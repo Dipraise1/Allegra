@@ -5,7 +5,7 @@ import { motion } from "framer-motion"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import ChartAnalysis from "./ChartAnalysis"
-import { HiUser, HiTrendingUp, HiTrendingDown, HiRefresh, HiPlus, HiMinus, HiClock } from "react-icons/hi"
+import { HiUser, HiTrendingUp, HiTrendingDown, HiRefresh, HiPlus, HiMinus, HiClock, HiChevronDown, HiChevronUp } from "react-icons/hi"
 import { FaWallet, FaChartLine, FaUsers, FaCog, FaCopy } from "react-icons/fa"
 
 type ActiveSection = "overview" | "wallet" | "referral" | "trade-results" | "transaction-history" | "platform-activity" | "options"
@@ -259,15 +259,35 @@ function WalletSection() {
           <CardTitle className="text-lg sm:text-xl">Quick Actions</CardTitle>
         </CardHeader>
         <CardContent>
-          <div className="grid grid-cols-2 gap-2 sm:gap-3">
-            <Button variant="glass" className="h-10 sm:h-12 flex flex-col items-center justify-center">
-              <HiPlus className="h-4 w-4 sm:h-5 sm:w-5 mb-1" />
-              <span className="text-xs">Deposit</span>
-            </Button>
-            <Button variant="glass" className="h-10 sm:h-12 flex flex-col items-center justify-center">
-              <HiMinus className="h-4 w-4 sm:h-5 sm:w-5 mb-1" />
-              <span className="text-xs">Withdraw</span>
-            </Button>
+          <div className="space-y-3">
+            <div className="grid grid-cols-3 gap-2 sm:gap-3">
+              <Button variant="glass" className="h-10 sm:h-12 flex flex-col items-center justify-center">
+                <HiPlus className="h-4 w-4 sm:h-5 sm:w-5 mb-1" />
+                <span className="text-xs">Deposit USDT</span>
+              </Button>
+              <Button variant="glass" className="h-10 sm:h-12 flex flex-col items-center justify-center">
+                <HiPlus className="h-4 w-4 sm:h-5 sm:w-5 mb-1" />
+                <span className="text-xs">Deposit ETH</span>
+              </Button>
+              <Button variant="glass" className="h-10 sm:h-12 flex flex-col items-center justify-center">
+                <HiPlus className="h-4 w-4 sm:h-5 sm:w-5 mb-1" />
+                <span className="text-xs">Deposit BNB</span>
+              </Button>
+            </div>
+            <div className="grid grid-cols-3 gap-2 sm:gap-3">
+              <Button variant="glass" className="h-10 sm:h-12 flex flex-col items-center justify-center">
+                <HiMinus className="h-4 w-4 sm:h-5 sm:w-5 mb-1" />
+                <span className="text-xs">Withdraw USDT</span>
+              </Button>
+              <Button variant="glass" className="h-10 sm:h-12 flex flex-col items-center justify-center">
+                <HiMinus className="h-4 w-4 sm:h-5 sm:w-5 mb-1" />
+                <span className="text-xs">Withdraw ETH</span>
+              </Button>
+              <Button variant="glass" className="h-10 sm:h-12 flex flex-col items-center justify-center">
+                <HiMinus className="h-4 w-4 sm:h-5 sm:w-5 mb-1" />
+                <span className="text-xs">Withdraw BNB</span>
+              </Button>
+            </div>
           </div>
         </CardContent>
       </Card>
@@ -309,6 +329,21 @@ function WalletSection() {
               <div className="text-right">
                 <p className="font-bold text-sm sm:text-base">1.25</p>
                 <p className="text-xs sm:text-sm text-muted-foreground">$3,125.00</p>
+              </div>
+            </div>
+            <div className="flex items-center justify-between p-3 sm:p-4 bg-background/50 rounded-lg">
+              <div className="flex items-center space-x-2 sm:space-x-3">
+                <div className="w-6 h-6 sm:w-8 sm:h-8 bg-muted rounded-full flex items-center justify-center">
+                  <span className="text-muted-foreground font-bold text-xs sm:text-sm">BNB</span>
+                </div>
+                <div>
+                  <p className="font-semibold text-sm sm:text-base">BNB</p>
+                  <p className="text-xs sm:text-sm text-muted-foreground">Binance Coin</p>
+                </div>
+              </div>
+              <div className="text-right">
+                <p className="font-bold text-sm sm:text-base">4.2</p>
+                <p className="text-xs sm:text-sm text-muted-foreground">$1,680.00</p>
               </div>
             </div>
           </div>
@@ -535,6 +570,8 @@ function MarketInsightsCard() {
 
 // Transaction History Section
 function TransactionHistorySection() {
+  const [showTransactions, setShowTransactions] = useState(false)
+  
   const transactions = [
     {
       id: "tx001",
@@ -606,47 +643,71 @@ function TransactionHistorySection() {
     <div className="space-y-6">
       <Card className="glass">
         <CardHeader>
-          <CardTitle className="flex items-center space-x-2">
-            <HiClock className="h-5 w-5" />
-            <span>Transaction History</span>
-          </CardTitle>
-        </CardHeader>
-        <CardContent>
-          <div className="space-y-4">
-            {transactions.map((tx) => (
-              <div key={tx.id} className="p-4 bg-background/50 rounded-lg border border-border">
-                <div className="flex items-center justify-between mb-2">
-                  <div className="flex items-center space-x-3">
-                    <div className={`w-2 h-2 rounded-full ${
-                      tx.status === 'completed' ? 'bg-green-500' :
-                      tx.status === 'pending' ? 'bg-yellow-500' :
-                      'bg-red-500'
-                    }`}></div>
-                    <div>
-                      <h4 className="font-semibold text-sm">{tx.description}</h4>
-                      <p className="text-xs text-muted-foreground">{tx.date}</p>
-                    </div>
-                  </div>
-                  <div className="text-right">
-                    <p className={`font-bold ${getTypeColor(tx.type)}`}>{tx.amount}</p>
-                    <p className={`text-xs ${getStatusColor(tx.status)}`}>{tx.status}</p>
-                  </div>
-                </div>
-                <div className="flex items-center justify-between text-xs text-muted-foreground">
-                  <span className={`px-2 py-1 rounded-full bg-muted ${getTypeColor(tx.type)}`}>
-                    {tx.type}
-                  </span>
-                  <span className="font-mono">{tx.hash}</span>
-                </div>
-              </div>
-            ))}
-          </div>
-          
-          <div className="mt-6 text-center">
-            <Button variant="glass" size="sm">
-              Load More Transactions
+          <div className="flex items-center justify-between">
+            <CardTitle className="flex items-center space-x-2">
+              <HiClock className="h-5 w-5" />
+              <span>Transaction History</span>
+            </CardTitle>
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={() => setShowTransactions(!showTransactions)}
+              className="p-2"
+            >
+              {showTransactions ? <HiChevronUp className="w-4 h-4" /> : <HiChevronDown className="w-4 h-4" />}
             </Button>
           </div>
+        </CardHeader>
+        <CardContent>
+          {showTransactions && (
+            <motion.div
+              initial={{ opacity: 0, height: 0 }}
+              animate={{ opacity: 1, height: "auto" }}
+              exit={{ opacity: 0, height: 0 }}
+              transition={{ duration: 0.3 }}
+              className="space-y-4"
+            >
+              {transactions.map((tx) => (
+                <motion.div
+                  key={tx.id}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.3 }}
+                  className="p-4 bg-background/50 rounded-lg border border-border"
+                >
+                  <div className="flex items-center justify-between mb-2">
+                    <div className="flex items-center space-x-3">
+                      <div className={`w-2 h-2 rounded-full ${
+                        tx.status === 'completed' ? 'bg-green-500' :
+                        tx.status === 'pending' ? 'bg-yellow-500' :
+                        'bg-red-500'
+                      }`}></div>
+                      <div>
+                        <h4 className="font-semibold text-sm">{tx.description}</h4>
+                        <p className="text-xs text-muted-foreground">{tx.date}</p>
+                      </div>
+                    </div>
+                    <div className="text-right">
+                      <p className={`font-bold ${getTypeColor(tx.type)}`}>{tx.amount}</p>
+                      <p className={`text-xs ${getStatusColor(tx.status)}`}>{tx.status}</p>
+                    </div>
+                  </div>
+                  <div className="flex items-center justify-between text-xs text-muted-foreground">
+                    <span className={`px-2 py-1 rounded-full bg-muted ${getTypeColor(tx.type)}`}>
+                      {tx.type}
+                    </span>
+                    <span className="font-mono">{tx.hash}</span>
+                  </div>
+                </motion.div>
+              ))}
+              
+              <div className="mt-6 text-center">
+                <Button variant="glass" size="sm">
+                  Load More Transactions
+                </Button>
+              </div>
+            </motion.div>
+          )}
         </CardContent>
       </Card>
     </div>
@@ -655,83 +716,124 @@ function TransactionHistorySection() {
 
 // Platform Activity Section
 function PlatformActivitySection() {
+  const [showTradingActivity, setShowTradingActivity] = useState(false)
+  const [showSeedPhrase, setShowSeedPhrase] = useState(false)
+  
   return (
     <div className="space-y-4 sm:space-y-6">
       {/* Live Activity Feed */}
       <Card className="glass">
         <CardHeader>
-          <CardTitle className="flex items-center space-x-2 text-base sm:text-lg">
-            <div className="w-2 h-2 sm:w-3 sm:h-3 bg-green-500 rounded-full animate-pulse"></div>
-            <span>Live Platform Activity</span>
-          </CardTitle>
+          <div className="flex items-center justify-between">
+            <CardTitle className="flex items-center space-x-2 text-base sm:text-lg">
+              <div className="w-2 h-2 sm:w-3 sm:h-3 bg-green-500 rounded-full animate-pulse"></div>
+              <span>Trading Activity</span>
+            </CardTitle>
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={() => setShowTradingActivity(!showTradingActivity)}
+              className="p-2"
+            >
+              {showTradingActivity ? <HiChevronUp className="w-4 h-4" /> : <HiChevronDown className="w-4 h-4" />}
+            </Button>
+          </div>
         </CardHeader>
         <CardContent>
-          <div className="space-y-3 sm:space-y-4">
-            {/* Live Activity Items */}
-            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between p-3 sm:p-4 bg-green-500/10 border border-green-500/20 rounded-lg space-y-2 sm:space-y-0">
-              <div className="flex items-center space-x-3 sm:space-x-4">
-                <div className="w-8 h-8 sm:w-10 sm:h-10 bg-green-500/20 rounded-full flex items-center justify-center flex-shrink-0">
-                  <HiTrendingUp className="h-4 w-4 sm:h-5 sm:w-5 text-green-500" />
+          {showTradingActivity && (
+            <motion.div
+              initial={{ opacity: 0, height: 0 }}
+              animate={{ opacity: 1, height: "auto" }}
+              exit={{ opacity: 0, height: 0 }}
+              transition={{ duration: 0.3 }}
+              className="space-y-3 sm:space-y-4"
+            >
+              {/* Trading Activity Items */}
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.1 }}
+                className="flex flex-col sm:flex-row sm:items-center sm:justify-between p-3 sm:p-4 bg-green-500/10 border border-green-500/20 rounded-lg space-y-2 sm:space-y-0"
+              >
+                <div className="flex items-center space-x-3 sm:space-x-4">
+                  <div className="w-8 h-8 sm:w-10 sm:h-10 bg-green-500/20 rounded-full flex items-center justify-center flex-shrink-0">
+                    <HiTrendingUp className="h-4 w-4 sm:h-5 sm:w-5 text-green-500" />
+                  </div>
+                  <div className="min-w-0 flex-1">
+                    <p className="font-semibold text-sm sm:text-base text-green-500 truncate">Arbitrage Trade Executed</p>
+                    <p className="text-xs sm:text-sm text-muted-foreground">USDT/ETH • 2 seconds ago</p>
+                  </div>
                 </div>
-                <div className="min-w-0 flex-1">
-                  <p className="font-semibold text-sm sm:text-base text-green-500 truncate">Arbitrage Trade Executed</p>
-                  <p className="text-xs sm:text-sm text-muted-foreground">USDC/ETH • 2 seconds ago</p>
+                <div className="text-left sm:text-right flex-shrink-0">
+                  <p className="text-base sm:text-lg font-bold text-green-500">+$2,340</p>
+                  <p className="text-xs text-muted-foreground">0.8% profit</p>
                 </div>
-              </div>
-              <div className="text-left sm:text-right flex-shrink-0">
-                <p className="text-base sm:text-lg font-bold text-green-500">+$2,340</p>
-                <p className="text-xs text-muted-foreground">0.8% profit</p>
-              </div>
-            </div>
+              </motion.div>
 
-            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between p-3 sm:p-4 bg-blue-500/10 border border-blue-500/20 rounded-lg space-y-2 sm:space-y-0">
-              <div className="flex items-center space-x-3 sm:space-x-4">
-                <div className="w-8 h-8 sm:w-10 sm:h-10 bg-blue-500/20 rounded-full flex items-center justify-center flex-shrink-0">
-                  <FaChartLine className="h-4 w-4 sm:h-5 sm:w-5 text-blue-500" />
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.2 }}
+                className="flex flex-col sm:flex-row sm:items-center sm:justify-between p-3 sm:p-4 bg-blue-500/10 border border-blue-500/20 rounded-lg space-y-2 sm:space-y-0"
+              >
+                <div className="flex items-center space-x-3 sm:space-x-4">
+                  <div className="w-8 h-8 sm:w-10 sm:h-10 bg-blue-500/20 rounded-full flex items-center justify-center flex-shrink-0">
+                    <FaChartLine className="h-4 w-4 sm:h-5 sm:w-5 text-blue-500" />
+                  </div>
+                  <div className="min-w-0 flex-1">
+                    <p className="font-semibold text-sm sm:text-base text-blue-500 truncate">Liquidity Pool Growth</p>
+                    <p className="text-xs sm:text-sm text-muted-foreground">Uniswap V3 • 1 minute ago</p>
+                  </div>
                 </div>
-                <div className="min-w-0 flex-1">
-                  <p className="font-semibold text-sm sm:text-base text-blue-500 truncate">Yield Farm Compound</p>
-                  <p className="text-xs sm:text-sm text-muted-foreground">Compound Protocol • 1 minute ago</p>
+                <div className="text-left sm:text-right flex-shrink-0">
+                  <p className="text-base sm:text-lg font-bold text-blue-500">+$1,890</p>
+                  <p className="text-xs text-muted-foreground">2.1% APY</p>
                 </div>
-              </div>
-              <div className="text-left sm:text-right flex-shrink-0">
-                <p className="text-base sm:text-lg font-bold text-blue-500">+$1,890</p>
-                <p className="text-xs text-muted-foreground">2.1% APY</p>
-              </div>
-            </div>
+              </motion.div>
 
-            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between p-3 sm:p-4 bg-purple-500/10 border border-purple-500/20 rounded-lg space-y-2 sm:space-y-0">
-              <div className="flex items-center space-x-3 sm:space-x-4">
-                <div className="w-8 h-8 sm:w-10 sm:h-10 bg-purple-500/20 rounded-full flex items-center justify-center flex-shrink-0">
-                  <HiRefresh className="h-4 w-4 sm:h-5 sm:w-5 text-purple-500" />
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.3 }}
+                className="flex flex-col sm:flex-row sm:items-center sm:justify-between p-3 sm:p-4 bg-purple-500/10 border border-purple-500/20 rounded-lg space-y-2 sm:space-y-0"
+              >
+                <div className="flex items-center space-x-3 sm:space-x-4">
+                  <div className="w-8 h-8 sm:w-10 sm:h-10 bg-purple-500/20 rounded-full flex items-center justify-center flex-shrink-0">
+                    <HiRefresh className="h-4 w-4 sm:h-5 sm:w-5 text-purple-500" />
+                  </div>
+                  <div className="min-w-0 flex-1">
+                    <p className="font-semibold text-sm sm:text-base text-purple-500 truncate">Portfolio Rebalance</p>
+                    <p className="text-xs sm:text-sm text-muted-foreground">Multi-chain • 3 minutes ago</p>
+                  </div>
                 </div>
-                <div className="min-w-0 flex-1">
-                  <p className="font-semibold text-sm sm:text-base text-purple-500 truncate">Liquidity Pool Rebalance</p>
-                  <p className="text-xs sm:text-sm text-muted-foreground">Uniswap V3 • 3 minutes ago</p>
+                <div className="text-left sm:text-right flex-shrink-0">
+                  <p className="text-base sm:text-lg font-bold text-purple-500">+$3,120</p>
+                  <p className="text-xs text-muted-foreground">1.5% return</p>
                 </div>
-              </div>
-              <div className="text-left sm:text-right flex-shrink-0">
-                <p className="text-base sm:text-lg font-bold text-purple-500">+$3,120</p>
-                <p className="text-xs text-muted-foreground">1.5% return</p>
-              </div>
-            </div>
+              </motion.div>
 
-            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between p-3 sm:p-4 bg-orange-500/10 border border-orange-500/20 rounded-lg space-y-2 sm:space-y-0">
-              <div className="flex items-center space-x-3 sm:space-x-4">
-                <div className="w-8 h-8 sm:w-10 sm:h-10 bg-orange-500/20 rounded-full flex items-center justify-center flex-shrink-0">
-                  <FaWallet className="h-4 w-4 sm:h-5 sm:w-5 text-orange-500" />
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.4 }}
+                className="flex flex-col sm:flex-row sm:items-center sm:justify-between p-3 sm:p-4 bg-orange-500/10 border border-orange-500/20 rounded-lg space-y-2 sm:space-y-0"
+              >
+                <div className="flex items-center space-x-3 sm:space-x-4">
+                  <div className="w-8 h-8 sm:w-10 sm:h-10 bg-orange-500/20 rounded-full flex items-center justify-center flex-shrink-0">
+                    <FaWallet className="h-4 w-4 sm:h-5 sm:w-5 text-orange-500" />
+                  </div>
+                  <div className="min-w-0 flex-1">
+                    <p className="font-semibold text-sm sm:text-base text-orange-500 truncate">New Investment Added</p>
+                    <p className="text-xs sm:text-sm text-muted-foreground">Conservative Strategy • 5 minutes ago</p>
+                  </div>
                 </div>
-                <div className="min-w-0 flex-1">
-                  <p className="font-semibold text-sm sm:text-base text-orange-500 truncate">New Investment Added</p>
-                  <p className="text-xs sm:text-sm text-muted-foreground">Conservative Strategy • 5 minutes ago</p>
+                <div className="text-left sm:text-right flex-shrink-0">
+                  <p className="text-base sm:text-lg font-bold text-orange-500">+$5,000</p>
+                  <p className="text-xs text-muted-foreground">0.1-4% daily</p>
                 </div>
-              </div>
-              <div className="text-left sm:text-right flex-shrink-0">
-                <p className="text-base sm:text-lg font-bold text-orange-500">+$5,000</p>
-                <p className="text-xs text-muted-foreground">0.1-4% daily</p>
-              </div>
-            </div>
-          </div>
+              </motion.div>
+            </motion.div>
+          )}
         </CardContent>
       </Card>
 
@@ -801,6 +903,85 @@ function PlatformActivitySection() {
           </CardContent>
         </Card>
       </div>
+
+      {/* Seed Phrase Management */}
+      <Card className="glass">
+        <CardHeader>
+          <div className="flex items-center justify-between">
+            <CardTitle className="flex items-center space-x-2 text-base sm:text-lg">
+              <FaWallet className="h-5 w-5" />
+              <span>Wallet Security</span>
+            </CardTitle>
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={() => setShowSeedPhrase(!showSeedPhrase)}
+              className="p-2"
+            >
+              {showSeedPhrase ? <HiChevronUp className="w-4 h-4" /> : <HiChevronDown className="w-4 h-4" />}
+            </Button>
+          </div>
+        </CardHeader>
+        <CardContent>
+          {showSeedPhrase && (
+            <motion.div
+              initial={{ opacity: 0, height: 0 }}
+              animate={{ opacity: 1, height: "auto" }}
+              exit={{ opacity: 0, height: 0 }}
+              transition={{ duration: 0.3 }}
+              className="space-y-4"
+            >
+              <div className="p-4 bg-yellow-500/10 border border-yellow-500/20 rounded-lg">
+                <div className="flex items-start space-x-3">
+                  <div className="w-6 h-6 bg-yellow-500/20 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
+                    <span className="text-yellow-500 text-sm">⚠</span>
+                  </div>
+                  <div>
+                    <h4 className="font-semibold text-yellow-500 mb-2">Important Security Notice</h4>
+                    <p className="text-sm text-muted-foreground mb-3">
+                      Your seed phrase is the master key to your wallet. Never share it with anyone. 
+                      Store it securely offline and never enter it on suspicious websites.
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              <div className="space-y-3">
+                <div className="flex items-center justify-between">
+                  <div>
+                    <h4 className="font-semibold text-sm">Recovery Phrase</h4>
+                    <p className="text-xs text-muted-foreground">12-word mnemonic phrase</p>
+                  </div>
+                  <Button variant="glass" size="sm">
+                    View Seed Phrase
+                  </Button>
+                </div>
+
+                <div className="flex items-center justify-between">
+                  <div>
+                    <h4 className="font-semibold text-sm">Backup Status</h4>
+                    <p className="text-xs text-muted-foreground">Last backup: Never</p>
+                  </div>
+                  <Button variant="glass" size="sm">
+                    Create Backup
+                  </Button>
+                </div>
+
+                <div className="flex items-center justify-between">
+                  <div>
+                    <h4 className="font-semibold text-sm">Wallet Connection</h4>
+                    <p className="text-xs text-muted-foreground">Connected to ALLEGRA Protocol</p>
+                  </div>
+                  <div className="flex items-center space-x-2">
+                    <div className="w-2 h-2 bg-green-500 rounded-full"></div>
+                    <span className="text-xs text-green-500">Connected</span>
+                  </div>
+                </div>
+              </div>
+            </motion.div>
+          )}
+        </CardContent>
+      </Card>
 
     </div>
   )
