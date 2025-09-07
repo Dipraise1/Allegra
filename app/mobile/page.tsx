@@ -127,7 +127,7 @@ export default function MobileHomePage() {
       </div>
 
       {/* Main Content */}
-      <div className="relative z-10 min-h-screen flex flex-col justify-center px-4 py-8">
+      <div className="relative z-10 min-h-screen flex flex-col justify-center px-4 pt-16 pb-8">
         {/* Logo Section */}
         <motion.div
           initial={{ opacity: 0, scale: 0.8 }}
