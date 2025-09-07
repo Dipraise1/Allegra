@@ -25,7 +25,7 @@ const features = [
   {
     icon: Shield,
     title: "Enterprise Security",
-    description: "Multi-signature wallets, smart contract audits, and institutional-grade security measures protect your assets.",
+    description: "Multi-signature wallets, AI-powered security audits, and institutional-grade security measures protect your assets.",
     color: "from-gray-200 to-gray-400"
   },
   {
@@ -148,7 +148,7 @@ export default function KeyFeatures() {
                   </div>
                   <div>
                     <div className="text-white font-semibold text-sm">Security Rating</div>
-                    <div className="text-gray-400 text-xs">Audited by top firms</div>
+                    <div className="text-gray-400 text-xs">AI-powered security audits</div>
                   </div>
                 </div>
                 <div className="text-center space-y-2">

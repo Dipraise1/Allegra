@@ -1,43 +1,43 @@
 "use client"
 
 import { motion } from "framer-motion"
-import { Wallet, TrendingUp, Shield, Settings, Plus, Eye, EyeOff } from "lucide-react"
+import { HiTrendingUp, HiShieldCheck, HiCog, HiPlus, HiEye, HiEyeOff, HiRefresh } from "react-icons/hi"
+import { FaWallet } from "react-icons/fa"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { useTheme } from "@/components/ThemeProvider"
 import { cn } from "@/lib/utils"
 import Image from "next/image"
 import { useState } from "react"
+import { useTokenData } from "@/hooks/useTokenData"
 
 export default function Dashboard() {
   const { theme } = useTheme()
   const [showBalances, setShowBalances] = useState(true)
   const [isWalletConnected, setIsWalletConnected] = useState(false)
+  const [selectedChain, setSelectedChain] = useState('ethereum')
   
-  const mockData = {
-    totalValue: "$12,450.32",
-    dailyChange: "+$234.56",
-    apy: "8.42%",
-    strategies: [
-      { name: "USDC Yield", value: "$5,000", apy: "12.5%", change: "+$45.23" },
-      { name: "ETH Staking", value: "$3,200", apy: "6.8%", change: "+$12.45" },
-      { name: "Liquidity Pool", value: "$4,250.32", apy: "9.2%", change: "+$67.89" }
-    ]
-  }
+  // Use real token data
+  const { tokens, loading, error, totalValue, totalChange24h, refresh } = useTokenData(selectedChain)
+  
 
+  // Calculate portfolio metrics from real token data
   const portfolioData = {
-    totalBalance: "$8,750.50",
-    availableBalance: "$2,450.32",
-    stakedAmount: "$6,300.18",
-    totalReturn: "+$1,250.32",
-    totalReturnPercent: "+16.7%",
-    riskScore: "Low",
-    assets: [
-      { symbol: "MATIC", name: "Polygon", balance: "1,250.50", value: "$1,250.50", apy: "8.5%", change: "+2.3%", allocation: "14.3%", imageId: "4713" },
-      { symbol: "USDC", name: "USD Coin", balance: "2,450.32", value: "$2,450.32", apy: "12.3%", change: "+0.1%", allocation: "28.0%", imageId: "6319" },
-      { symbol: "ETH", name: "Ethereum", balance: "1.25", value: "$3,125.00", apy: "6.8%", change: "+5.2%", allocation: "35.7%", imageId: "279" },
-      { symbol: "BTC", name: "Bitcoin", balance: "0.15", value: "$1,925.68", apy: "9.2%", change: "+3.8%", allocation: "22.0%", imageId: "1" }
-    ],
+    totalBalance: `$${totalValue.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`,
+    availableBalance: `$${(totalValue * 0.3).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`,
+    stakedAmount: `$${(totalValue * 0.7).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`,
+    totalReturn: `${totalChange24h >= 0 ? '+' : ''}$${totalChange24h.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`,
+    totalReturnPercent: `${totalChange24h >= 0 ? '+' : ''}${((totalChange24h / totalValue) * 100).toFixed(2)}%`,
+    assets: tokens.map(token => ({
+      symbol: token.symbol,
+      name: token.name,
+      balance: token.balance.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 6 }),
+      value: `$${token.value.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`,
+      apy: `${(Math.random() * 15 + 5).toFixed(1)}%`, // Mock APY for now
+      change: `${token.change24h >= 0 ? '+' : ''}${token.change24h.toFixed(2)}%`,
+      allocation: `${token.allocation.toFixed(1)}%`,
+      imageId: token.imageId
+    })),
     transactions: [
       { type: "Deposit", asset: "MATIC", amount: "500.00", value: "$500.00", time: "2 hours ago", status: "Completed", hash: "0x1a2b3c...", imageId: "4713" },
       { type: "Stake", asset: "MATIC", amount: "1,000.00", value: "$1,000.00", time: "1 day ago", status: "Active", hash: "0x4d5e6f...", imageId: "4713" },
@@ -70,7 +70,7 @@ export default function Dashboard() {
               height={32}
               className="object-contain logo-white"
             />
-            <span className="text-xl font-bold gradient-text">ALLEGRA Dashboard</span>
+            <span className="text-lg font-semibold gradient-text">Portfolio</span>
           </div>
           
           <div className="flex items-center justify-center space-x-3">
@@ -80,11 +80,11 @@ export default function Dashboard() {
               onClick={() => setShowBalances(!showBalances)}
               className="text-xs"
             >
-              {showBalances ? <EyeOff className="h-3 w-3 mr-1" /> : <Eye className="h-3 w-3 mr-1" />}
+              {showBalances ? <HiEyeOff className="h-3 w-3 mr-1" /> : <HiEye className="h-3 w-3 mr-1" />}
               {showBalances ? 'Hide' : 'Show'} Balances
             </Button>
             <Button variant="glass" size="sm" className="text-xs">
-              <Settings className="h-3 w-3 mr-1" />
+              <HiCog className="h-3 w-3 mr-1" />
               Settings
             </Button>
           </div>
@@ -101,7 +101,7 @@ export default function Dashboard() {
             className="text-center mb-8"
           >
             <div className="w-24 h-24 mx-auto mb-6 bg-gradient-to-r from-white to-gray-300 rounded-full flex items-center justify-center">
-              <Wallet className="h-12 w-12 text-black" />
+              <FaWallet className="h-12 w-12 text-black" />
             </div>
             <h1 className="text-3xl font-bold gradient-text mb-4">Connect Your Wallet</h1>
             <p className="text-muted-foreground mb-8 max-w-2xl mx-auto">
@@ -114,7 +114,7 @@ export default function Dashboard() {
                 className="px-8"
                 onClick={() => setIsWalletConnected(true)}
               >
-                <Wallet className="mr-2 h-5 w-5" />
+                <FaWallet className="mr-2 h-5 w-5" />
                 Connect Wallet
               </Button>
               <Button size="lg" variant="glass" className="px-8">
@@ -131,7 +131,7 @@ export default function Dashboard() {
             className="space-y-4"
           >
             {/* Portfolio Overview */}
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3">
+            <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-4 gap-3">
               <Card className="glass">
                 <CardContent className="p-4">
                   <div className="flex items-center justify-between mb-2">
@@ -191,10 +191,6 @@ export default function Dashboard() {
                       </div>
                     </div>
                   </div>
-                  <div className="flex items-center justify-between text-xs">
-                    <span className="text-muted-foreground">Risk Score</span>
-                    <span className="font-medium text-green-500">{portfolioData.riskScore}</span>
-                  </div>
                 </CardContent>
               </Card>
 
@@ -234,7 +230,7 @@ export default function Dashboard() {
                 </CardTitle>
               </CardHeader>
               <CardContent className="pt-0">
-                <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+                <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-4 gap-3">
                   <Button variant="glass" className="h-16 flex flex-col items-center justify-center space-y-1">
                     <svg viewBox="0 0 24 24" fill="none" className="w-5 h-5">
                       <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z" fill="currentColor"/>
@@ -263,7 +259,7 @@ export default function Dashboard() {
               </CardContent>
             </Card>
 
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               {/* Assets */}
               <Card className="glass">
                 <CardHeader className="pb-3">
@@ -420,7 +416,7 @@ export default function Dashboard() {
                 </CardTitle>
               </CardHeader>
               <CardContent className="pt-0">
-                <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-4">
+                <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-4 gap-4 mb-4">
                   <div className="text-center">
                     <div className="w-12 h-12 mx-auto mb-2 rounded-lg flex items-center justify-center overflow-hidden">
                       <img 
@@ -466,7 +462,7 @@ export default function Dashboard() {
                 <div className="bg-white/5 dark:bg-black/5 rounded-lg p-3 mb-4">
                   <div className="flex items-center justify-between mb-2">
                     <span className="text-xs text-muted-foreground">Progress</span>
-                    <span className="text-xs font-medium">45/90 days</span>
+                    <span className="text-xs font-medium">15/30 days</span>
                   </div>
                   <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-1.5">
                     <div className="bg-gradient-to-r from-purple-400 to-purple-600 h-1.5 rounded-full" style={{width: '50%'}}></div>

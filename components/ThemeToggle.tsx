@@ -1,6 +1,6 @@
 "use client"
 
-import { Moon, Sun, Monitor } from "lucide-react"
+import { HiSun, HiMoon, HiDesktopComputer } from "react-icons/hi"
 import { Button } from "@/components/ui/button"
 import { useTheme } from "@/components/ThemeProvider"
 
@@ -20,13 +20,13 @@ export function ThemeToggle() {
   const getIcon = () => {
     switch (theme) {
       case "light":
-        return <Sun size={16} />
+        return <HiSun size={16} />
       case "dark":
-        return <Moon size={16} />
+        return <HiMoon size={16} />
       case "system":
-        return <Monitor size={16} />
+        return <HiDesktopComputer size={16} />
       default:
-        return <Sun size={16} />
+        return <HiSun size={16} />
     }
   }
 

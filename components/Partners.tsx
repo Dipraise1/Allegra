@@ -5,50 +5,50 @@ import Image from "next/image"
 
 const partners = [
   {
-    name: "Polygon",
-    logo: "https://assets.coingecko.com/coins/images/4713/large/matic-token-icon.png",
+    name: "OpenAI",
+    logo: "https://upload.wikimedia.org/wikipedia/commons/0/04/ChatGPT_logo.svg",
     width: 120,
     height: 40
   },
   {
-    name: "Ethereum",
-    logo: "https://assets.coingecko.com/coins/images/279/large/ethereum.png",
+    name: "Anthropic",
+    logo: "https://upload.wikimedia.org/wikipedia/commons/4/4d/Anthropic_logo.svg",
     width: 120,
     height: 40
   },
   {
-    name: "Chainlink",
-    logo: "https://assets.coingecko.com/coins/images/877/large/chainlink-new-logo.png",
+    name: "Google AI",
+    logo: "https://upload.wikimedia.org/wikipedia/commons/2/2f/Google_2015_logo.svg",
     width: 120,
     height: 40
   },
   {
-    name: "Uniswap",
-    logo: "https://assets.coingecko.com/coins/images/12504/large/uniswap-uni.png",
+    name: "Microsoft AI",
+    logo: "https://upload.wikimedia.org/wikipedia/commons/4/44/Microsoft_logo.svg",
     width: 120,
     height: 40
   },
   {
-    name: "Aave",
-    logo: "https://assets.coingecko.com/coins/images/12645/large/AAVE.png",
+    name: "Meta AI",
+    logo: "https://upload.wikimedia.org/wikipedia/commons/7/7b/Meta_Platforms_Inc._logo.svg",
     width: 120,
     height: 40
   },
   {
-    name: "Compound",
-    logo: "https://assets.coingecko.com/coins/images/10775/large/COMP.png",
+    name: "Hugging Face",
+    logo: "https://huggingface.co/datasets/huggingface/brand-assets/resolve/main/hf-logo.svg",
     width: 120,
     height: 40
   },
   {
-    name: "MakerDAO",
-    logo: "https://assets.coingecko.com/coins/images/1364/large/Mark_Maker.png",
+    name: "Cohere",
+    logo: "https://upload.wikimedia.org/wikipedia/commons/9/9a/Cohere_Logo.svg",
     width: 120,
     height: 40
   },
   {
-    name: "Curve",
-    logo: "https://assets.coingecko.com/coins/images/12124/large/Curve.png",
+    name: "Stability AI",
+    logo: "https://upload.wikimedia.org/wikipedia/commons/1/1e/Stability_AI_logo.svg",
     width: 120,
     height: 40
   }
@@ -65,9 +65,9 @@ export default function Partners() {
           transition={{ duration: 0.6 }}
           className="text-center mb-12"
         >
-          <h2 className="text-2xl font-bold gradient-text mb-4">Trusted by Leading Protocols</h2>
+          <h2 className="text-2xl font-bold gradient-text mb-4">Powered by Leading AI Partners</h2>
           <p className="text-muted-foreground max-w-2xl mx-auto">
-            ALLEGRA Protocol integrates with the most established and secure DeFi platforms
+            ALLEGRA Protocol leverages cutting-edge AI technology from industry leaders
           </p>
         </motion.div>
 
@@ -105,11 +105,14 @@ export default function Partners() {
                   className="object-contain filter grayscale hover:grayscale-0 transition-all duration-300"
                   onError={(e) => {
                     // Fallback to text if image fails to load
-                    e.currentTarget.style.display = 'none';
-                    const fallback = document.createElement('div');
-                    fallback.className = 'text-muted-foreground font-semibold text-sm';
-                    fallback.textContent = partner.name;
-                    e.currentTarget.parentNode?.appendChild(fallback);
+                    const target = e.currentTarget as HTMLImageElement;
+                    target.style.display = 'none';
+                    if (target.parentElement) {
+                      const fallback = document.createElement('div');
+                      fallback.className = 'text-muted-foreground font-semibold text-sm px-4 py-2 border border-border rounded-lg';
+                      fallback.textContent = partner.name;
+                      target.parentElement.appendChild(fallback);
+                    }
                   }}
                 />
               </motion.div>

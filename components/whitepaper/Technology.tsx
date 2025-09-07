@@ -31,7 +31,7 @@ const technologySections = [
     title: "Smart Contracts",
     icon: Shield,
     content: {
-      description: "Audited smart contracts ensure secure, transparent, and efficient execution of all protocol operations.",
+      description: "AI-audited smart contracts ensure secure, transparent, and efficient execution of all protocol operations.",
       features: [
         "Multi-signature wallet integration for enhanced security",
         "Automated yield distribution and compounding",
@@ -40,7 +40,7 @@ const technologySections = [
       ],
       technical: {
         "Language": "Solidity 0.8.19+",
-        "Audits": "CertiK, ConsenSys Diligence, OpenZeppelin",
+        "Audits": "AI-Powered Continuous Security Analysis",
         "Gas Optimization": "Average 15% lower gas costs",
         "Test Coverage": "98.5% code coverage"
       }

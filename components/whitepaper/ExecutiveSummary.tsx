@@ -13,7 +13,7 @@ const features = [
   {
     icon: Shield,
     title: "Enterprise Security",
-    description: "Multi-signature wallets, smart contract audits, and institutional-grade protection"
+    description: "Multi-signature wallets, AI-powered security audits, and institutional-grade protection"
   },
   {
     icon: Zap,
@@ -123,7 +123,7 @@ export default function ExecutiveSummary() {
                     </li>
                     <li className="flex items-start space-x-2">
                       <span className="text-green-400 mt-1">•</span>
-                      <span>Multi-signature security and smart contract audits</span>
+                      <span>Multi-signature security and AI-powered audits</span>
                     </li>
                     <li className="flex items-start space-x-2">
                       <span className="text-green-400 mt-1">•</span>

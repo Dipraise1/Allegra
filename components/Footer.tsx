@@ -1,11 +1,12 @@
 "use client"
 
-import { motion } from "framer-motion"
-import { Github, Twitter, Linkedin, Mail, ExternalLink } from "lucide-react"
+import { motion, AnimatePresence } from "framer-motion"
+import { Github, Twitter, Linkedin, Mail, ExternalLink, ChevronDown } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { useTheme } from "@/components/ThemeProvider"
 import { cn } from "@/lib/utils"
 import Image from "next/image"
+import { useState } from "react"
 
 const socialLinks = [
   { name: "GitHub", icon: Github, href: "#" },
@@ -43,6 +44,15 @@ const footerLinks = {
 
 export default function Footer() {
   const { theme } = useTheme()
+  const [openSections, setOpenSections] = useState<string[]>([])
+  
+  const toggleSection = (category: string) => {
+    setOpenSections(prev => 
+      prev.includes(category) 
+        ? prev.filter(section => section !== category)
+        : [...prev, category]
+    )
+  }
   
   return (
     <footer className="relative bg-gradient-to-b from-transparent to-black/20">
@@ -87,34 +97,90 @@ export default function Footer() {
             </motion.div>
           </div>
 
-          {/* Links Sections */}
-          {Object.entries(footerLinks).map(([category, links]) => (
-            <motion.div
-              key={category}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: 0.1 }}
-              className="space-y-4"
-            >
-              <h3 className="text-foreground font-semibold text-sm uppercase tracking-wider">
-                {category}
-              </h3>
-              <ul className="space-y-3">
-                {links.map((link) => (
-                  <li key={link.name}>
-                    <a
-                      href={link.href}
-                      className="text-muted-foreground hover:text-foreground text-sm transition-colors duration-200 flex items-center space-x-1"
+          {/* Links Sections - Desktop Grid */}
+          <div className="hidden md:contents">
+            {Object.entries(footerLinks).map(([category, links]) => (
+              <motion.div
+                key={category}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: 0.1 }}
+                className="space-y-4"
+              >
+                <h3 className="text-foreground font-semibold text-sm uppercase tracking-wider">
+                  {category}
+                </h3>
+                <ul className="space-y-3">
+                  {links.map((link) => (
+                    <li key={link.name}>
+                      <a
+                        href={link.href}
+                        className="text-muted-foreground hover:text-foreground text-sm transition-colors duration-200 flex items-center space-x-1"
+                      >
+                        <span>{link.name}</span>
+                        {'external' in link && link.external && <ExternalLink size={12} />}
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+              </motion.div>
+            ))}
+          </div>
+
+          {/* Mobile Accordion */}
+          <div className="md:hidden space-y-4">
+            {Object.entries(footerLinks).map(([category, links]) => (
+              <motion.div
+                key={category}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: 0.1 }}
+                className="border border-white/10 rounded-lg overflow-hidden"
+              >
+                <button
+                  onClick={() => toggleSection(category)}
+                  className="w-full px-4 py-3 flex items-center justify-between text-left hover:bg-white/5 transition-colors duration-200"
+                >
+                  <h3 className="text-foreground font-semibold text-sm uppercase tracking-wider">
+                    {category}
+                  </h3>
+                  <motion.div
+                    animate={{ rotate: openSections.includes(category) ? 180 : 0 }}
+                    transition={{ duration: 0.2 }}
+                  >
+                    <ChevronDown size={16} className="text-muted-foreground" />
+                  </motion.div>
+                </button>
+                
+                <AnimatePresence>
+                  {openSections.includes(category) && (
+                    <motion.div
+                      initial={{ height: 0, opacity: 0 }}
+                      animate={{ height: "auto", opacity: 1 }}
+                      exit={{ height: 0, opacity: 0 }}
+                      transition={{ duration: 0.3, ease: "easeInOut" }}
+                      className="overflow-hidden"
                     >
-                      <span>{link.name}</span>
-                      {'external' in link && link.external && <ExternalLink size={12} />}
-                    </a>
-                  </li>
-                ))}
-              </ul>
-            </motion.div>
-          ))}
+                      <div className="px-4 pb-3 space-y-3">
+                        {links.map((link) => (
+                          <a
+                            key={link.name}
+                            href={link.href}
+                            className="block text-muted-foreground hover:text-foreground text-sm transition-colors duration-200 flex items-center space-x-1"
+                          >
+                            <span>{link.name}</span>
+                            {'external' in link && link.external && <ExternalLink size={12} />}
+                          </a>
+                        ))}
+                      </div>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              </motion.div>
+            ))}
+          </div>
         </div>
 
         {/* Bottom Section */}

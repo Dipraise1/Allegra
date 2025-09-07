@@ -82,8 +82,12 @@ const commands = [
   }
 ]
 
-export default function CommandPalette() {
-  const [open, setOpen] = useState(false)
+interface CommandPaletteProps {
+  onClose?: () => void
+}
+
+export default function CommandPalette({ onClose }: CommandPaletteProps) {
+  const [open, setOpen] = useState(true)
   const [search, setSearch] = useState("")
 
   useEffect(() => {
@@ -94,12 +98,18 @@ export default function CommandPalette() {
       }
       if (e.key === "Escape") {
         setOpen(false)
+        onClose?.()
       }
     }
 
     document.addEventListener("keydown", down)
     return () => document.removeEventListener("keydown", down)
-  }, [])
+  }, [onClose])
+
+  const handleClose = () => {
+    setOpen(false)
+    onClose?.()
+  }
 
   const scrollToSection = (href: string) => {
     const element = document.querySelector(href)
@@ -123,11 +133,11 @@ export default function CommandPalette() {
         whileHover={{ scale: 1.05 }}
         whileTap={{ scale: 0.95 }}
         onClick={() => setOpen(true)}
-        className="fixed bottom-8 right-8 z-40 glass px-4 py-2 rounded-lg flex items-center space-x-2 text-white hover:bg-white/20 transition-colors duration-200"
+        className="fixed bottom-8 right-8 z-40 glass px-4 py-2 rounded-lg flex items-center space-x-2 text-black dark:text-white hover:bg-black/10 dark:hover:bg-white/20 transition-colors duration-200"
       >
         <Search size={16} />
         <span className="hidden sm:inline text-sm">Search</span>
-        <kbd className="hidden sm:inline-flex items-center px-2 py-1 bg-white/10 rounded text-xs">
+        <kbd className="hidden sm:inline-flex items-center px-2 py-1 bg-black/10 dark:bg-white/10 rounded text-xs">
           ⌘K
         </kbd>
       </motion.button>
@@ -139,33 +149,33 @@ export default function CommandPalette() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 z-50 bg-black/50 backdrop-blur-sm flex items-start justify-center pt-20 px-4"
-            onClick={() => setOpen(false)}
+            className="fixed inset-0 z-50 bg-black/50 dark:bg-black/50 backdrop-blur-sm flex items-start justify-center pt-20 px-4"
+            onClick={handleClose}
           >
             <motion.div
               initial={{ opacity: 0, scale: 0.95, y: -20 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.95, y: -20 }}
               transition={{ type: "spring", damping: 20, stiffness: 300 }}
-              className="glass w-full max-w-2xl rounded-xl shadow-2xl"
+              className="bg-white/95 dark:bg-black/95 backdrop-blur-md w-full max-w-2xl rounded-xl shadow-2xl border border-black/10 dark:border-white/10"
               onClick={(e) => e.stopPropagation()}
             >
               <Command className="rounded-xl">
-                <div className="flex items-center border-b border-white/10 px-4 py-3">
-                  <Search size={20} className="text-gray-400 mr-3" />
+                <div className="flex items-center border-b border-black/10 dark:border-white/10 px-4 py-3">
+                  <Search size={20} className="text-gray-600 dark:text-gray-400 mr-3" />
                   <Command.Input
                     value={search}
                     onValueChange={setSearch}
                     placeholder="Search sections, features, or topics..."
-                    className="flex-1 bg-transparent text-white placeholder-gray-400 outline-none"
+                    className="flex-1 bg-transparent text-black dark:text-white placeholder-gray-600 dark:placeholder-gray-400 outline-none"
                   />
-                  <kbd className="hidden sm:inline-flex items-center px-2 py-1 bg-white/10 rounded text-xs text-gray-400">
+                  <kbd className="hidden sm:inline-flex items-center px-2 py-1 bg-black/10 dark:bg-white/10 rounded text-xs text-gray-600 dark:text-gray-400">
                     ESC
                   </kbd>
                 </div>
                 
                 <Command.List className="max-h-96 overflow-y-auto p-2">
-                  <Command.Empty className="py-8 text-center text-gray-400">
+                  <Command.Empty className="py-8 text-center text-gray-600 dark:text-gray-400">
                     No results found.
                   </Command.Empty>
                   
@@ -181,7 +191,7 @@ export default function CommandPalette() {
                     <div key={category}>
                       <Command.Group
                         heading={
-                          <div className="px-2 py-1 text-xs font-semibold text-gray-400 uppercase tracking-wider">
+                          <div className="px-2 py-1 text-xs font-semibold text-gray-600 dark:text-gray-400 uppercase tracking-wider">
                             {category}
                           </div>
                         }
@@ -191,14 +201,14 @@ export default function CommandPalette() {
                             key={command.id}
                             value={command.title}
                             onSelect={() => scrollToSection(command.href)}
-                            className="flex items-center space-x-3 px-3 py-3 rounded-lg cursor-pointer hover:bg-white/10 transition-colors duration-200"
+                            className="flex items-center space-x-3 px-3 py-3 rounded-lg cursor-pointer hover:bg-black/10 dark:hover:bg-white/10 transition-colors duration-200"
                           >
-                            <div className="w-8 h-8 bg-gradient-to-r from-white to-gray-300 rounded-lg flex items-center justify-center flex-shrink-0">
-                              <command.icon size={16} className="text-black" />
+                            <div className="w-8 h-8 bg-black/10 dark:bg-white/10 rounded-lg flex items-center justify-center flex-shrink-0">
+                              <command.icon size={16} className="text-black dark:text-white" />
                             </div>
                             <div className="flex-1 min-w-0">
-                              <div className="text-white font-medium">{command.title}</div>
-                              <div className="text-gray-400 text-sm truncate">{command.description}</div>
+                              <div className="text-black dark:text-white font-medium">{command.title}</div>
+                              <div className="text-gray-600 dark:text-gray-400 text-sm truncate">{command.description}</div>
                             </div>
                           </Command.Item>
                         ))}

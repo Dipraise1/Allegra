@@ -20,7 +20,7 @@ const warnings = [
   {
     icon: Shield,
     title: "Smart Contract Risk",
-    description: "While audited, smart contracts may contain bugs or vulnerabilities that could result in loss of funds.",
+    description: "While AI-audited, smart contracts may contain bugs or vulnerabilities that could result in loss of funds.",
     type: "warning"
   },
   {

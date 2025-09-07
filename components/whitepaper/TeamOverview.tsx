@@ -39,7 +39,7 @@ const teamMembers = [
       twitter: "#",
       github: "#"
     },
-    expertise: ["Cybersecurity", "Smart Contracts", "Auditing"]
+    expertise: ["Cybersecurity", "Smart Contracts", "AI Security"]
   },
   {
     name: "Dr. Emily Watson",

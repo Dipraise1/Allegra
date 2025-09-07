@@ -13,8 +13,8 @@ const securityFeatures = [
   },
   {
     icon: Lock,
-    title: "Smart Contract Audits",
-    description: "Comprehensive audits by leading security firms including CertiK and ConsenSys Diligence",
+    title: "AI-Powered Security Audits",
+    description: "Advanced AI systems continuously audit smart contracts for vulnerabilities and security risks",
     status: "implemented"
   },
   {
@@ -45,24 +45,24 @@ const securityFeatures = [
 
 const auditResults = [
   {
-    firm: "CertiK",
+    firm: "ALLEGRA AI Security",
     rating: "A+",
-    date: "Q4 2024",
-    findings: "No critical issues found",
+    date: "Continuous",
+    findings: "Real-time vulnerability scanning",
     color: "from-white to-gray-300"
   },
   {
-    firm: "ConsenSys Diligence",
-    rating: "A",
-    date: "Q3 2024",
-    findings: "Minor recommendations addressed",
+    firm: "AI Threat Detection",
+    rating: "A+",
+    date: "24/7",
+    findings: "Advanced pattern recognition",
     color: "from-gray-200 to-gray-400"
   },
   {
-    firm: "OpenZeppelin",
+    firm: "Machine Learning Audit",
     rating: "A+",
-    date: "Q2 2024",
-    findings: "Security best practices confirmed",
+    date: "Ongoing",
+    findings: "Automated security analysis",
     color: "from-gray-300 to-gray-500"
   }
 ]
@@ -144,7 +144,7 @@ export default function SecurityMeasures() {
           <Card className="glass max-w-6xl mx-auto">
             <CardHeader>
               <CardTitle className="text-2xl text-white text-center">
-                Security Audit Results
+                AI Security Audit Results
               </CardTitle>
             </CardHeader>
             <CardContent>
@@ -224,7 +224,7 @@ export default function SecurityMeasures() {
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 {[
                   "Multi-signature wallet implementation",
-                  "Smart contract audits completed",
+                  "AI-powered security audits active",
                   "Bug bounty program active",
                   "Emergency pause mechanisms",
                   "Real-time monitoring systems",
