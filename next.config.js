@@ -15,6 +15,16 @@ const nextConfig = {
         pathname: '/**',
       },
     ],
+    unoptimized: false,
+    dangerouslyAllowSVG: true,
+    contentDispositionType: 'attachment',
+    contentSecurityPolicy: "default-src 'self'; script-src 'none'; sandbox;",
+  },
+  // Ensure proper routing
+  trailingSlash: false,
+  // Optimize for Vercel
+  experimental: {
+    optimizeCss: true,
   },
 }
 
