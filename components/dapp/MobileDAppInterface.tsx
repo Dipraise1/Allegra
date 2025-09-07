@@ -22,7 +22,6 @@ import {
   HiClock,
   HiCog
 } from "react-icons/hi"
-import Image from "next/image"
 import ChartAnalysis from "./ChartAnalysis"
 
 type ActiveSection = 'overview' | 'wallet' | 'activity' | 'settings'
@@ -195,8 +194,8 @@ export default function MobileDAppInterface() {
                   {/* USDT Balance */}
                   <div className="flex items-center justify-between p-4 bg-white dark:bg-black rounded-xl border border-gray-200 dark:border-gray-800">
                     <div className="flex items-center space-x-3">
-                      <div className="w-10 h-10 bg-gray-100 dark:bg-gray-800 rounded-full flex items-center justify-center">
-                        <span className="text-sm font-bold text-gray-600 dark:text-gray-400">USDT</span>
+                      <div className="w-10 h-10 bg-green-500 rounded-full flex items-center justify-center">
+                        <span className="text-lg font-bold text-white">$</span>
                       </div>
                       <div>
                         <p className="text-sm font-medium text-foreground">Tether USD</p>
@@ -214,8 +213,8 @@ export default function MobileDAppInterface() {
                   {/* BNB Balance */}
                   <div className="flex items-center justify-between p-4 bg-white dark:bg-black rounded-xl border border-gray-200 dark:border-gray-800">
                     <div className="flex items-center space-x-3">
-                      <div className="w-10 h-10 bg-gray-100 dark:bg-gray-800 rounded-full flex items-center justify-center">
-                        <span className="text-sm font-bold text-gray-600 dark:text-gray-400">BNB</span>
+                      <div className="w-10 h-10 bg-yellow-500 rounded-full flex items-center justify-center">
+                        <span className="text-lg font-bold text-white">B</span>
                       </div>
                       <div>
                         <p className="text-sm font-medium text-foreground">Binance Coin</p>
@@ -465,8 +464,8 @@ export default function MobileDAppInterface() {
                     {/* USDT Balance */}
                     <div className="flex items-center justify-between p-4 bg-white dark:bg-black rounded-xl border border-gray-200 dark:border-gray-800">
                       <div className="flex items-center space-x-3">
-                        <div className="w-10 h-10 bg-gray-100 dark:bg-gray-800 rounded-full flex items-center justify-center">
-                          <span className="text-sm font-bold text-gray-600 dark:text-gray-400">USDT</span>
+                        <div className="w-10 h-10 bg-green-500 rounded-full flex items-center justify-center">
+                          <span className="text-lg font-bold text-white">$</span>
                         </div>
                         <div>
                           <p className="text-sm font-medium text-foreground">Tether USD</p>
@@ -484,8 +483,8 @@ export default function MobileDAppInterface() {
                     {/* BNB Balance */}
                     <div className="flex items-center justify-between p-4 bg-white dark:bg-black rounded-xl border border-gray-200 dark:border-gray-800">
                       <div className="flex items-center space-x-3">
-                        <div className="w-10 h-10 bg-gray-100 dark:bg-gray-800 rounded-full flex items-center justify-center">
-                          <span className="text-sm font-bold text-gray-600 dark:text-gray-400">BNB</span>
+                        <div className="w-10 h-10 bg-yellow-500 rounded-full flex items-center justify-center">
+                          <span className="text-lg font-bold text-white">B</span>
                         </div>
                         <div>
                           <p className="text-sm font-medium text-foreground">Binance Coin</p>

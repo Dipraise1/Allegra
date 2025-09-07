@@ -16,7 +16,7 @@ export default function MobileHomePage() {
 
   const stats = [
     { value: "0.1% - 4%", label: "Daily Returns", icon: HiTrendingUp, color: "text-black dark:text-white" },
-    { value: "100%", label: "Secure", icon: HiShieldCheck, color: "text-black dark:text-white" },
+    { value: "Transparency", label: "First", icon: HiShieldCheck, color: "text-black dark:text-white" },
     { value: "24/7", label: "AI Monitoring", icon: HiChip, color: "text-black dark:text-white" }
   ]
 

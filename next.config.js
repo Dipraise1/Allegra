@@ -26,6 +26,12 @@ const nextConfig = {
         port: '',
         pathname: '/**',
       },
+      {
+        protocol: 'https',
+        hostname: 'cryptologos.cc',
+        port: '',
+        pathname: '/**',
+      },
     ],
     unoptimized: false,
     dangerouslyAllowSVG: true,

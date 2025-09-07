@@ -303,8 +303,8 @@ function WalletSection() {
           <div className="space-y-3 sm:space-y-4">
             <div className="flex items-center justify-between p-3 sm:p-4 bg-background/50 rounded-lg">
               <div className="flex items-center space-x-2 sm:space-x-3">
-                <div className="w-6 h-6 sm:w-8 sm:h-8 bg-muted rounded-full flex items-center justify-center">
-                  <span className="text-muted-foreground font-bold text-xs sm:text-sm">$</span>
+                <div className="w-6 h-6 sm:w-8 sm:h-8 bg-green-500 rounded-full flex items-center justify-center">
+                  <span className="text-sm sm:text-base font-bold text-white">$</span>
                 </div>
                 <div>
                   <p className="font-semibold text-sm sm:text-base">USDT</p>
@@ -318,8 +318,8 @@ function WalletSection() {
             </div>
             <div className="flex items-center justify-between p-3 sm:p-4 bg-background/50 rounded-lg">
               <div className="flex items-center space-x-2 sm:space-x-3">
-                <div className="w-6 h-6 sm:w-8 sm:h-8 bg-muted rounded-full flex items-center justify-center">
-                  <span className="text-muted-foreground font-bold text-xs sm:text-sm">Ξ</span>
+                <div className="w-6 h-6 sm:w-8 sm:h-8 bg-blue-500 rounded-full flex items-center justify-center">
+                  <span className="text-sm sm:text-base font-bold text-white">Ξ</span>
                 </div>
                 <div>
                   <p className="font-semibold text-sm sm:text-base">ETH</p>
@@ -333,8 +333,8 @@ function WalletSection() {
             </div>
             <div className="flex items-center justify-between p-3 sm:p-4 bg-background/50 rounded-lg">
               <div className="flex items-center space-x-2 sm:space-x-3">
-                <div className="w-6 h-6 sm:w-8 sm:h-8 bg-muted rounded-full flex items-center justify-center">
-                  <span className="text-muted-foreground font-bold text-xs sm:text-sm">BNB</span>
+                <div className="w-6 h-6 sm:w-8 sm:h-8 bg-yellow-500 rounded-full flex items-center justify-center">
+                  <span className="text-sm sm:text-base font-bold text-white">B</span>
                 </div>
                 <div>
                   <p className="font-semibold text-sm sm:text-base">BNB</p>

@@ -193,7 +193,7 @@ export default function Hero() {
                 <HiShieldCheck className="w-5 h-5 text-blue-500" />
                 <span className="text-sm text-muted-foreground">Security</span>
               </div>
-              <div className="text-3xl sm:text-4xl font-bold text-blue-500">100%</div>
+              <div className="text-3xl sm:text-4xl font-bold text-blue-500"></div>
             </div>
           </motion.div>
 
