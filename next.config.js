@@ -22,10 +22,6 @@ const nextConfig = {
   },
   // Ensure proper routing
   trailingSlash: false,
-  // Optimize for Vercel
-  experimental: {
-    optimizeCss: true,
-  },
 }
 
 module.exports = nextConfig
