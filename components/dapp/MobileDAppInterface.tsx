@@ -23,6 +23,7 @@ import {
   HiCog
 } from "react-icons/hi"
 import ChartAnalysis from "./ChartAnalysis"
+import Image from "next/image"
 
 type ActiveSection = 'overview' | 'wallet' | 'activity' | 'settings'
 
@@ -194,8 +195,14 @@ export default function MobileDAppInterface() {
                   {/* USDT Balance */}
                   <div className="flex items-center justify-between p-4 bg-white dark:bg-black rounded-xl border border-gray-200 dark:border-gray-800">
                     <div className="flex items-center space-x-3">
-                      <div className="w-10 h-10 bg-green-500 rounded-full flex items-center justify-center">
-                        <span className="text-lg font-bold text-white">$</span>
+                      <div className="w-10 h-10 bg-gray-100 dark:bg-gray-800 rounded-full flex items-center justify-center overflow-hidden">
+                        <Image
+                          src="https://assets.coingecko.com/coins/images/325/large/Tether.png"
+                          alt="USDT"
+                          width={40}
+                          height={40}
+                          className="w-full h-full object-contain"
+                        />
                       </div>
                       <div>
                         <p className="text-sm font-medium text-foreground">Tether USD</p>
@@ -213,8 +220,14 @@ export default function MobileDAppInterface() {
                   {/* BNB Balance */}
                   <div className="flex items-center justify-between p-4 bg-white dark:bg-black rounded-xl border border-gray-200 dark:border-gray-800">
                     <div className="flex items-center space-x-3">
-                      <div className="w-10 h-10 bg-yellow-500 rounded-full flex items-center justify-center">
-                        <span className="text-lg font-bold text-white">B</span>
+                      <div className="w-10 h-10 bg-gray-100 dark:bg-gray-800 rounded-full flex items-center justify-center overflow-hidden">
+                        <Image
+                          src="https://assets.coingecko.com/coins/images/825/large/bnb-icon2_2x.png"
+                          alt="BNB"
+                          width={40}
+                          height={40}
+                          className="w-full h-full object-contain"
+                        />
                       </div>
                       <div>
                         <p className="text-sm font-medium text-foreground">Binance Coin</p>
@@ -464,8 +477,14 @@ export default function MobileDAppInterface() {
                     {/* USDT Balance */}
                     <div className="flex items-center justify-between p-4 bg-white dark:bg-black rounded-xl border border-gray-200 dark:border-gray-800">
                       <div className="flex items-center space-x-3">
-                        <div className="w-10 h-10 bg-green-500 rounded-full flex items-center justify-center">
-                          <span className="text-lg font-bold text-white">$</span>
+                        <div className="w-10 h-10 bg-gray-100 dark:bg-gray-800 rounded-full flex items-center justify-center overflow-hidden">
+                          <Image
+                            src="https://assets.coingecko.com/coins/images/325/large/Tether.png"
+                            alt="USDT"
+                            width={40}
+                            height={40}
+                            className="w-full h-full object-contain"
+                          />
                         </div>
                         <div>
                           <p className="text-sm font-medium text-foreground">Tether USD</p>
@@ -483,8 +502,14 @@ export default function MobileDAppInterface() {
                     {/* BNB Balance */}
                     <div className="flex items-center justify-between p-4 bg-white dark:bg-black rounded-xl border border-gray-200 dark:border-gray-800">
                       <div className="flex items-center space-x-3">
-                        <div className="w-10 h-10 bg-yellow-500 rounded-full flex items-center justify-center">
-                          <span className="text-lg font-bold text-white">B</span>
+                        <div className="w-10 h-10 bg-gray-100 dark:bg-gray-800 rounded-full flex items-center justify-center overflow-hidden">
+                          <Image
+                            src="https://assets.coingecko.com/coins/images/825/large/bnb-icon2_2x.png"
+                            alt="BNB"
+                            width={40}
+                            height={40}
+                            className="w-full h-full object-contain"
+                          />
                         </div>
                         <div>
                           <p className="text-sm font-medium text-foreground">Binance Coin</p>

@@ -5,6 +5,7 @@ import { motion } from "framer-motion"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import ChartAnalysis from "./ChartAnalysis"
+import Image from "next/image"
 import { HiUser, HiTrendingUp, HiTrendingDown, HiRefresh, HiPlus, HiMinus, HiClock, HiChevronDown, HiChevronUp } from "react-icons/hi"
 import { FaWallet, FaChartLine, FaUsers, FaCog, FaCopy } from "react-icons/fa"
 
@@ -303,8 +304,14 @@ function WalletSection() {
           <div className="space-y-3 sm:space-y-4">
             <div className="flex items-center justify-between p-3 sm:p-4 bg-background/50 rounded-lg">
               <div className="flex items-center space-x-2 sm:space-x-3">
-                <div className="w-6 h-6 sm:w-8 sm:h-8 bg-green-500 rounded-full flex items-center justify-center">
-                  <span className="text-sm sm:text-base font-bold text-white">$</span>
+                <div className="w-6 h-6 sm:w-8 sm:h-8 bg-muted rounded-full flex items-center justify-center overflow-hidden">
+                  <Image
+                    src="https://assets.coingecko.com/coins/images/325/large/Tether.png"
+                    alt="USDT"
+                    width={32}
+                    height={32}
+                    className="w-full h-full object-contain"
+                  />
                 </div>
                 <div>
                   <p className="font-semibold text-sm sm:text-base">USDT</p>
@@ -318,8 +325,14 @@ function WalletSection() {
             </div>
             <div className="flex items-center justify-between p-3 sm:p-4 bg-background/50 rounded-lg">
               <div className="flex items-center space-x-2 sm:space-x-3">
-                <div className="w-6 h-6 sm:w-8 sm:h-8 bg-blue-500 rounded-full flex items-center justify-center">
-                  <span className="text-sm sm:text-base font-bold text-white">Ξ</span>
+                <div className="w-6 h-6 sm:w-8 sm:h-8 bg-muted rounded-full flex items-center justify-center overflow-hidden">
+                  <Image
+                    src="https://assets.coingecko.com/coins/images/279/large/ethereum.png"
+                    alt="ETH"
+                    width={32}
+                    height={32}
+                    className="w-full h-full object-contain"
+                  />
                 </div>
                 <div>
                   <p className="font-semibold text-sm sm:text-base">ETH</p>
@@ -333,8 +346,14 @@ function WalletSection() {
             </div>
             <div className="flex items-center justify-between p-3 sm:p-4 bg-background/50 rounded-lg">
               <div className="flex items-center space-x-2 sm:space-x-3">
-                <div className="w-6 h-6 sm:w-8 sm:h-8 bg-yellow-500 rounded-full flex items-center justify-center">
-                  <span className="text-sm sm:text-base font-bold text-white">B</span>
+                <div className="w-6 h-6 sm:w-8 sm:h-8 bg-muted rounded-full flex items-center justify-center overflow-hidden">
+                  <Image
+                    src="https://assets.coingecko.com/coins/images/825/large/bnb-icon2_2x.png"
+                    alt="BNB"
+                    width={32}
+                    height={32}
+                    className="w-full h-full object-contain"
+                  />
                 </div>
                 <div>
                   <p className="font-semibold text-sm sm:text-base">BNB</p>
