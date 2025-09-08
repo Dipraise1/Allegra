@@ -27,7 +27,7 @@ import ChartAnalysis from "./ChartAnalysis"
 import DepositContainer from "./DepositContainer"
 import Image from "next/image"
 
-type ActiveSection = 'overview' | 'wallet' | 'activity' | 'settings'
+type ActiveSection = 'overview' | 'wallet' | 'activity' | 'profile' | 'settings'
 
 export default function MobileDAppInterface() {
   const [activeSection, setActiveSection] = useState<ActiveSection>('overview')
@@ -38,6 +38,7 @@ export default function MobileDAppInterface() {
     { id: 'overview', label: 'Overview', icon: HiHome },
     { id: 'wallet', label: 'Wallet', icon: HiCash },
     { id: 'activity', label: 'Activity', icon: HiClock },
+    { id: 'profile', label: 'Profile', icon: HiShieldCheck },
     { id: 'settings', label: 'Settings', icon: HiCog },
   ] as const
 
@@ -591,6 +592,182 @@ export default function MobileDAppInterface() {
                         </div>
                       </motion.div>
                     )}
+                  </div>
+                </CardContent>
+              </Card>
+            </motion.div>
+          )}
+
+          {activeSection === 'profile' && (
+            <motion.div
+              key="profile"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -20 }}
+              transition={{ duration: 0.2 }}
+              className="space-y-6"
+            >
+              {/* User Profile */}
+              <Card className="p-4 bg-white dark:bg-black border border-gray-200 dark:border-gray-800">
+                <CardHeader className="flex flex-row items-center justify-between space-y-0 p-0 mb-4">
+                  <CardTitle className="text-base font-semibold text-foreground">Profile</CardTitle>
+                </CardHeader>
+                <CardContent className="p-0">
+                  <div className="flex items-center space-x-4 mb-6">
+                    <div className="w-16 h-16 bg-gradient-to-r from-primary to-primary/70 rounded-full flex items-center justify-center">
+                      <span className="text-2xl font-bold text-white">JD</span>
+                    </div>
+                    <div>
+                      <h3 className="text-lg font-semibold text-foreground">John Doe</h3>
+                      <p className="text-sm text-muted-foreground">john.doe@example.com</p>
+                      <p className="text-xs text-muted-foreground">Member since Jan 2024</p>
+                    </div>
+                  </div>
+                  
+                  <div className="space-y-4">
+                    <div className="flex items-center justify-between p-3 bg-gray-50 dark:bg-gray-900 rounded-lg">
+                      <div className="flex items-center space-x-3">
+                        <div className="w-8 h-8 bg-blue-100 dark:bg-blue-900/30 rounded-full flex items-center justify-center">
+                          <HiShieldCheck className="w-4 h-4 text-blue-600 dark:text-blue-400" />
+                        </div>
+                        <div>
+                          <p className="text-sm font-medium text-foreground">Account Status</p>
+                          <p className="text-xs text-muted-foreground">Verified</p>
+                        </div>
+                      </div>
+                      <div className="text-right">
+                        <p className="text-sm font-bold text-green-600 dark:text-green-400">Active</p>
+                      </div>
+                    </div>
+
+                    <div className="flex items-center justify-between p-3 bg-gray-50 dark:bg-gray-900 rounded-lg">
+                      <div className="flex items-center space-x-3">
+                        <div className="w-8 h-8 bg-green-100 dark:bg-green-900/30 rounded-full flex items-center justify-center">
+                          <HiTrendingUp className="w-4 h-4 text-green-600 dark:text-green-400" />
+                        </div>
+                        <div>
+                          <p className="text-sm font-medium text-foreground">Trading Level</p>
+                          <p className="text-xs text-muted-foreground">Advanced</p>
+                        </div>
+                      </div>
+                      <div className="text-right">
+                        <p className="text-sm font-bold text-foreground">Level 3</p>
+                      </div>
+                    </div>
+
+                    <div className="flex items-center justify-between p-3 bg-gray-50 dark:bg-gray-900 rounded-lg">
+                      <div className="flex items-center space-x-3">
+                        <div className="w-8 h-8 bg-purple-100 dark:bg-purple-900/30 rounded-full flex items-center justify-center">
+                          <HiCurrencyDollar className="w-4 h-4 text-purple-600 dark:text-purple-400" />
+                        </div>
+                        <div>
+                          <p className="text-sm font-medium text-foreground">Total Invested</p>
+                          <p className="text-xs text-muted-foreground">Lifetime</p>
+                        </div>
+                      </div>
+                      <div className="text-right">
+                        <p className="text-sm font-bold text-foreground">$15,420</p>
+                      </div>
+                    </div>
+
+                    <div className="flex items-center justify-between p-3 bg-gray-50 dark:bg-gray-900 rounded-lg">
+                      <div className="flex items-center space-x-3">
+                        <div className="w-8 h-8 bg-orange-100 dark:bg-orange-900/30 rounded-full flex items-center justify-center">
+                          <HiChartBar className="w-4 h-4 text-orange-600 dark:text-orange-400" />
+                        </div>
+                        <div>
+                          <p className="text-sm font-medium text-foreground">Total Returns</p>
+                          <p className="text-xs text-muted-foreground">All time</p>
+                        </div>
+                      </div>
+                      <div className="text-right">
+                        <p className="text-sm font-bold text-green-600 dark:text-green-400">+$3,780</p>
+                      </div>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+
+              {/* Security Settings */}
+              <Card className="p-4 bg-white dark:bg-black border border-gray-200 dark:border-gray-800">
+                <CardHeader className="flex flex-row items-center justify-between space-y-0 p-0 mb-4">
+                  <CardTitle className="text-base font-semibold text-foreground">Security</CardTitle>
+                </CardHeader>
+                <CardContent className="p-0">
+                  <div className="space-y-3">
+                    <div className="flex items-center justify-between p-3">
+                      <div>
+                        <p className="text-sm font-medium text-foreground">Two-Factor Authentication</p>
+                        <p className="text-xs text-muted-foreground">Add extra security</p>
+                      </div>
+                      <Button variant="outline" size="sm">
+                        Enable
+                      </Button>
+                    </div>
+                    
+                    <div className="flex items-center justify-between p-3">
+                      <div>
+                        <p className="text-sm font-medium text-foreground">Biometric Login</p>
+                        <p className="text-xs text-muted-foreground">Use fingerprint/face ID</p>
+                      </div>
+                      <Button variant="outline" size="sm">
+                        <HiCheckCircle className="w-4 h-4 mr-1" />
+                        Enabled
+                      </Button>
+                    </div>
+
+                    <div className="flex items-center justify-between p-3">
+                      <div>
+                        <p className="text-sm font-medium text-foreground">Auto-Lock</p>
+                        <p className="text-xs text-muted-foreground">Lock after 5 minutes</p>
+                      </div>
+                      <Button variant="outline" size="sm">
+                        <HiCheckCircle className="w-4 h-4 mr-1" />
+                        On
+                      </Button>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+
+              {/* Preferences */}
+              <Card className="p-4 bg-white dark:bg-black border border-gray-200 dark:border-gray-800">
+                <CardHeader className="flex flex-row items-center justify-between space-y-0 p-0 mb-4">
+                  <CardTitle className="text-base font-semibold text-foreground">Preferences</CardTitle>
+                </CardHeader>
+                <CardContent className="p-0">
+                  <div className="space-y-3">
+                    <div className="flex items-center justify-between p-3">
+                      <div>
+                        <p className="text-sm font-medium text-foreground">Push Notifications</p>
+                        <p className="text-xs text-muted-foreground">Price alerts & updates</p>
+                      </div>
+                      <Button variant="outline" size="sm">
+                        <HiCheckCircle className="w-4 h-4 mr-1" />
+                        On
+                      </Button>
+                    </div>
+                    
+                    <div className="flex items-center justify-between p-3">
+                      <div>
+                        <p className="text-sm font-medium text-foreground">Email Notifications</p>
+                        <p className="text-xs text-muted-foreground">Weekly reports</p>
+                      </div>
+                      <Button variant="outline" size="sm">
+                        <HiCheckCircle className="w-4 h-4 mr-1" />
+                        On
+                      </Button>
+                    </div>
+
+                    <div className="flex items-center justify-between p-3">
+                      <div>
+                        <p className="text-sm font-medium text-foreground">Dark Mode</p>
+                        <p className="text-xs text-muted-foreground">System preference</p>
+                      </div>
+                      <Button variant="outline" size="sm">
+                        Auto
+                      </Button>
+                    </div>
                   </div>
                 </CardContent>
               </Card>
