@@ -4,8 +4,8 @@ import './globals.css'
 import Navigation from '@/components/Navigation'
 import Footer from '@/components/Footer'
 import { ThemeProvider } from '@/components/ThemeProvider'
-import { headers } from 'next/headers'
 import LoadingWrapper from '@/components/LoadingWrapper'
+import ConditionalLayout from '@/components/ConditionalLayout'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -44,12 +44,6 @@ export default function RootLayout({
 }: {
   children: React.ReactNode
 }) {
-  const headersList = headers()
-  const pathname = headersList.get('x-pathname') || ''
-  
-  // Check if we're on the DApp route
-  const isDAppRoute = pathname.startsWith('/dapp')
-  
   return (
     <html lang="en" suppressHydrationWarning>
       <head>
@@ -61,19 +55,9 @@ export default function RootLayout({
       </head>
       <body className={`${inter.className} min-h-screen bg-white dark:bg-black`}>
         <ThemeProvider defaultTheme="light" storageKey="allegra-theme">
-          <LoadingWrapper isDAppRoute={isDAppRoute}>
-            {isDAppRoute ? (
-              <>{children}</>
-            ) : (
-              <>
-                <Navigation />
-                <main className="relative">
-                  {children}
-                </main>
-                <Footer />
-              </>
-            )}
-          </LoadingWrapper>
+          <ConditionalLayout>
+            {children}
+          </ConditionalLayout>
         </ThemeProvider>
       </body>
     </html>

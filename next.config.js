@@ -1,5 +1,7 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  output: 'export',
+  trailingSlash: true,
   images: {
     remotePatterns: [
       {
@@ -33,13 +35,11 @@ const nextConfig = {
         pathname: '/**',
       },
     ],
-    unoptimized: false,
+    unoptimized: true,
     dangerouslyAllowSVG: true,
     contentDispositionType: 'attachment',
     contentSecurityPolicy: "default-src 'self'; script-src 'none'; sandbox;",
   },
-  // Ensure proper routing
-  trailingSlash: false,
 }
 
 module.exports = nextConfig
