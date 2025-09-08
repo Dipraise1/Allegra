@@ -5,6 +5,7 @@ import Navigation from '@/components/Navigation'
 import Footer from '@/components/Footer'
 import { ThemeProvider } from '@/components/ThemeProvider'
 import { headers } from 'next/headers'
+import LoadingWrapper from '@/components/LoadingWrapper'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -60,17 +61,19 @@ export default function RootLayout({
       </head>
       <body className={`${inter.className} min-h-screen bg-white dark:bg-black`}>
         <ThemeProvider defaultTheme="light" storageKey="allegra-theme">
-          {isDAppRoute ? (
-            <>{children}</>
-          ) : (
-            <>
-              <Navigation />
-              <main className="relative">
-                {children}
-              </main>
-              <Footer />
-            </>
-          )}
+          <LoadingWrapper isDAppRoute={isDAppRoute}>
+            {isDAppRoute ? (
+              <>{children}</>
+            ) : (
+              <>
+                <Navigation />
+                <main className="relative">
+                  {children}
+                </main>
+                <Footer />
+              </>
+            )}
+          </LoadingWrapper>
         </ThemeProvider>
       </body>
     </html>
