@@ -5,6 +5,7 @@ import { motion } from "framer-motion"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import ChartAnalysis from "./ChartAnalysis"
+import DepositContainer from "./DepositContainer"
 import Image from "next/image"
 import { HiUser, HiTrendingUp, HiTrendingDown, HiRefresh, HiPlus, HiMinus, HiClock, HiChevronDown, HiChevronUp } from "react-icons/hi"
 import { FaWallet, FaChartLine, FaUsers, FaCog, FaCopy } from "react-icons/fa"
@@ -174,6 +175,9 @@ function OverviewSection() {
           </div>
         </CardContent>
       </Card>
+
+      {/* Deposit Container */}
+      <DepositContainer isMobile={false} />
 
       {/* Chart Analysis */}
       <ChartAnalysis isMobile={false} />

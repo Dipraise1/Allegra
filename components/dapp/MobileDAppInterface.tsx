@@ -23,6 +23,7 @@ import {
   HiCog
 } from "react-icons/hi"
 import ChartAnalysis from "./ChartAnalysis"
+import DepositContainer from "./DepositContainer"
 import Image from "next/image"
 
 type ActiveSection = 'overview' | 'wallet' | 'activity' | 'settings'
@@ -463,6 +464,15 @@ export default function MobileDAppInterface() {
                 </motion.div>
               )}
             </Card>
+          </motion.div>
+
+          {/* Deposit Container */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 1.2 }}
+          >
+            <DepositContainer isMobile={true} />
           </motion.div>
 
           {/* Chart Analysis */}
