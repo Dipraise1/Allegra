@@ -32,6 +32,7 @@ type ActiveSection = 'overview' | 'wallet' | 'activity' | 'settings'
 export default function MobileDAppInterface() {
   const [activeSection, setActiveSection] = useState<ActiveSection>('overview')
   const [showBalances, setShowBalances] = useState(true)
+  const [showTradingActivity, setShowTradingActivity] = useState(false)
 
   const navigationItems = [
     { id: 'overview', label: 'Overview', icon: HiHome },
@@ -136,10 +137,6 @@ export default function MobileDAppInterface() {
                 <Card className="p-4 bg-white dark:bg-black border border-gray-200 dark:border-gray-800">
                   <CardHeader className="flex flex-row items-center justify-between space-y-0 p-0 mb-4">
                     <CardTitle className="text-base font-semibold text-foreground">Portfolio Overview</CardTitle>
-                    <div className="flex items-center space-x-1">
-                      <HiCheckCircle className="w-4 h-4 text-green-500" />
-                      <span className="text-xs text-green-500">Active</span>
-                    </div>
                   </CardHeader>
                   <CardContent className="p-0 space-y-3">
                     {/* USDT Balance */}
@@ -341,15 +338,259 @@ export default function MobileDAppInterface() {
               transition={{ duration: 0.2 }}
               className="space-y-6"
             >
+              {/* Transaction History */}
               <Card className="p-4 bg-white dark:bg-black border border-gray-200 dark:border-gray-800">
                 <CardHeader className="flex flex-row items-center justify-between space-y-0 p-0 mb-4">
-                  <CardTitle className="text-base font-semibold text-foreground">Platform Activity</CardTitle>
+                  <CardTitle className="text-base font-semibold text-foreground">Transaction History</CardTitle>
+                  <Button variant="outline" size="sm" className="text-xs">
+                    <HiRefresh className="w-3 h-3 mr-1" />
+                    Refresh
+                  </Button>
                 </CardHeader>
                 <CardContent className="p-0">
-                  <div className="text-center py-8">
-                    <HiClock className="w-12 h-12 text-muted-foreground mx-auto mb-3" />
-                    <p className="text-sm text-muted-foreground">No recent activity</p>
-                    <p className="text-xs text-muted-foreground mt-1">Your transactions will appear here</p>
+                  <div className="space-y-3">
+                    {/* Sample Transaction 1 */}
+                    <div className="flex items-center justify-between p-3 bg-gray-50 dark:bg-gray-900 rounded-lg">
+                      <div className="flex items-center space-x-3">
+                        <div className="w-8 h-8 bg-green-100 dark:bg-green-900/30 rounded-full flex items-center justify-center">
+                          <HiPlus className="w-4 h-4 text-green-600 dark:text-green-400" />
+                        </div>
+                        <div>
+                          <p className="text-sm font-medium text-foreground">Deposit</p>
+                          <p className="text-xs text-muted-foreground">2 hours ago</p>
+                        </div>
+                      </div>
+                      <div className="text-right">
+                        <p className="text-sm font-bold text-green-600 dark:text-green-400">+1,000 USDT</p>
+                        <p className="text-xs text-muted-foreground">$1,000.00</p>
+                      </div>
+                    </div>
+
+                    {/* Sample Transaction 2 */}
+                    <div className="flex items-center justify-between p-3 bg-gray-50 dark:bg-gray-900 rounded-lg">
+                      <div className="flex items-center space-x-3">
+                        <div className="w-8 h-8 bg-blue-100 dark:bg-blue-900/30 rounded-full flex items-center justify-center">
+                          <HiTrendingUp className="w-4 h-4 text-blue-600 dark:text-blue-400" />
+                        </div>
+                        <div>
+                          <p className="text-sm font-medium text-foreground">Yield Earned</p>
+                          <p className="text-xs text-muted-foreground">5 hours ago</p>
+                        </div>
+                      </div>
+                      <div className="text-right">
+                        <p className="text-sm font-bold text-green-600 dark:text-green-400">+$24.50</p>
+                        <p className="text-xs text-muted-foreground">Daily yield</p>
+                      </div>
+                    </div>
+
+                    {/* Sample Transaction 3 */}
+                    <div className="flex items-center justify-between p-3 bg-gray-50 dark:bg-gray-900 rounded-lg">
+                      <div className="flex items-center space-x-3">
+                        <div className="w-8 h-8 bg-purple-100 dark:bg-purple-900/30 rounded-full flex items-center justify-center">
+                          <HiMinus className="w-4 h-4 text-purple-600 dark:text-purple-400" />
+                        </div>
+                        <div>
+                          <p className="text-sm font-medium text-foreground">Withdrawal</p>
+                          <p className="text-xs text-muted-foreground">1 day ago</p>
+                        </div>
+                      </div>
+                      <div className="text-right">
+                        <p className="text-sm font-bold text-red-600 dark:text-red-400">-0.5 ETH</p>
+                        <p className="text-xs text-muted-foreground">$1,250.00</p>
+                      </div>
+                    </div>
+
+                    {/* Sample Transaction 4 */}
+                    <div className="flex items-center justify-between p-3 bg-gray-50 dark:bg-gray-900 rounded-lg">
+                      <div className="flex items-center space-x-3">
+                        <div className="w-8 h-8 bg-green-100 dark:bg-green-900/30 rounded-full flex items-center justify-center">
+                          <HiPlus className="w-4 h-4 text-green-600 dark:text-green-400" />
+                        </div>
+                        <div>
+                          <p className="text-sm font-medium text-foreground">Deposit</p>
+                          <p className="text-xs text-muted-foreground">2 days ago</p>
+                        </div>
+                      </div>
+                      <div className="text-right">
+                        <p className="text-sm font-bold text-green-600 dark:text-green-400">+2.1 BNB</p>
+                        <p className="text-xs text-muted-foreground">$840.00</p>
+                      </div>
+                    </div>
+
+                    {/* Sample Transaction 5 */}
+                    <div className="flex items-center justify-between p-3 bg-gray-50 dark:bg-gray-900 rounded-lg">
+                      <div className="flex items-center space-x-3">
+                        <div className="w-8 h-8 bg-blue-100 dark:bg-blue-900/30 rounded-full flex items-center justify-center">
+                          <HiTrendingUp className="w-4 h-4 text-blue-600 dark:text-blue-400" />
+                        </div>
+                        <div>
+                          <p className="text-sm font-medium text-foreground">Yield Earned</p>
+                          <p className="text-xs text-muted-foreground">3 days ago</p>
+                        </div>
+                      </div>
+                      <div className="text-right">
+                        <p className="text-sm font-bold text-green-600 dark:text-green-400">+$18.75</p>
+                        <p className="text-xs text-muted-foreground">Daily yield</p>
+                      </div>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+
+              {/* Trading Activity */}
+              <Card className="p-4 bg-white dark:bg-black border border-gray-200 dark:border-gray-800">
+                <CardHeader className="flex flex-row items-center justify-between space-y-0 p-0 mb-4">
+                  <CardTitle className="text-base font-semibold text-foreground">Trading Activity</CardTitle>
+                  <Button 
+                    variant="outline" 
+                    size="sm" 
+                    className="text-xs"
+                    onClick={() => setShowTradingActivity(!showTradingActivity)}
+                  >
+                    {showTradingActivity ? (
+                      <>
+                        <HiChevronUp className="w-3 h-3 mr-1" />
+                        Hide
+                      </>
+                    ) : (
+                      <>
+                        <HiChevronDown className="w-3 h-3 mr-1" />
+                        Show All
+                      </>
+                    )}
+                  </Button>
+                </CardHeader>
+                <CardContent className="p-0">
+                  <div className="space-y-3">
+                    {/* Sample Trading Activity 1 */}
+                    <div className="flex items-center justify-between p-3 bg-gray-50 dark:bg-gray-900 rounded-lg">
+                      <div className="flex items-center space-x-3">
+                        <div className="w-8 h-8 bg-orange-100 dark:bg-orange-900/30 rounded-full flex items-center justify-center">
+                          <HiArrowUp className="w-4 h-4 text-orange-600 dark:text-orange-400" />
+                        </div>
+                        <div>
+                          <p className="text-sm font-medium text-foreground">ETH/USDT Trade</p>
+                          <p className="text-xs text-muted-foreground">4 hours ago</p>
+                        </div>
+                      </div>
+                      <div className="text-right">
+                        <p className="text-sm font-bold text-green-600 dark:text-green-400">+2.1%</p>
+                        <p className="text-xs text-muted-foreground">$45.20 profit</p>
+                      </div>
+                    </div>
+
+                    {/* Sample Trading Activity 2 */}
+                    <div className="flex items-center justify-between p-3 bg-gray-50 dark:bg-gray-900 rounded-lg">
+                      <div className="flex items-center space-x-3">
+                        <div className="w-8 h-8 bg-red-100 dark:bg-red-900/30 rounded-full flex items-center justify-center">
+                          <HiArrowUp className="w-4 h-4 text-red-600 dark:text-red-400 rotate-180" />
+                        </div>
+                        <div>
+                          <p className="text-sm font-medium text-foreground">BNB/USDT Trade</p>
+                          <p className="text-xs text-muted-foreground">6 hours ago</p>
+                        </div>
+                      </div>
+                      <div className="text-right">
+                        <p className="text-sm font-bold text-red-600 dark:text-red-400">-1.2%</p>
+                        <p className="text-xs text-muted-foreground">$12.50 loss</p>
+                      </div>
+                    </div>
+
+                    {/* Expandable Trading Activities */}
+                    {showTradingActivity && (
+                      <motion.div
+                        initial={{ opacity: 0, height: 0 }}
+                        animate={{ opacity: 1, height: "auto" }}
+                        exit={{ opacity: 0, height: 0 }}
+                        transition={{ duration: 0.3 }}
+                        className="space-y-3"
+                      >
+                        {/* Sample Trading Activity 3 */}
+                        <div className="flex items-center justify-between p-3 bg-gray-50 dark:bg-gray-900 rounded-lg">
+                          <div className="flex items-center space-x-3">
+                            <div className="w-8 h-8 bg-green-100 dark:bg-green-900/30 rounded-full flex items-center justify-center">
+                              <HiArrowUp className="w-4 h-4 text-green-600 dark:text-green-400" />
+                            </div>
+                            <div>
+                              <p className="text-sm font-medium text-foreground">USDT/ETH Trade</p>
+                              <p className="text-xs text-muted-foreground">1 day ago</p>
+                            </div>
+                          </div>
+                          <div className="text-right">
+                            <p className="text-sm font-bold text-green-600 dark:text-green-400">+3.4%</p>
+                            <p className="text-xs text-muted-foreground">$78.90 profit</p>
+                          </div>
+                        </div>
+
+                        {/* Sample Trading Activity 4 */}
+                        <div className="flex items-center justify-between p-3 bg-gray-50 dark:bg-gray-900 rounded-lg">
+                          <div className="flex items-center space-x-3">
+                            <div className="w-8 h-8 bg-blue-100 dark:bg-blue-900/30 rounded-full flex items-center justify-center">
+                              <HiArrowUp className="w-4 h-4 text-blue-600 dark:text-blue-400" />
+                            </div>
+                            <div>
+                              <p className="text-sm font-medium text-foreground">BNB/ETH Trade</p>
+                              <p className="text-xs text-muted-foreground">2 days ago</p>
+                            </div>
+                          </div>
+                          <div className="text-right">
+                            <p className="text-sm font-bold text-green-600 dark:text-green-400">+1.8%</p>
+                            <p className="text-xs text-muted-foreground">$32.15 profit</p>
+                          </div>
+                        </div>
+
+                        {/* Sample Trading Activity 5 */}
+                        <div className="flex items-center justify-between p-3 bg-gray-50 dark:bg-gray-900 rounded-lg">
+                          <div className="flex items-center space-x-3">
+                            <div className="w-8 h-8 bg-red-100 dark:bg-red-900/30 rounded-full flex items-center justify-center">
+                              <HiArrowUp className="w-4 h-4 text-red-600 dark:text-red-400 rotate-180" />
+                            </div>
+                            <div>
+                              <p className="text-sm font-medium text-foreground">ETH/BNB Trade</p>
+                              <p className="text-xs text-muted-foreground">3 days ago</p>
+                            </div>
+                          </div>
+                          <div className="text-right">
+                            <p className="text-sm font-bold text-red-600 dark:text-red-400">-0.8%</p>
+                            <p className="text-xs text-muted-foreground">$8.75 loss</p>
+                          </div>
+                        </div>
+
+                        {/* Sample Trading Activity 6 */}
+                        <div className="flex items-center justify-between p-3 bg-gray-50 dark:bg-gray-900 rounded-lg">
+                          <div className="flex items-center space-x-3">
+                            <div className="w-8 h-8 bg-green-100 dark:bg-green-900/30 rounded-full flex items-center justify-center">
+                              <HiArrowUp className="w-4 h-4 text-green-600 dark:text-green-400" />
+                            </div>
+                            <div>
+                              <p className="text-sm font-medium text-foreground">USDT/BNB Trade</p>
+                              <p className="text-xs text-muted-foreground">4 days ago</p>
+                            </div>
+                          </div>
+                          <div className="text-right">
+                            <p className="text-sm font-bold text-green-600 dark:text-green-400">+2.7%</p>
+                            <p className="text-xs text-muted-foreground">$56.30 profit</p>
+                          </div>
+                        </div>
+
+                        {/* Sample Trading Activity 7 */}
+                        <div className="flex items-center justify-between p-3 bg-gray-50 dark:bg-gray-900 rounded-lg">
+                          <div className="flex items-center space-x-3">
+                            <div className="w-8 h-8 bg-purple-100 dark:bg-purple-900/30 rounded-full flex items-center justify-center">
+                              <HiArrowUp className="w-4 h-4 text-purple-600 dark:text-purple-400" />
+                            </div>
+                            <div>
+                              <p className="text-sm font-medium text-foreground">ETH/USDT Trade</p>
+                              <p className="text-xs text-muted-foreground">5 days ago</p>
+                            </div>
+                          </div>
+                          <div className="text-right">
+                            <p className="text-sm font-bold text-green-600 dark:text-green-400">+4.2%</p>
+                            <p className="text-xs text-muted-foreground">$89.45 profit</p>
+                          </div>
+                        </div>
+                      </motion.div>
+                    )}
                   </div>
                 </CardContent>
               </Card>
