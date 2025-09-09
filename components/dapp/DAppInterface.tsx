@@ -295,8 +295,7 @@ export function DAppInterface() {
         </div>
 
         {/* Main Dashboard Layout - Only on Overview */}
-        {activeSection === "overview" && (
-          <div className="grid grid-cols-1 lg:grid-cols-4 gap-4">
+        <div className="grid grid-cols-1 lg:grid-cols-4 gap-4">
           {/* Main Chart Section */}
           <div className="lg:col-span-3">
             <div className="bg-card border border-border rounded-lg p-4 mb-4 shadow-lg">
@@ -485,16 +484,16 @@ export function DAppInterface() {
         )}
 
         {/* Portfolio Section */}
-        {activeSection === "wallet" && <OverviewSection />}
+        {activeSection === "overview" && <OverviewSection />}
 
         {/* Investments Section */}
-        {activeSection === "investments" && <InvestmentsSection />}
+        {activeSection === "investments" && <InvestmentSection />}
 
         {/* Rewards & Vesting Section */}
-        {activeSection === "rewards" && <RewardsSection />}
+        {activeSection === "rewards" && <ReferralSection />}
 
         {/* Options Section */}
-        {activeSection === "options" && <OptionsSection />}
+        {activeSection === "options" && <OptionsWheelSection />}
 
         {/* Profile Section */}
         {activeSection === "profile" && <ProfileSection userProfile={userProfile} />}

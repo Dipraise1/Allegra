@@ -201,13 +201,13 @@ export function OverviewTab({ onMakeDeposit }: OverviewTabProps) {
 
   const fetchPerformanceData = () => {
     // Generate realistic performance data for the last 30 days
-    const labels = []
-    const data = []
+    const labels: string[] = []
+    const data: number[] = []
     const today = new Date()
     
     // Start with a base value and simulate realistic market movements
     let currentValue = 10000 // Starting portfolio value
-    const dailyReturns = []
+    const dailyReturns: number[] = []
     
     for (let i = 29; i >= 0; i--) {
       const date = new Date(today)
@@ -276,7 +276,7 @@ export function OverviewTab({ onMakeDeposit }: OverviewTabProps) {
         displayColors: false,
         titleFont: {
           size: 14,
-          weight: 'bold'
+          weight: 'bold' as const
         },
         bodyFont: {
           size: 13

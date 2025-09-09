@@ -15,7 +15,7 @@ interface Reward {
   earnedDate: Date
   vestingEndDate: Date
   source: string
-  status: "vesting" | "vested" | "claimed"
+  status: "pending" | "vested" | "claimed"
   claimedDate?: Date
   txHash?: string
 }
@@ -100,7 +100,7 @@ export function RewardsVestingTab() {
           earnedDate: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000), // 2 days ago
           vestingEndDate: new Date(Date.now() + 5 * 24 * 60 * 60 * 1000), // 5 days from now
           source: "Arbitrage Strategy",
-          status: "vesting"
+          status: "pending"
         },
         {
           id: "2",
@@ -108,7 +108,7 @@ export function RewardsVestingTab() {
           earnedDate: new Date(Date.now() - 5 * 24 * 60 * 60 * 1000), // 5 days ago
           vestingEndDate: new Date(Date.now() + 2 * 24 * 60 * 60 * 1000), // 2 days from now
           source: "Yield Farming",
-          status: "vesting"
+          status: "pending"
         },
         {
           id: "3",
@@ -134,7 +134,7 @@ export function RewardsVestingTab() {
           earnedDate: new Date(Date.now() - 1 * 24 * 60 * 60 * 1000), // 1 day ago
           vestingEndDate: new Date(Date.now() + 6 * 24 * 60 * 60 * 1000), // 6 days from now
           source: "AI Strategy Alpha",
-          status: "vesting"
+          status: "pending"
         },
         {
           id: "ref-1",
@@ -150,7 +150,7 @@ export function RewardsVestingTab() {
           id: "ref-2",
           amount: 200.00,
           source: "Referral Bonus - User #2",
-          status: "vesting",
+          status: "pending",
           earnedDate: new Date(Date.now() - 10 * 24 * 60 * 60 * 1000),
           vestingEndDate: new Date(Date.now() + 20 * 24 * 60 * 60 * 1000)
         },
@@ -171,7 +171,7 @@ export function RewardsVestingTab() {
       // Calculate summary
       const summary: VestingSummary = {
         totalVested: mockRewards.filter(r => r.status === "vested").reduce((sum, r) => sum + r.amount, 0),
-        totalUnvested: mockRewards.filter(r => r.status === "vesting").reduce((sum, r) => sum + r.amount, 0),
+        totalUnvested: mockRewards.filter(r => r.status === "pending").reduce((sum, r) => sum + r.amount, 0),
         totalClaimed: mockRewards.filter(r => r.status === "claimed").reduce((sum, r) => sum + r.amount, 0),
         pendingRewards: mockRewards.filter(r => r.status === "vested").reduce((sum, r) => sum + r.amount, 0)
       }
@@ -205,7 +205,7 @@ export function RewardsVestingTab() {
           refereeAddress: "0x8765...4321",
           amount: 200.00,
           earnedDate: new Date(Date.now() - 10 * 24 * 60 * 60 * 1000),
-          status: "vesting",
+          status: "pending",
           vestingEndDate: new Date(Date.now() + 20 * 24 * 60 * 60 * 1000)
         },
         {
@@ -287,7 +287,7 @@ export function RewardsVestingTab() {
       // Update summary
       setVestingSummary(prev => ({
         ...prev,
-        totalClaimed: prev.totalClaimed + rewards.find(r => r.id === rewardId)?.amount || 0,
+        totalClaimed: prev.totalClaimed + (rewards.find(r => r.id === rewardId)?.amount || 0),
         pendingRewards: prev.pendingRewards - (rewards.find(r => r.id === rewardId)?.amount || 0)
       }))
       
@@ -597,7 +597,7 @@ export function RewardsVestingTab() {
                         {reward.status.charAt(0).toUpperCase() + reward.status.slice(1)}
                       </p>
                     </div>
-                    {reward.status === "vesting" && (
+                    {reward.status === "pending" && (
                       <p className="text-xs text-muted-foreground">
                         {getTimeRemaining(reward.vestingEndDate)} remaining
                       </p>
@@ -605,7 +605,7 @@ export function RewardsVestingTab() {
                   </div>
 
                   {/* Vesting Timer */}
-                  {reward.status === "vesting" && (
+                  {reward.status === "pending" && (
                     <div>
                       <p className="text-sm font-medium text-muted-foreground">Vesting Ends</p>
                       <p className="text-lg font-semibold">
@@ -653,7 +653,7 @@ export function RewardsVestingTab() {
                         <span>{claiming === reward.id ? "Claiming..." : "Claim"}</span>
                       </Button>
                     )}
-                    {reward.status === "vesting" && (
+                    {reward.status === "pending" && (
                       <Button variant="outline" size="sm" disabled>
                         <HiClock className="h-4 w-4 mr-2" />
                         Vesting
@@ -898,7 +898,7 @@ export function RewardsVestingTab() {
                             {claiming === reward.id ? "Claiming..." : "Claim"}
                           </Button>
                         )}
-                        {reward.status === "vesting" && (
+                        {reward.status === "pending" && (
                           <p className="text-xs text-muted-foreground mt-1">
                             Vests in {getTimeRemaining(reward.vestingEndDate)}
                           </p>

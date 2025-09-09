@@ -204,7 +204,7 @@ export default function NewMobileDApp() {
         refereeAddress: "0x8765...4321",
         amount: 125.00,
         earnedDate: new Date(Date.now() - 5 * 24 * 60 * 60 * 1000),
-        status: "vesting",
+        status: "pending",
         vestingEndDate: new Date(Date.now() + 25 * 24 * 60 * 60 * 1000)
       },
       {
@@ -627,7 +627,7 @@ export default function NewMobileDApp() {
                     <div className="text-right">
                       <span className={`text-xs px-2 py-1 rounded-full ${
                         reward.status === "claimed" ? "bg-green-100 text-green-600 dark:bg-green-900 dark:text-green-400" :
-                        reward.status === "vesting" ? "bg-orange-100 text-orange-600 dark:bg-orange-900 dark:text-orange-400" :
+                        reward.status === "pending" ? "bg-orange-100 text-orange-600 dark:bg-orange-900 dark:text-orange-400" :
                         "bg-gray-100 text-gray-600 dark:bg-gray-800 dark:text-gray-400"
                       }`}>
                         {reward.status.charAt(0).toUpperCase() + reward.status.slice(1)}
