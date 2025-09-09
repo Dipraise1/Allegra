@@ -56,7 +56,7 @@ export default function RootLayout({
         <meta name="apple-mobile-web-app-title" content="ALLEGRA Protocol" />
       </head>
       <body className={`${inter.className} min-h-screen bg-white dark:bg-black`}>
-        <ThemeProvider defaultTheme="light" storageKey="allegra-theme">
+        <ThemeProvider defaultTheme="dark" storageKey="allegra-theme">
           <ToastProvider />
           <ConditionalLayout>
             {children}

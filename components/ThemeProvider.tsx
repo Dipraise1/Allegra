@@ -35,6 +35,9 @@ export function ThemeProvider({
     const savedTheme = localStorage?.getItem(storageKey) as Theme
     if (savedTheme) {
       setTheme(savedTheme)
+    } else {
+      // Default to dark mode for first-time visitors
+      setTheme("dark")
     }
   }, [storageKey])
 
