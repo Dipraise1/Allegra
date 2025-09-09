@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react"
 import Hero from '@/components/Hero'
 import ExecutiveSummary from '@/components/landing/ExecutiveSummary'
-import MarketContext from '@/components/landing/MarketContext'
+import HowAllegraWorks from '@/components/landing/HowAllegraWorks'
 import KeyFeatures from '@/components/landing/KeyFeatures'
 import TechnologyOverview from '@/components/landing/TechnologyOverview'
 import RiskManagement from '@/components/landing/RiskManagement'
@@ -54,7 +54,7 @@ export default function Home() {
       
       <Hero />
       <ExecutiveSummary />
-      <MarketContext />
+      <HowAllegraWorks />
       <KeyFeatures />
       <TechnologyOverview />
       <RiskManagement />

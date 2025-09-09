@@ -223,86 +223,87 @@ export default function Navigation() {
               animate={{ opacity: 1, scale: 1 }}
               exit={{ opacity: 0, scale: 0.95 }}
               transition={{ duration: 0.3, ease: "easeInOut" }}
-              className="fixed inset-0 z-[60] lg:hidden"
+              className="fixed inset-0 z-[60] lg:hidden flex flex-col"
               style={{ backgroundColor: '#000000' }}
             >
-              <div className="h-full w-full bg-black shadow-2xl">
-              {/* Header with close button */}
-              <div className="flex items-center justify-between p-4 border-b border-gray-700">
-                <div className="flex items-center space-x-3">
-                  <div className="w-8 h-8 relative">
-                    <Image
-                      src="/images/logo-transparent.png"
-                      alt="ALLEGRA Protocol Logo"
-                      width={32}
-                      height={32}
-                      className="object-contain logo-white"
-                    />
+              <div className="h-full w-full bg-black shadow-2xl flex flex-col">
+                {/* Header with close button */}
+                <div className="flex items-center justify-between p-4 border-b border-gray-700 flex-shrink-0">
+                  <div className="flex items-center space-x-3">
+                    <div className="w-8 h-8 relative">
+                      <Image
+                        src="/images/logo-transparent.png"
+                        alt="ALLEGRA Protocol Logo"
+                        width={32}
+                        height={32}
+                        className="object-contain logo-white"
+                      />
+                    </div>
+                    <span className="text-lg font-bold text-white">ALLEGRA</span>
                   </div>
-                  <span className="text-lg font-bold text-white">ALLEGRA</span>
-                </div>
-                <Button
-                  variant="ghost"
-                  size="icon"
-                  className="text-white hover:bg-white/20"
-                  onClick={() => setIsMobileMenuOpen(false)}
-                >
-                  <motion.div
-                    animate={{ rotate: isMobileMenuOpen ? 180 : 0 }}
-                    transition={{ duration: 0.3, ease: "easeInOut" }}
-                    className="w-6 h-6 flex flex-col justify-center items-center"
+                  <Button
+                    variant="ghost"
+                    size="icon"
+                    className="text-white hover:bg-white/20"
+                    onClick={() => setIsMobileMenuOpen(false)}
                   >
-                    <div className="w-5 h-0.5 bg-current rotate-45 absolute"></div>
-                    <div className="w-5 h-0.5 bg-current -rotate-45 absolute"></div>
-                  </motion.div>
-                </Button>
-              </div>
-
-              {/* Navigation Items */}
-              <div className="flex flex-col h-full">
-                <div className="flex-1 px-6 py-8 space-y-2">
-                  {navItems.map((item, index) => (
-                    <motion.button
-                      key={item.name}
-                      initial={{ opacity: 0, x: -30 }}
-                      animate={{ opacity: 1, x: 0 }}
-                      transition={{ delay: index * 0.1, duration: 0.4 }}
-                      onClick={() => handleNavClick(item.href)}
-                      className={cn(
-                        "block w-full text-left px-6 py-4 text-lg font-medium transition-all duration-200 rounded-2xl group relative",
-                        isActive(item.href)
-                          ? "text-white bg-gray-800 border border-gray-600 shadow-lg"
-                          : "text-gray-400 hover:text-white hover:bg-gray-800/50"
-                      )}
+                    <motion.div
+                      animate={{ rotate: isMobileMenuOpen ? 180 : 0 }}
+                      transition={{ duration: 0.3, ease: "easeInOut" }}
+                      className="w-6 h-6 flex flex-col justify-center items-center"
                     >
-                      <div className="flex items-center justify-between">
-                        <span className="text-xl">{item.name}</span>
+                      <div className="w-5 h-0.5 bg-current rotate-45 absolute"></div>
+                      <div className="w-5 h-0.5 bg-current -rotate-45 absolute"></div>
+                    </motion.div>
+                  </Button>
+                </div>
+
+                {/* Scrollable Navigation Items */}
+                <div className="flex-1 overflow-y-auto">
+                  <div className="px-6 py-8 space-y-2">
+                    {navItems.map((item, index) => (
+                      <motion.button
+                        key={item.name}
+                        initial={{ opacity: 0, x: -30 }}
+                        animate={{ opacity: 1, x: 0 }}
+                        transition={{ delay: index * 0.1, duration: 0.4 }}
+                        onClick={() => handleNavClick(item.href)}
+                        className={cn(
+                          "block w-full text-left px-6 py-4 text-lg font-medium transition-all duration-200 rounded-2xl group relative",
+                          isActive(item.href)
+                            ? "text-white bg-gray-800 border border-gray-600 shadow-lg"
+                            : "text-gray-400 hover:text-white hover:bg-gray-800/50"
+                        )}
+                      >
+                        <div className="flex items-center justify-between">
+                          <span className="text-xl">{item.name}</span>
+                          {isActive(item.href) && (
+                            <motion.div
+                              initial={{ scale: 0 }}
+                              animate={{ scale: 1 }}
+                              className="w-3 h-3 bg-white rounded-full"
+                            />
+                          )}
+                        </div>
                         {isActive(item.href) && (
                           <motion.div
-                            initial={{ scale: 0 }}
-                            animate={{ scale: 1 }}
-                            className="w-3 h-3 bg-white rounded-full"
+                            layoutId="mobileActiveIndicator"
+                            className="absolute left-0 top-0 bottom-0 w-1.5 bg-white rounded-r-full"
+                            initial={false}
+                            transition={{ type: "spring", stiffness: 500, damping: 30 }}
                           />
                         )}
-                      </div>
-                      {isActive(item.href) && (
-                        <motion.div
-                          layoutId="mobileActiveIndicator"
-                          className="absolute left-0 top-0 bottom-0 w-1.5 bg-white rounded-r-full"
-                          initial={false}
-                          transition={{ type: "spring", stiffness: 500, damping: 30 }}
-                        />
-                      )}
-                    </motion.button>
-                  ))}
+                      </motion.button>
+                    ))}
+                  </div>
                 </div>
                 
-                {/* Bottom CTA Section */}
+                {/* Fixed Bottom CTA Section */}
                 <motion.div
                   initial={{ opacity: 0, y: 30 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: navItems.length * 0.1 + 0.2, duration: 0.4 }}
-                  className="p-6 border-t border-gray-700 bg-gray-900/50"
+                  className="p-6 border-t border-gray-700 bg-gray-900/50 flex-shrink-0"
                 >
                   <div className="space-y-4">
                     <Button 
@@ -321,7 +322,6 @@ export default function Navigation() {
                   </div>
                 </motion.div>
               </div>
-            </div>
             </motion.div>
           </>
         )}

@@ -115,7 +115,7 @@ export default function Hero() {
                 </div>
                 <span className="text-sm text-muted-foreground">Daily Returns</span>
               </div>
-              <div className="text-2xl sm:text-3xl font-bold text-gray-600 dark:text-gray-300">0.1% - 5%</div>
+              <div className="text-2xl sm:text-3xl font-bold text-gray-600 dark:text-gray-300">0.1% - 4%</div>
             </motion.div>
             
             <motion.div 

@@ -60,7 +60,7 @@ export default function AboutPage() {
             <Card className="text-center bg-white/10 backdrop-blur-sm border-white/20">
               <CardContent className="pt-6">
                 <TrendingUp className="w-12 h-12 text-white mx-auto mb-4" />
-                <h3 className="text-xl font-bold mb-2 text-white">0.1% - 5%</h3>
+                <h3 className="text-xl font-bold mb-2 text-white">0.1% - 4%</h3>
                 <p className="text-white/80">Daily Returns</p>
               </CardContent>
             </Card>

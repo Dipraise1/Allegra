@@ -63,7 +63,7 @@ export default function PerformancePage() {
             <Card className="text-center bg-white/10 backdrop-blur-sm border-white/20">
               <CardContent className="pt-3">
                 <TrendingUp className="w-6 h-6 md:w-8 md:h-8 text-white mx-auto mb-1" />
-                <h3 className="text-sm md:text-lg font-bold mb-1 text-white">0.1% - 5%</h3>
+                <h3 className="text-sm md:text-lg font-bold mb-1 text-white">0.1% - 4%</h3>
                 <p className="text-white/80 text-xs md:text-sm">Daily Returns</p>
               </CardContent>
             </Card>

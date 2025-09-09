@@ -21,7 +21,7 @@ export default function WhitepaperPage() {
             ALLEGRA Protocol Whitepaper
           </h1>
           <p className="text-lg text-muted-foreground max-w-3xl mx-auto mb-8">
-            Comprehensive documentation covering ALLEGRA Protocol's AI-powered DeFi platform with daily 0.1%-5% yields, 
+            Comprehensive documentation covering ALLEGRA Protocol's AI-powered DeFi platform with daily 0.1%-4% yields, 
             flexible reward management, and institutional-grade security measures.
           </p>
           
@@ -41,7 +41,7 @@ export default function WhitepaperPage() {
                 >
                   <HiTrendingUp className="w-6 h-6 text-foreground" />
                 </motion.div>
-                <h3 className="text-2xl font-bold text-foreground mb-1">0.1% - 5%</h3>
+                <h3 className="text-2xl font-bold text-foreground mb-1">0.1% - 4%</h3>
                 <p className="text-sm text-muted-foreground">Daily Returns</p>
               </CardContent>
             </Card>
@@ -100,7 +100,7 @@ export default function WhitepaperPage() {
                 ALLEGRA Protocol is a next-generation DeFi platform powered by advanced artificial intelligence. It generates sustainable yields for USDT holders by combining AI-driven trading strategies with institutional-grade risk management.
               </p>
               <p className="text-muted-foreground leading-relaxed">
-                ALLEGRA delivers variable daily returns between 0.1% and 5%, based on actual market performance, with no minimum deposit requirements. Our system prioritizes transparency, security, and accessibility, bringing institutional-grade trading strategies to everyday investors.
+                ALLEGRA delivers variable daily returns between 0.1% and 4%, based on actual market performance, with no minimum deposit requirements. Our system prioritizes transparency, security, and accessibility, bringing institutional-grade trading strategies to everyday investors.
               </p>
               
               {/* Interactive Progress Indicator */}
@@ -176,7 +176,7 @@ export default function WhitepaperPage() {
                   {
                     step: 3,
                     title: "Daily Rewards",
-                    description: "Profits are distributed daily in USDT, ranging from 0.1% to 5%, based on actual trading results.",
+                    description: "Profits are distributed daily in USDT, ranging from 0.1% to 4%, based on actual trading results.",
                     icon: HiTrendingUp
                   },
                   {
@@ -246,7 +246,7 @@ export default function WhitepaperPage() {
                   },
                   {
                     title: "Daily USDT Rewards",
-                    description: "Earn 0.1%–5% daily based on real trading results.",
+                    description: "Earn 0.1%–4% daily based on real trading results.",
                     icon: HiTrendingUp
                   },
                   {
@@ -453,7 +453,7 @@ export default function WhitepaperPage() {
                       </div>
                       <span className="text-sm font-medium text-foreground">Daily Returns</span>
                     </div>
-                    <p className="text-lg font-bold text-foreground">0.1% - 5%</p>
+                    <p className="text-lg font-bold text-foreground">0.1% - 4%</p>
                     <p className="text-xs text-muted-foreground">Based on actual trading results</p>
                   </motion.div>
                   

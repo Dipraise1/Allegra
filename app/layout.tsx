@@ -12,7 +12,7 @@ const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
   title: 'ALLEGRA: AI-Driven DeFi Trading Protocol | Sustainable Yields',
-  description: 'ALLEGRA Protocol delivers sustainable yields through AI-powered trading strategies. Daily returns of 0.1% to 5% with transparent, verifiable on-chain performance. No minimum deposit required.',
+  description: 'ALLEGRA Protocol delivers sustainable yields through AI-powered trading strategies. Daily returns of 0.1% to 4% with transparent, verifiable on-chain performance. No minimum deposit required.',
   keywords: ['DeFi', 'AI', 'Yield Farming', 'Blockchain', 'Cryptocurrency', 'ALLEGRA Protocol', 'Sustainable Yields', 'AI Trading', 'USDT', 'Smart Contracts'],
   authors: [{ name: 'ALLEGRA Protocol Team' }],
   icons: {

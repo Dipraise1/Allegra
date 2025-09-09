@@ -6,7 +6,7 @@
 
 ALLEGRA Protocol is a next-generation DeFi platform powered by advanced artificial intelligence. It generates sustainable yields for USDT holders by combining AI-driven trading strategies with institutional-grade risk management.
 
-ALLEGRA delivers variable daily returns between 0.1% and 5%, based on actual market performance, with no minimum deposit requirements. Our system prioritizes transparency, security, and accessibility, bringing institutional-grade trading strategies to everyday investors.
+ALLEGRA delivers variable daily returns between 0.1% and 4%, based on actual market performance, with no minimum deposit requirements. Our system prioritizes transparency, security, and accessibility, bringing institutional-grade trading strategies to everyday investors.
 
 ---
 
@@ -21,7 +21,7 @@ Think of ALLEGRA as an AI-powered wealth manager for your USDT. Here's how it wo
    - **Liquidity Providing**: Supplying liquidity to earn trading fees.
    - **Lending**: Generating interest on lending protocols.
 
-3. **Daily Rewards** – Profits are distributed daily in USDT, ranging from 0.1% to 5%, based on actual trading results.
+3. **Daily Rewards** – Profits are distributed daily in USDT, ranging from 0.1% to 4%, based on actual trading results.
 
 4. **Flexible Rewards Management** – You can choose to withdraw your daily rewards or compound them back into your investment for accelerated growth.
 
@@ -32,7 +32,7 @@ Think of ALLEGRA as an AI-powered wealth manager for your USDT. Here's how it wo
 ## 3. Key Features
 
 - **AI-Powered Trading**: Proprietary algorithms adapt in real-time.
-- **Daily USDT Rewards**: Earn 0.1%–5% daily based on real trading results.
+- **Daily USDT Rewards**: Earn 0.1%–4% daily based on real trading results.
 - **Flexible Deposits**: No minimum deposit required.
 - **30-Day Lock**: Principal is locked for 30 days; rewards withdrawable anytime.
 - **Reward Flexibility**: Choose to withdraw daily rewards or compound them for growth.
@@ -62,7 +62,7 @@ Built on Ethereum and Layer 2 solutions, ALLEGRA's smart contracts handle automa
 
 | Metric | Details |
 |--------|---------|
-| Daily Returns | 0.1%–5% (based on actual trading results) |
+| Daily Returns | 0.1%–4% (based on actual trading results) |
 | Performance Fee | 15% of earnings (AI operations + development) |
 | Reward Management | Daily rewards can be withdrawn or compounded |
 | Rewards Withdrawal | Anytime, no penalties |

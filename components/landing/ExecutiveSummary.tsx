@@ -104,7 +104,7 @@ export default function ExecutiveSummary() {
           <Card className="text-center">
             <CardContent className="pt-6">
               <TrendingUp className="w-12 h-12 text-gray-600 dark:text-gray-300 mx-auto mb-4" />
-              <h3 className="text-xl font-bold mb-2">0.1% - 5%</h3>
+              <h3 className="text-xl font-bold mb-2">0.1% - 4%</h3>
               <p className="text-muted-foreground">Daily Returns</p>
             </CardContent>
           </Card>

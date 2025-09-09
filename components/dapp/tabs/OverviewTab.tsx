@@ -214,7 +214,7 @@ export function OverviewTab({ onMakeDeposit }: OverviewTabProps) {
       date.setDate(date.getDate() - i)
       labels.push(date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' }))
       
-      // Simulate realistic daily returns (0.1% to 5% as per whitepaper)
+      // Simulate realistic daily returns (0.1% to 4% as per whitepaper)
       // Add some market correlation and volatility
       const marketTrend = Math.sin((29 - i) * 0.1) * 0.02 // Market cycle
       const volatility = (Math.random() - 0.5) * 0.03 // ±1.5% daily volatility
