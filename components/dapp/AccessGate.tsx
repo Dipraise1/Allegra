@@ -4,7 +4,7 @@ import { useState, useEffect } from "react"
 import { motion } from "framer-motion"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
-import { HiShieldCheck, HiExclamation, HiArrowRight, HiWallet } from "react-icons/hi"
+import { HiShieldCheck, HiExclamation, HiArrowRight, HiCreditCard } from "react-icons/hi"
 import { FaWallet, FaLock } from "react-icons/fa"
 import { useRouter } from "next/navigation"
 
