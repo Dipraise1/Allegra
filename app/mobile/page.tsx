@@ -1,339 +1,524 @@
 "use client"
 
-import { useEffect, useState } from "react"
-import { motion, AnimatePresence } from "framer-motion"
-import { HiArrowRight, HiPlay, HiTrendingUp, HiShieldCheck, HiChip, HiSearch } from "react-icons/hi"
+import { motion } from "framer-motion"
 import { Button } from "@/components/ui/button"
-import { useTheme } from "@/components/ThemeProvider"
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import { HiShieldCheck, HiTrendingUp, HiGlobe, HiLightningBolt, HiChartBar, HiUsers, HiCog, HiDocumentText, HiDownload } from "react-icons/hi"
+import { FaEthereum, FaRobot, FaEye, FaWallet } from "react-icons/fa"
 import Image from "next/image"
-import CommandPalette from "@/components/CommandPalette"
+import Link from "next/link"
 
-export default function MobileHomePage() {
-  const { theme } = useTheme()
-  const [currentStat, setCurrentStat] = useState(0)
-  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 })
-  const [isCommandPaletteOpen, setIsCommandPaletteOpen] = useState(false)
-
-  const stats = [
-    { value: "0.1% - 4%", label: "Daily Returns", icon: HiTrendingUp, color: "text-black dark:text-white" },
-    { value: "Transparency", label: "First", icon: HiShieldCheck, color: "text-black dark:text-white" },
-    { value: "24/7", label: "AI Monitoring", icon: HiChip, color: "text-black dark:text-white" }
+export default function MobilePage() {
+  const features = [
+    {
+      icon: FaRobot,
+      title: "Multi-model AI Ensemble",
+      description: "Advanced AI models working together for optimal trading decisions"
+    },
+    {
+      icon: HiShieldCheck,
+      title: "Risk Prioritization",
+      description: "Capital preservation first with comprehensive risk management"
+    },
+    {
+      icon: FaEthereum,
+      title: "Blockchain Integration",
+      description: "Transparent, verifiable trades on multiple blockchains"
+    },
+    {
+      icon: FaEye,
+      title: "Enhanced Transparency",
+      description: "All trades and strategies are publicly verifiable on-chain"
+    },
+    {
+      icon: HiGlobe,
+      title: "Accessibility",
+      description: "No minimum deposit, multi-chain support for global access"
+    },
+    {
+      icon: HiLightningBolt,
+      title: "Liquidity Terms",
+      description: "30-day lock period with daily rewards and flexible options"
+    }
   ]
 
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrentStat((prev) => (prev + 1) % stats.length)
-    }, 3000)
+  const stats = [
+    { label: "Daily Returns", value: "0.1% to 5%", icon: HiTrendingUp },
+    { label: "Transparency", value: "On-chain", icon: FaEye },
+    { label: "Security", value: "Audited contracts", icon: HiShieldCheck }
+  ]
 
-    return () => clearInterval(interval)
-  }, [stats.length])
-
-  useEffect(() => {
-    const handleMouseMove = (e: MouseEvent) => {
-      setMousePosition({ x: e.clientX, y: e.clientY })
+  const useCases = [
+    {
+      title: "Individual Investors",
+      description: "Access professional-grade AI trading strategies with no minimum investment",
+      icon: HiUsers
+    },
+    {
+      title: "Institutions",
+      description: "Enterprise-grade solutions with advanced reporting and compliance features",
+      icon: HiChartBar
+    },
+    {
+      title: "Corporate Treasury",
+      description: "Diversify treasury holdings with transparent, yield-generating strategies",
+      icon: HiCog
     }
-    
-    window.addEventListener('mousemove', handleMouseMove)
-    return () => window.removeEventListener('mousemove', handleMouseMove)
-  }, [])
+  ]
 
   return (
-    <div className="min-h-screen bg-white dark:bg-black text-black dark:text-white overflow-hidden">
-      {/* Dynamic Background */}
-      <div className="absolute inset-0 overflow-hidden">
-        {/* Animated Grid */}
-        <motion.div 
-          className="absolute inset-0 opacity-[0.03] dark:opacity-[0.08]"
-          animate={{ 
-            backgroundPosition: ['0% 0%', '100% 100%'] 
-          }}
-          transition={{ 
-            duration: 20, 
-            repeat: Infinity, 
-            ease: "linear" 
-          }}
-        >
-          <svg width="100%" height="100%" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid slice">
-            <defs>
-              <pattern id="mobile-grid" width="15" height="15" patternUnits="userSpaceOnUse">
-                <path d="M 15 0 L 0 0 0 15" fill="none" stroke="currentColor" strokeWidth="0.5"/>
-              </pattern>
-            </defs>
-            <rect width="100%" height="100%" fill="url(#mobile-grid)" className="text-foreground"/>
-          </svg>
-        </motion.div>
+    <div className="min-h-screen bg-white dark:bg-black text-black dark:text-white">
+      {/* Hero Section */}
+      <section className="relative min-h-screen flex items-center justify-center overflow-hidden px-4 pt-20">
+        {/* Background */}
+        <div className="absolute inset-0 overflow-hidden">
+          <div className="absolute inset-0 opacity-[0.02] dark:opacity-[0.05]">
+            <svg width="100%" height="100%" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid slice">
+              <defs>
+                <pattern id="mobile-grid" width="50" height="50" patternUnits="userSpaceOnUse">
+                  <path d="M 50 0 L 0 0 0 50" fill="none" stroke="currentColor" strokeWidth="0.5"/>
+                </pattern>
+              </defs>
+              <rect width="100%" height="100%" fill="url(#mobile-grid)" className="text-foreground"/>
+            </svg>
+          </div>
+          <div className="absolute inset-0 bg-gradient-to-br from-slate-50/30 via-transparent to-blue-50/20 dark:from-slate-900/30 dark:via-transparent dark:to-blue-900/20"></div>
+        </div>
 
-        {/* Floating Elements */}
-        <motion.div
-          animate={{
-            x: [0, 20, 0],
-            y: [0, -15, 0],
-            scale: [1, 1.1, 1],
-          }}
-          transition={{
-            duration: 15,
-            repeat: Infinity,
-            ease: "linear"
-          }}
-          style={{
-            x: mousePosition.x * 0.005,
-            y: mousePosition.y * 0.005,
-          }}
-          className="absolute top-1/4 left-1/4 w-24 h-24 bg-gradient-to-r from-blue-500/20 to-purple-500/20 rounded-full blur-xl"
-        />
-        <motion.div
-          animate={{
-            x: [0, -15, 0],
-            y: [0, 20, 0],
-            scale: [1, 0.9, 1],
-          }}
-          transition={{
-            duration: 18,
-            repeat: Infinity,
-            ease: "linear"
-          }}
-          style={{
-            x: mousePosition.x * -0.003,
-            y: mousePosition.y * -0.003,
-          }}
-          className="absolute bottom-1/3 right-1/4 w-20 h-20 bg-gradient-to-r from-green-500/20 to-cyan-500/20 rounded-full blur-xl"
-        />
-        
-        {/* Geometric Shapes */}
-        <motion.div
-          animate={{
-            rotate: [0, 360],
-            scale: [1, 1.2, 1],
-          }}
-          transition={{
-            duration: 25,
-            repeat: Infinity,
-            ease: "linear"
-          }}
-          className="absolute top-1/3 right-1/4 w-8 h-8 border border-blue-500/30 rounded-lg"
-        />
-        <motion.div
-          animate={{
-            rotate: [360, 0],
-            scale: [1, 0.8, 1],
-          }}
-          transition={{
-            duration: 20,
-            repeat: Infinity,
-            ease: "linear"
-          }}
-          className="absolute bottom-1/4 left-1/3 w-6 h-6 border border-green-500/30 rounded-full"
-        />
-      </div>
-
-      {/* Main Content */}
-      <div className="relative z-10 min-h-screen flex flex-col justify-center px-4 pt-16 pb-8">
-        {/* Logo Section */}
-        <motion.div
-          initial={{ opacity: 0, scale: 0.8 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 0.8 }}
-          className="text-center mb-8"
-        >
+        <div className="relative z-10 text-center max-w-md mx-auto">
+          {/* Logo */}
           <motion.div
-            whileHover={{ scale: 1.05 }}
-            className="inline-block mb-6"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="mb-8"
           >
-            <div className="w-20 h-20 mx-auto relative">
-              <motion.div
-                animate={{ rotate: 360 }}
-                transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
-                className="absolute inset-0 border-2 border-blue-500/30 rounded-full"
+            <div className="w-20 h-20 mx-auto mb-4 relative">
+              <Image
+                src="/images/logo-transparent.png"
+                alt="ALLEGRA Logo"
+                width={80}
+                height={80}
+                className="w-full h-full object-contain logo-white"
               />
-              <motion.div
-                animate={{ rotate: -360 }}
-                transition={{ duration: 15, repeat: Infinity, ease: "linear" }}
-                className="absolute inset-2 border border-green-500/30 rounded-full"
-              />
-              <div className="absolute inset-4 flex items-center justify-center">
-                <Image
-                  src="/images/logo-transparent.png"
-                  alt="ALLEGRA Protocol Logo"
-                  width={64}
-                  height={64}
-                  className="object-contain logo-white w-full h-full"
-                />
+            </div>
+            <h1 className="text-3xl font-bold gradient-text mb-2">ALLEGRA</h1>
+            <p className="text-sm text-muted-foreground">AI-Driven Trading Protocol: Integrating AI with blockchain for transparent, verifiable trading strategies.</p>
+          </motion.div>
+
+          {/* Main Headline */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.2 }}
+            className="mb-8"
+          >
+            <h2 className="text-2xl font-bold text-foreground mb-4">
+              Unlock AI-Powered Yields in Crypto Markets
+            </h2>
+            <p className="text-base text-muted-foreground leading-relaxed">
+              Sustainable, risk-adjusted returns through transparent, verifiable trading strategies. 
+              Operated by Allegra Technologies Ltd.
+            </p>
+          </motion.div>
+
+          {/* Key Stats */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.4 }}
+            className="grid grid-cols-1 gap-4 mb-8"
+          >
+            {stats.map((stat, index) => {
+              const Icon = stat.icon
+              return (
+                <div key={index} className="bg-white/80 dark:bg-gray-900/80 backdrop-blur-sm rounded-xl p-4 border border-gray-200 dark:border-gray-700">
+                  <div className="flex items-center space-x-3">
+                    <div className="w-10 h-10 bg-blue-100 dark:bg-blue-900/20 rounded-lg flex items-center justify-center">
+                      <Icon className="w-5 h-5 text-gray-600 dark:text-gray-300" />
+                    </div>
+                    <div className="text-left">
+                      <p className="text-sm font-medium text-foreground">{stat.label}</p>
+                      <p className="text-lg font-bold text-blue-600 dark:text-blue-400">{stat.value}</p>
+                    </div>
+                  </div>
+                </div>
+              )
+            })}
+          </motion.div>
+
+          {/* CTAs */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.6 }}
+            className="space-y-3"
+          >
+            <Button size="lg" className="w-full h-12 text-base" asChild>
+              <Link href="/auth">
+                <FaWallet className="w-5 h-5 mr-2" />
+                Sign Up & Connect Wallet
+              </Link>
+            </Button>
+            <Button variant="outline" size="lg" className="w-full h-12 text-base" asChild>
+              <Link href="/whitepaper">
+                <HiDocumentText className="w-5 h-5 mr-2" />
+                Read White Paper
+              </Link>
+            </Button>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* Executive Summary */}
+      <section className="py-16 px-4">
+        <div className="max-w-md mx-auto">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="text-center mb-8"
+          >
+            <h3 className="text-2xl font-bold text-foreground mb-4">Revolutionizing DeFi with AI</h3>
+            <p className="text-base text-muted-foreground leading-relaxed">
+              ALLEGRA addresses the core challenges in crypto markets through advanced AI ensemble models 
+              that provide sustainable, transparent, and verifiable trading strategies.
+            </p>
+          </motion.div>
+
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.2 }}
+            className="space-y-4"
+          >
+            {[
+              "Daily Returns: 0.1% to 5%",
+              "Transparency: On-chain verifiable",
+              "Rewards: Daily distribution",
+              "Deposits: No minimum required",
+              "Security: Audited smart contracts",
+              "Governance: Community-driven DAO"
+            ].map((item, index) => (
+              <div key={index} className="flex items-center space-x-3">
+                <div className="w-2 h-2 bg-blue-500 rounded-full"></div>
+                <span className="text-sm text-foreground">{item}</span>
+              </div>
+            ))}
+          </motion.div>
+        </div>
+      </section>
+
+      {/* Key Features */}
+      <section className="py-16 px-4 bg-gray-50 dark:bg-gray-900">
+        <div className="max-w-md mx-auto">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="text-center mb-8"
+          >
+            <h3 className="text-2xl font-bold text-foreground mb-4">Protocol Highlights</h3>
+            <p className="text-base text-muted-foreground">
+              Advanced features that set ALLEGRA apart in the DeFi landscape
+            </p>
+          </motion.div>
+
+          <div className="space-y-4">
+            {features.map((feature, index) => {
+              const Icon = feature.icon
+              return (
+                <motion.div
+                  key={index}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: index * 0.1 }}
+                >
+                  <Card className="bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700">
+                    <CardContent className="p-4">
+                      <div className="flex items-start space-x-3">
+                        <div className="w-10 h-10 bg-blue-100 dark:bg-blue-900/20 rounded-lg flex items-center justify-center flex-shrink-0">
+                          <Icon className="w-5 h-5 text-gray-600 dark:text-gray-300" />
+                        </div>
+                        <div>
+                          <h4 className="font-semibold text-foreground mb-1">{feature.title}</h4>
+                          <p className="text-sm text-muted-foreground">{feature.description}</p>
+                        </div>
+                      </div>
+                    </CardContent>
+                  </Card>
+                </motion.div>
+              )
+            })}
+          </div>
+        </div>
+      </section>
+
+      {/* Technology Overview */}
+      <section className="py-16 px-4">
+        <div className="max-w-md mx-auto">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="text-center mb-8"
+          >
+            <h3 className="text-2xl font-bold text-foreground mb-4">The Allegra Core</h3>
+            <p className="text-base text-muted-foreground">
+              Advanced AI framework with multiple specialized models
+            </p>
+          </motion.div>
+
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.2 }}
+            className="space-y-4"
+          >
+            <Card className="bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700">
+              <CardHeader className="pb-3">
+                <CardTitle className="text-lg flex items-center space-x-2">
+                  <FaRobot className="w-5 h-5 text-blue-600" />
+                  <span>AI Framework</span>
+                </CardTitle>
+              </CardHeader>
+              <CardContent className="pt-0">
+                <div className="space-y-3">
+                  <div>
+                    <h5 className="font-medium text-foreground">Searchers</h5>
+                    <p className="text-sm text-muted-foreground">GNN, LSTM, Transformer models for market analysis</p>
+                  </div>
+                  <div>
+                    <h5 className="font-medium text-foreground">Judge</h5>
+                    <p className="text-sm text-muted-foreground">Random Forest and NLP for decision validation</p>
+                  </div>
+                  <div>
+                    <h5 className="font-medium text-foreground">Executor</h5>
+                    <p className="text-sm text-muted-foreground">Automated trade execution with risk controls</p>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+
+            <Card className="bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700">
+              <CardHeader className="pb-3">
+                <CardTitle className="text-lg flex items-center space-x-2">
+                  <HiShieldCheck className="w-5 h-5 text-green-600" />
+                  <span>Safeguards</span>
+                </CardTitle>
+              </CardHeader>
+              <CardContent className="pt-0">
+                <div className="space-y-2">
+                  <p className="text-sm text-muted-foreground">• Hedging strategies</p>
+                  <p className="text-sm text-muted-foreground">• Circuit breakers</p>
+                  <p className="text-sm text-muted-foreground">• Risk monitoring</p>
+                  <p className="text-sm text-muted-foreground">• Emergency protocols</p>
+                </div>
+              </CardContent>
+            </Card>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* Risk Management */}
+      <section className="py-16 px-4 bg-gray-50 dark:bg-gray-900">
+        <div className="max-w-md mx-auto">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="text-center mb-8"
+          >
+            <h3 className="text-2xl font-bold text-foreground mb-4">Capital Preservation First</h3>
+            <p className="text-base text-muted-foreground">
+              Comprehensive risk management framework
+            </p>
+          </motion.div>
+
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.2 }}
+            className="space-y-4"
+          >
+            <Card className="bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700">
+              <CardContent className="p-4">
+                <h4 className="font-semibold text-foreground mb-3">Risk Principles</h4>
+                <div className="space-y-2">
+                  <p className="text-sm text-muted-foreground">• Capital preservation over profit maximization</p>
+                  <p className="text-sm text-muted-foreground">• Diversified strategies across multiple markets</p>
+                  <p className="text-sm text-muted-foreground">• Real-time monitoring and adjustment</p>
+                </div>
+              </CardContent>
+            </Card>
+
+            <div className="bg-yellow-50 dark:bg-yellow-900/20 border border-yellow-200 dark:border-yellow-800 rounded-xl p-4">
+              <div className="flex items-start space-x-3">
+                <HiShieldCheck className="w-5 h-5 text-yellow-600 dark:text-yellow-400 flex-shrink-0 mt-0.5" />
+                <div>
+                  <h5 className="font-medium text-yellow-800 dark:text-yellow-200 mb-1">Risk Disclaimer</h5>
+                  <p className="text-sm text-yellow-700 dark:text-yellow-300">
+                    Investing involves risks; past performance is not indicative of future results. 
+                    Please read our risk disclosure before investing.
+                  </p>
+                </div>
               </div>
             </div>
           </motion.div>
-          
-          <motion.h1
+        </div>
+      </section>
+
+      {/* Performance Model */}
+      <section className="py-16 px-4">
+        <div className="max-w-md mx-auto">
+          <motion.div
             initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.3, duration: 0.8 }}
-            className="text-4xl font-bold mb-2"
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="text-center mb-8"
           >
-            <span className="text-foreground">ALLEGRA</span>
-            <br />
-            <span className="gradient-text">
-              Protocol
-            </span>
-          </motion.h1>
-          
-          <motion.p
+            <h3 className="text-2xl font-bold text-foreground mb-4">Verifiable Yields from Real Trades</h3>
+            <p className="text-base text-muted-foreground">
+              Transparent performance with on-chain verification
+            </p>
+          </motion.div>
+
+          <motion.div
             initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.5, duration: 0.8 }}
-            className="text-muted-foreground text-sm max-w-xs mx-auto leading-relaxed"
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.2 }}
+            className="space-y-4"
           >
-            AI-Powered DeFi Protocol delivering sustainable yields through intelligent asset allocation
-          </motion.p>
-        </motion.div>
-
-        {/* Dynamic Stats Section */}
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.7, duration: 0.8 }}
-          className="mb-8"
-        >
-          <div className="glass-light rounded-2xl p-6 mx-auto max-w-sm">
-            <AnimatePresence mode="wait">
-              <motion.div
-                key={currentStat}
-                initial={{ opacity: 0, scale: 0.8, y: 20 }}
-                animate={{ opacity: 1, scale: 1, y: 0 }}
-                exit={{ opacity: 0, scale: 0.8, y: -20 }}
-                transition={{ duration: 0.5 }}
-                className="text-center"
-              >
-                <div className="flex items-center justify-center space-x-2 mb-3">
-                  {(() => {
-                    const IconComponent = stats[currentStat].icon
-                    return <IconComponent className={`w-6 h-6 ${stats[currentStat].color}`} />
-                  })()}
-                  <span className="text-muted-foreground text-sm">{stats[currentStat].label}</span>
+            <Card className="bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700">
+              <CardContent className="p-4">
+                <h4 className="font-semibold text-foreground mb-3">Performance Metrics</h4>
+                <div className="space-y-3">
+                  <div className="flex justify-between">
+                    <span className="text-sm text-muted-foreground">Yield Range</span>
+                    <span className="text-sm font-medium text-foreground">0.1% - 5% daily</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-sm text-muted-foreground">Distribution</span>
+                    <span className="text-sm font-medium text-foreground">Non-compounding</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-sm text-muted-foreground">Verification</span>
+                    <span className="text-sm font-medium text-foreground">On-chain</span>
+                  </div>
                 </div>
-                <div className={`text-3xl font-bold ${stats[currentStat].color}`}>
-                  {stats[currentStat].value}
-                </div>
-              </motion.div>
-            </AnimatePresence>
+              </CardContent>
+            </Card>
+
+            <Card className="bg-gradient-to-r from-blue-50 to-green-50 dark:from-blue-900/20 dark:to-green-900/20 border border-blue-200 dark:border-blue-800">
+              <CardContent className="p-4">
+                <h4 className="font-semibold text-foreground mb-2">Example: $10,000 Deposit</h4>
+                <p className="text-sm text-muted-foreground">
+                  With average 2% daily returns, you could earn approximately $200 per day, 
+                  with all trades verifiable on-chain.
+                </p>
+              </CardContent>
+            </Card>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* Use Cases */}
+      <section className="py-16 px-4 bg-gray-50 dark:bg-gray-900">
+        <div className="max-w-md mx-auto">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="text-center mb-8"
+          >
+            <h3 className="text-2xl font-bold text-foreground mb-4">Who Benefits from ALLEGRA?</h3>
+            <p className="text-base text-muted-foreground">
+              Designed for users across the spectrum
+            </p>
+          </motion.div>
+
+          <div className="space-y-4">
+            {useCases.map((useCase, index) => {
+              const Icon = useCase.icon
+              return (
+                <motion.div
+                  key={index}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: index * 0.1 }}
+                >
+                  <Card className="bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700">
+                    <CardContent className="p-4">
+                      <div className="flex items-start space-x-3">
+                        <div className="w-10 h-10 bg-green-100 dark:bg-green-900/20 rounded-lg flex items-center justify-center flex-shrink-0">
+                          <Icon className="w-5 h-5 text-gray-600 dark:text-gray-300" />
+                        </div>
+                        <div>
+                          <h4 className="font-semibold text-foreground mb-1">{useCase.title}</h4>
+                          <p className="text-sm text-muted-foreground">{useCase.description}</p>
+                        </div>
+                      </div>
+                    </CardContent>
+                  </Card>
+                </motion.div>
+              )
+            })}
           </div>
-        </motion.div>
+        </div>
+      </section>
 
-        {/* Feature Cards */}
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.9, duration: 0.8 }}
-          className="grid grid-cols-2 gap-4 mb-8"
-        >
+      {/* Resources & CTA */}
+      <section className="py-16 px-4">
+        <div className="max-w-md mx-auto text-center">
           <motion.div
-            whileHover={{ scale: 1.05, y: -5 }}
-            className="glass-light rounded-xl p-4 text-center"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="mb-8"
           >
-            <div className="w-8 h-8 bg-black/10 dark:bg-white/10 rounded-full flex items-center justify-center mx-auto mb-2">
-              <HiTrendingUp className="w-4 h-4 text-black dark:text-white" />
-            </div>
-            <div className="text-xs text-muted-foreground">Daily Returns</div>
-            <div className="text-lg font-bold text-black dark:text-white">0.1% - 4%</div>
+            <h3 className="text-2xl font-bold text-foreground mb-4">Get Started Today</h3>
+            <p className="text-base text-muted-foreground mb-6">
+              Join the future of AI-driven DeFi trading
+            </p>
           </motion.div>
-          
-          <motion.div
-            whileHover={{ scale: 1.05, y: -5 }}
-            className="glass-light rounded-xl p-4 text-center"
-          >
-            <div className="w-8 h-8 bg-black/10 dark:bg-white/10 rounded-full flex items-center justify-center mx-auto mb-2">
-              <HiShieldCheck className="w-4 h-4 text-black dark:text-white" />
-            </div>
-            <div className="text-xs text-muted-foreground">Security</div>
-            <div className="text-lg font-bold text-black dark:text-white">100%</div>
-          </motion.div>
-        </motion.div>
 
-        {/* CTA Buttons */}
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 1.1, duration: 0.8 }}
-          className="space-y-4"
-        >
           <motion.div
-            whileHover={{ scale: 1.02 }}
-            whileTap={{ scale: 0.98 }}
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.2 }}
+            className="space-y-4"
           >
-            <Button
-              size="lg"
-              variant="gradient"
-              className="w-full py-4 text-lg font-semibold group"
-              asChild
-            >
-              <a href="/dapp">
-                Start Earning Today
-                <HiArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
-              </a>
+            <Button size="lg" className="w-full h-12 text-base" asChild>
+              <Link href="/auth">
+                <FaWallet className="w-5 h-5 mr-2" />
+                Sign Up & Connect Wallet
+              </Link>
             </Button>
+            
+            <div className="grid grid-cols-2 gap-3">
+              <Button variant="outline" size="lg" className="h-12" asChild>
+                <Link href="/whitepaper">
+                  <HiDocumentText className="w-4 h-4 mr-2" />
+                  White Paper
+                </Link>
+              </Button>
+              <Button variant="outline" size="lg" className="h-12" asChild>
+                <Link href="/resources">
+                  <HiDownload className="w-4 h-4 mr-2" />
+                  Backtests
+                </Link>
+              </Button>
+            </div>
           </motion.div>
-          
-          <motion.div
-            whileHover={{ scale: 1.02 }}
-            whileTap={{ scale: 0.98 }}
-          >
-            <Button
-              size="lg"
-              variant="glass"
-              className="w-full py-4 text-lg font-semibold group"
-              asChild
-            >
-              <a href="/whitepaper">
-                <HiPlay className="mr-2 h-5 w-5" />
-                Learn More
-              </a>
-            </Button>
-          </motion.div>
-        </motion.div>
+        </div>
+      </section>
 
-        {/* Trust Indicators */}
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 1.3, duration: 0.8 }}
-          className="mt-8 text-center"
-        >
-          <div className="flex flex-col space-y-3 text-xs text-muted-foreground">
-            <div className="flex items-center justify-center space-x-2">
-              <div className="w-2 h-2 bg-black dark:bg-white rounded-full"></div>
-              <span>$50M+ Assets Under Management</span>
-            </div>
-            <div className="flex items-center justify-center space-x-2">
-              <div className="w-2 h-2 bg-black dark:bg-white rounded-full"></div>
-              <span>10,000+ Active Investors</span>
-            </div>
-            <div className="flex items-center justify-center space-x-2">
-              <div className="w-2 h-2 bg-black dark:bg-white rounded-full"></div>
-              <span>24/7 AI Monitoring</span>
-            </div>
-          </div>
-        </motion.div>
-
-        {/* Search Button */}
-        <motion.div
-          initial={{ opacity: 0, scale: 0 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ delay: 1.5, duration: 0.8 }}
-          className="fixed bottom-6 right-6 z-50"
-        >
-          <motion.button
-            whileHover={{ scale: 1.1 }}
-            whileTap={{ scale: 0.9 }}
-            onClick={() => setIsCommandPaletteOpen(true)}
-            className="w-14 h-14 bg-black dark:bg-white rounded-full flex items-center justify-center shadow-lg border-2 border-white dark:border-black"
-          >
-            <HiSearch className="w-6 h-6 text-white dark:text-black" />
-          </motion.button>
-        </motion.div>
-
-        {/* Command Palette */}
-        {isCommandPaletteOpen && (
-          <CommandPalette onClose={() => setIsCommandPaletteOpen(false)} />
-        )}
-      </div>
     </div>
   )
 }

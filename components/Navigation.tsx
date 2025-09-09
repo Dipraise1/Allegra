@@ -1,8 +1,9 @@
 "use client"
 
 import { useState, useEffect } from "react"
-import { motion } from "framer-motion"
-import { HiMenu, HiX } from "react-icons/hi"
+import { motion, AnimatePresence } from "framer-motion"
+import { usePathname } from "next/navigation"
+// Removed AI-looking icons - using custom elements instead
 import { Button } from "@/components/ui/button"
 import { cn } from "@/lib/utils"
 import { ThemeToggle } from "@/components/ThemeToggle"
@@ -11,34 +12,51 @@ import Image from "next/image"
 
 const navItems = [
   { name: "Home", href: "/" },
-  { name: "Whitepaper", href: "/whitepaper" },
-  { name: "Market Insights", href: "/market-insights" },
+  { name: "About", href: "/about" },
+  { name: "Technology", href: "/technology" },
+  { name: "Risk Management", href: "/risk-management" },
+  { name: "Performance", href: "/performance" },
+  { name: "Resources", href: "/resources" },
+  { name: "DApp", href: "/dapp" },
   { name: "Contact", href: "/contact" },
 ]
 
 export default function Navigation() {
   const [isScrolled, setIsScrolled] = useState(false)
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
-  const [activeSection, setActiveSection] = useState("home")
+  const pathname = usePathname()
   const { theme } = useTheme()
 
   useEffect(() => {
     const handleScroll = () => {
-      setIsScrolled(window.scrollY > 50)
-    }
-
-    // Set active section based on current pathname
-    const currentPath = window.location.pathname
-    const currentItem = navItems.find(item => item.href === currentPath)
-    if (currentItem) {
-      setActiveSection(currentItem.href)
-    } else {
-      setActiveSection("/")
+      // Don't update scroll state when mobile menu is open
+      if (!isMobileMenuOpen) {
+        setIsScrolled(window.scrollY > 50)
+      }
     }
 
     window.addEventListener("scroll", handleScroll)
     return () => window.removeEventListener("scroll", handleScroll)
-  }, [])
+  }, [isMobileMenuOpen])
+
+  // Close mobile menu when route changes
+  useEffect(() => {
+    setIsMobileMenuOpen(false)
+  }, [pathname])
+
+  // Prevent body scroll when mobile menu is open
+  useEffect(() => {
+    if (isMobileMenuOpen) {
+      document.body.style.overflow = 'hidden'
+    } else {
+      document.body.style.overflow = 'unset'
+    }
+    
+    // Cleanup on unmount
+    return () => {
+      document.body.style.overflow = 'unset'
+    }
+  }, [isMobileMenuOpen])
 
   const handleNavClick = (href: string) => {
     if (href.startsWith('/#')) {
@@ -54,125 +72,260 @@ export default function Navigation() {
     setIsMobileMenuOpen(false)
   }
 
+  // Check if a nav item is active
+  const isActive = (href: string) => {
+    if (href === "/") {
+      return pathname === "/"
+    }
+    return pathname.startsWith(href)
+  }
+
   return (
-    <motion.nav
-      initial={{ y: -100 }}
-      animate={{ y: 0 }}
-      className={cn(
-        "fixed top-0 left-0 right-0 z-50 transition-all duration-300",
-        isScrolled
-          ? "glass-dark shadow-lg"
-          : "bg-transparent"
-      )}
-    >
-      <div className="container mx-auto px-4">
-        <div className="flex items-center justify-between h-16">
-          {/* Logo */}
-          <motion.div
-            whileHover={{ scale: 1.05 }}
-            className="flex items-center space-x-4"
-          >
-            <div className="w-16 h-16 relative">
-              <Image
-                src="/images/logo-transparent.png"
-                alt="ALLEGRA Protocol Logo"
-                width={64}
-                height={64}
-                className="object-contain logo-white"
-              />
-            </div>
-            <span className="text-xl font-bold gradient-text">ALLEGRA</span>
-          </motion.div>
-
-          {/* Desktop Navigation */}
-          <div className="hidden lg:flex items-center space-x-8">
-            {navItems.map((item) => (
-              <button
-                key={item.name}
-                onClick={() => handleNavClick(item.href)}
-                className={cn(
-                  "text-sm font-medium transition-colors duration-200 relative",
-                  activeSection === item.href
-                    ? "text-foreground"
-                    : "text-muted-foreground hover:text-foreground"
-                )}
-              >
-                {item.name}
-                {activeSection === item.href && (
-                  <motion.div
-                    layoutId="activeSection"
-                    className="absolute -bottom-1 left-0 right-0 h-0.5 bg-gradient-to-r from-blue-500 to-purple-600"
-                    initial={false}
-                    transition={{ type: "spring", stiffness: 500, damping: 30 }}
-                  />
-                )}
-              </button>
-            ))}
-          </div>
-
-          {/* CTA Buttons */}
-          <div className="hidden lg:flex items-center space-x-4">
-            <Button variant="gradient" size="sm" asChild>
-              <a href="/dapp">DApp</a>
-            </Button>
-            <Button variant="glass" size="sm" asChild>
-              <a href="/auth">Create Account</a>
-            </Button>
-            <ThemeToggle />
-          </div>
-
-          {/* Mobile Menu Button and Theme Toggle */}
-          <div className="flex items-center space-x-2 lg:hidden">
-            <ThemeToggle />
-            <Button
-              variant="ghost"
-              size="icon"
-              className="text-foreground"
-              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+    <>
+      <motion.nav
+          initial={{ y: -100 }}
+          animate={{ y: 0 }}
+          className={cn(
+            "fixed top-0 left-0 right-0 z-50 transition-all duration-300",
+            isScrolled
+              ? "glass-dark shadow-lg"
+              : "bg-transparent"
+          )}
+        >
+        <div className="container mx-auto px-4">
+          <div className="flex items-center justify-between h-16">
+            {/* Logo */}
+            <motion.div
+              whileHover={{ scale: 1.05 }}
+              className="flex items-center space-x-4"
             >
-              {isMobileMenuOpen ? <HiX size={24} /> : <HiMenu size={24} />}
-            </Button>
+              <div className="w-16 h-16 relative">
+                <Image
+                  src="/images/logo-transparent.png"
+                  alt="ALLEGRA Protocol Logo"
+                  width={64}
+                  height={64}
+                  className="object-contain logo-white"
+                />
+              </div>
+              <span className="text-xl font-bold gradient-text">ALLEGRA</span>
+            </motion.div>
+
+            {/* Desktop Navigation */}
+            <div className="hidden lg:flex items-center space-x-8">
+              {navItems.map((item) => (
+                <button
+                  key={item.name}
+                  onClick={() => handleNavClick(item.href)}
+                  className={cn(
+                    "text-sm font-medium transition-colors duration-200 relative px-3 py-2 rounded-lg",
+                    isActive(item.href)
+                      ? "text-foreground bg-muted/20"
+                      : "text-muted-foreground hover:text-foreground hover:bg-muted/10"
+                  )}
+                >
+                  {item.name}
+                  {isActive(item.href) && (
+                    <motion.div
+                      layoutId="activeSection"
+                      className="absolute -bottom-1 left-0 right-0 h-0.5 bg-gray-600 dark:bg-gray-300"
+                      initial={false}
+                      transition={{ type: "spring", stiffness: 500, damping: 30 }}
+                    />
+                  )}
+                </button>
+              ))}
+            </div>
+
+            {/* CTA Buttons */}
+            <div className="hidden lg:flex items-center space-x-4">
+              <Button variant="gradient" size="sm" asChild>
+                <a href="/auth">Sign Up</a>
+              </Button>
+              <ThemeToggle />
+            </div>
+
+            {/* Mobile Menu Button and Theme Toggle */}
+            <div className="flex items-center space-x-2 lg:hidden">
+              <ThemeToggle />
+              <Button
+                variant="ghost"
+                size="icon"
+                className="text-foreground hover:bg-muted/20 transition-colors duration-200"
+                onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+              >
+                <motion.div
+                  animate={{ rotate: isMobileMenuOpen ? 180 : 0 }}
+                  transition={{ duration: 0.3, ease: "easeInOut" }}
+                  className="w-6 h-6 flex flex-col justify-center items-center"
+                >
+                  {isMobileMenuOpen ? (
+                    <>
+                      <motion.div
+                        initial={{ rotate: 0 }}
+                        animate={{ rotate: 45, y: 0 }}
+                        transition={{ duration: 0.3 }}
+                        className="w-5 h-0.5 bg-current absolute"
+                      />
+                      <motion.div
+                        initial={{ rotate: 0 }}
+                        animate={{ rotate: -45, y: 0 }}
+                        transition={{ duration: 0.3 }}
+                        className="w-5 h-0.5 bg-current absolute"
+                      />
+                    </>
+                  ) : (
+                    <>
+                      <motion.div
+                        initial={{ rotate: 45, y: 0 }}
+                        animate={{ rotate: 0, y: -4 }}
+                        transition={{ duration: 0.3 }}
+                        className="w-5 h-0.5 bg-current"
+                      />
+                      <motion.div
+                        initial={{ rotate: -45, y: 0 }}
+                        animate={{ rotate: 0, y: 0 }}
+                        transition={{ duration: 0.3 }}
+                        className="w-5 h-0.5 bg-current"
+                      />
+                      <motion.div
+                        initial={{ y: 0 }}
+                        animate={{ y: 4 }}
+                        transition={{ duration: 0.3 }}
+                        className="w-5 h-0.5 bg-current"
+                      />
+                    </>
+                  )}
+                </motion.div>
+              </Button>
+            </div>
           </div>
         </div>
+      </motion.nav>
 
-        {/* Mobile Menu */}
-        <motion.div
-          initial={false}
-          animate={{
-            height: isMobileMenuOpen ? "auto" : 0,
-            opacity: isMobileMenuOpen ? 1 : 0,
-          }}
-          className="lg:hidden overflow-hidden bg-white/95 dark:bg-black/95 backdrop-blur-md"
-        >
-          <div className="py-4 space-y-2">
-            {navItems.map((item) => (
-              <button
-                key={item.name}
-                onClick={() => handleNavClick(item.href)}
-                className={cn(
-                  "block w-full text-left px-4 py-2 text-sm font-medium transition-colors duration-200",
-                  activeSection === item.href
-                    ? "text-black dark:text-white bg-black/10 dark:bg-white/10 rounded-lg"
-                    : "text-black dark:text-white hover:bg-black/5 dark:hover:bg-white/5 rounded-lg"
-                )}
-              >
-                {item.name}
-              </button>
-            ))}
-            <div className="px-4 pt-4 space-y-2">
-              <Button variant="gradient" size="sm" className="w-full" asChild>
-                <a href="/dapp">DApp</a>
-              </Button>
-              <Button variant="glass" size="sm" className="w-full" asChild>
-                <a href="/auth">Create Account</a>
-              </Button>
-              <div className="flex justify-center pt-2">
-                <ThemeToggle />
+      {/* Mobile Menu - Outside of main nav container */}
+      <AnimatePresence>
+        {isMobileMenuOpen && (
+          <>
+            {/* Backdrop */}
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.3 }}
+              className="fixed inset-0 bg-black/50 backdrop-blur-sm z-[55] lg:hidden"
+              onClick={() => setIsMobileMenuOpen(false)}
+            />
+            
+            {/* Menu Content */}
+            <motion.div
+              initial={{ opacity: 0, scale: 0.95 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.95 }}
+              transition={{ duration: 0.3, ease: "easeInOut" }}
+              className="fixed inset-0 z-[60] lg:hidden"
+              style={{ backgroundColor: '#000000' }}
+            >
+              <div className="h-full w-full bg-black shadow-2xl">
+              {/* Header with close button */}
+              <div className="flex items-center justify-between p-4 border-b border-gray-700">
+                <div className="flex items-center space-x-3">
+                  <div className="w-8 h-8 relative">
+                    <Image
+                      src="/images/logo-transparent.png"
+                      alt="ALLEGRA Protocol Logo"
+                      width={32}
+                      height={32}
+                      className="object-contain logo-white"
+                    />
+                  </div>
+                  <span className="text-lg font-bold text-white">ALLEGRA</span>
+                </div>
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  className="text-white hover:bg-white/20"
+                  onClick={() => setIsMobileMenuOpen(false)}
+                >
+                  <motion.div
+                    animate={{ rotate: isMobileMenuOpen ? 180 : 0 }}
+                    transition={{ duration: 0.3, ease: "easeInOut" }}
+                    className="w-6 h-6 flex flex-col justify-center items-center"
+                  >
+                    <div className="w-5 h-0.5 bg-current rotate-45 absolute"></div>
+                    <div className="w-5 h-0.5 bg-current -rotate-45 absolute"></div>
+                  </motion.div>
+                </Button>
+              </div>
+
+              {/* Navigation Items */}
+              <div className="flex flex-col h-full">
+                <div className="flex-1 px-6 py-8 space-y-2">
+                  {navItems.map((item, index) => (
+                    <motion.button
+                      key={item.name}
+                      initial={{ opacity: 0, x: -30 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      transition={{ delay: index * 0.1, duration: 0.4 }}
+                      onClick={() => handleNavClick(item.href)}
+                      className={cn(
+                        "block w-full text-left px-6 py-4 text-lg font-medium transition-all duration-200 rounded-2xl group relative",
+                        isActive(item.href)
+                          ? "text-white bg-gray-800 border border-gray-600 shadow-lg"
+                          : "text-gray-400 hover:text-white hover:bg-gray-800/50"
+                      )}
+                    >
+                      <div className="flex items-center justify-between">
+                        <span className="text-xl">{item.name}</span>
+                        {isActive(item.href) && (
+                          <motion.div
+                            initial={{ scale: 0 }}
+                            animate={{ scale: 1 }}
+                            className="w-3 h-3 bg-white rounded-full"
+                          />
+                        )}
+                      </div>
+                      {isActive(item.href) && (
+                        <motion.div
+                          layoutId="mobileActiveIndicator"
+                          className="absolute left-0 top-0 bottom-0 w-1.5 bg-white rounded-r-full"
+                          initial={false}
+                          transition={{ type: "spring", stiffness: 500, damping: 30 }}
+                        />
+                      )}
+                    </motion.button>
+                  ))}
+                </div>
+                
+                {/* Bottom CTA Section */}
+                <motion.div
+                  initial={{ opacity: 0, y: 30 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: navItems.length * 0.1 + 0.2, duration: 0.4 }}
+                  className="p-6 border-t border-gray-700 bg-gray-900/50"
+                >
+                  <div className="space-y-4">
+                    <Button 
+                      variant="gradient" 
+                      size="lg" 
+                      className="w-full font-semibold text-lg py-6" 
+                      asChild
+                    >
+                      <a href="/auth">Get Started</a>
+                    </Button>
+                    
+                    <div className="flex items-center justify-center space-x-4 py-3">
+                      <span className="text-sm text-gray-400">Theme</span>
+                      <ThemeToggle />
+                    </div>
+                  </div>
+                </motion.div>
               </div>
             </div>
-          </div>
-        </motion.div>
-      </div>
-    </motion.nav>
+            </motion.div>
+          </>
+        )}
+      </AnimatePresence>
+    </>
   )
 }

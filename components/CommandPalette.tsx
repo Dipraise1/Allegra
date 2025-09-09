@@ -87,7 +87,7 @@ interface CommandPaletteProps {
 }
 
 export default function CommandPalette({ onClose }: CommandPaletteProps) {
-  const [open, setOpen] = useState(true)
+  const [open, setOpen] = useState(false)
   const [search, setSearch] = useState("")
 
   useEffect(() => {
@@ -136,7 +136,7 @@ export default function CommandPalette({ onClose }: CommandPaletteProps) {
         className="fixed bottom-8 right-8 z-40 glass px-4 py-2 rounded-lg flex items-center space-x-2 text-black dark:text-white hover:bg-black/10 dark:hover:bg-white/20 transition-colors duration-200"
       >
         <Search size={16} />
-        <span className="hidden sm:inline text-sm">Search</span>
+        <span className="hidden sm:inline text-xs">Search</span>
         <kbd className="hidden sm:inline-flex items-center px-2 py-1 bg-black/10 dark:bg-white/10 rounded text-xs">
           ⌘K
         </kbd>
@@ -167,7 +167,7 @@ export default function CommandPalette({ onClose }: CommandPaletteProps) {
                     value={search}
                     onValueChange={setSearch}
                     placeholder="Search sections, features, or topics..."
-                    className="flex-1 bg-transparent text-black dark:text-white placeholder-gray-600 dark:placeholder-gray-400 outline-none"
+                    className="flex-1 bg-transparent text-sm text-black dark:text-white placeholder-gray-600 dark:placeholder-gray-400 outline-none"
                   />
                   <kbd className="hidden sm:inline-flex items-center px-2 py-1 bg-black/10 dark:bg-white/10 rounded text-xs text-gray-600 dark:text-gray-400">
                     ESC
@@ -191,7 +191,7 @@ export default function CommandPalette({ onClose }: CommandPaletteProps) {
                     <div key={category}>
                       <Command.Group
                         heading={
-                          <div className="px-2 py-1 text-xs font-semibold text-gray-600 dark:text-gray-400 uppercase tracking-wider">
+                          <div className="px-2 py-1 text-xs font-medium text-gray-600 dark:text-gray-400 uppercase tracking-wider">
                             {category}
                           </div>
                         }
@@ -207,8 +207,8 @@ export default function CommandPalette({ onClose }: CommandPaletteProps) {
                               <command.icon size={16} className="text-black dark:text-white" />
                             </div>
                             <div className="flex-1 min-w-0">
-                              <div className="text-black dark:text-white font-medium">{command.title}</div>
-                              <div className="text-gray-600 dark:text-gray-400 text-sm truncate">{command.description}</div>
+                              <div className="text-black dark:text-white font-medium text-sm">{command.title}</div>
+                              <div className="text-gray-600 dark:text-gray-400 text-xs truncate">{command.description}</div>
                             </div>
                           </Command.Item>
                         ))}

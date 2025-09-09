@@ -94,10 +94,10 @@ export function Contact() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
           >
-            <h1 className="text-4xl md:text-6xl font-bold gradient-text mb-6">
+            <h1 className="text-3xl sm:text-4xl md:text-6xl font-bold gradient-text mb-6">
               Contact Us
             </h1>
-            <p className="text-xl text-muted-foreground max-w-3xl mx-auto mb-8">
+            <p className="text-lg sm:text-xl text-muted-foreground max-w-3xl mx-auto mb-8">
               Have questions about our platform? Need support with your investments? 
               We're here to help you succeed with ALLEGRA Protocol.
             </p>
@@ -115,7 +115,7 @@ export function Contact() {
             transition={{ duration: 0.6 }}
             className="mb-12"
           >
-            <h2 className="text-3xl font-bold gradient-text text-center mb-8">Get in Touch</h2>
+            <h2 className="text-2xl sm:text-3xl font-bold gradient-text text-center mb-8">Get in Touch</h2>
             
             {/* Side by Side Layout for Contact Methods */}
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
@@ -131,11 +131,11 @@ export function Contact() {
                     transition={{ duration: 0.5, delay: index * 0.1 }}
                   >
                     <Card className="glass hover:bg-white/5 dark:hover:bg-black/5 transition-all duration-300 group">
-                      <CardContent className="p-6">
-                        <div className="flex items-start space-x-4">
+                      <CardContent className="p-4 sm:p-6">
+                        <div className="flex items-start space-x-3 sm:space-x-4">
                           <motion.div 
                             whileHover={{ scale: 1.1, rotate: 5 }}
-                            className="w-12 h-12 bg-muted rounded-lg flex items-center justify-center flex-shrink-0 group-hover:bg-foreground group-hover:text-background transition-all duration-300"
+                            className="w-10 h-10 sm:w-12 sm:h-12 bg-muted rounded-lg flex items-center justify-center flex-shrink-0 group-hover:bg-foreground group-hover:text-background transition-all duration-300"
                           >
                             <method.icon className="h-6 w-6" />
                           </motion.div>
@@ -166,11 +166,11 @@ export function Contact() {
                     transition={{ duration: 0.5, delay: index * 0.1 }}
                   >
                     <Card className="glass hover:bg-white/5 dark:hover:bg-black/5 transition-all duration-300 group">
-                      <CardContent className="p-6">
-                        <div className="flex items-start space-x-4">
+                      <CardContent className="p-4 sm:p-6">
+                        <div className="flex items-start space-x-3 sm:space-x-4">
                           <motion.div 
                             whileHover={{ scale: 1.1, rotate: 5 }}
-                            className="w-12 h-12 bg-muted rounded-lg flex items-center justify-center flex-shrink-0 group-hover:bg-foreground group-hover:text-background transition-all duration-300"
+                            className="w-10 h-10 sm:w-12 sm:h-12 bg-muted rounded-lg flex items-center justify-center flex-shrink-0 group-hover:bg-foreground group-hover:text-background transition-all duration-300"
                           >
                             <method.icon className="h-6 w-6" />
                           </motion.div>
@@ -193,7 +193,7 @@ export function Contact() {
         </div>
       </section>
 
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 container mx-auto px-4">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 container mx-auto px-4">
         {/* Contact Form */}
         <motion.div
           initial={{ opacity: 0, x: -20 }}
@@ -210,7 +210,7 @@ export function Contact() {
             </CardHeader>
             <CardContent>
               <form onSubmit={handleSubmit} className="space-y-4">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div>
                     <label className="text-sm font-medium">Name</label>
                     <input
@@ -334,7 +334,7 @@ export function Contact() {
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
           >
-            <h2 className="text-3xl font-bold gradient-text text-center mb-8">Office Information</h2>
+            <h2 className="text-2xl sm:text-3xl font-bold gradient-text text-center mb-8">Office Information</h2>
             
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
               {/* Office Location & Phone */}
@@ -464,6 +464,68 @@ export function Contact() {
         </div>
       </section>
 
+      {/* Team Section */}
+      <section className="py-16 bg-white/50 dark:bg-black/50">
+        <div className="container mx-auto px-4 max-w-6xl">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+          >
+            <h2 className="text-2xl sm:text-3xl font-bold gradient-text text-center mb-8 sm:mb-12">Meet Our Team</h2>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8">
+              {[
+                {
+                  name: "Dr. Elena Rodriguez",
+                  role: "AI Research Lead",
+                  credentials: "PhD, Machine Learning",
+                  expertise: "Advanced AI algorithms and neural networks"
+                },
+                {
+                  name: "Michael Chen",
+                  role: "Blockchain Architect",
+                  credentials: "MSc, Computer Science",
+                  expertise: "Smart contract development and security"
+                },
+                {
+                  name: "Sarah Johnson",
+                  role: "Quantitative Finance",
+                  credentials: "MSc, Financial Engineering",
+                  expertise: "Risk management and portfolio optimization"
+                },
+                {
+                  name: "David Kim",
+                  role: "Security Engineering",
+                  credentials: "Cybersecurity Specialist",
+                  expertise: "System security and threat analysis"
+                }
+              ].map((member, index) => (
+                <motion.div
+                  key={member.name}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.5, delay: index * 0.1 }}
+                >
+                  <Card className="glass hover:bg-white/5 dark:hover:bg-black/5 transition-all duration-300 group text-center">
+                    <CardContent className="pt-6">
+                      <div className="w-20 h-20 bg-gradient-to-br from-blue-500 to-purple-600 rounded-full mx-auto mb-4 flex items-center justify-center text-white font-bold text-xl">
+                        {member.name.split(' ').map(n => n[0]).join('')}
+                      </div>
+                      <h3 className="font-bold text-lg mb-1">{member.name}</h3>
+                      <p className="text-sm text-muted-foreground mb-2">{member.role}</p>
+                      <p className="text-xs text-blue-600 dark:text-blue-400 mb-3">{member.credentials}</p>
+                      <p className="text-xs text-muted-foreground">{member.expertise}</p>
+                    </CardContent>
+                  </Card>
+                </motion.div>
+              ))}
+            </div>
+          </motion.div>
+        </div>
+      </section>
+
       {/* Social Media */}
       <section className="py-16">
         <div className="container mx-auto px-4 text-center">
@@ -473,17 +535,17 @@ export function Contact() {
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
           >
-            <h2 className="text-3xl font-bold gradient-text mb-8">Follow Us</h2>
-            <div className="flex justify-center space-x-6">
-              <Button variant="glass" size="lg" className="flex items-center space-x-2">
+            <h2 className="text-2xl sm:text-3xl font-bold gradient-text mb-8">Follow Us</h2>
+            <div className="flex flex-col sm:flex-row justify-center items-center space-y-4 sm:space-y-0 sm:space-x-6">
+              <Button variant="glass" size="lg" className="flex items-center space-x-2 w-full sm:w-auto">
                 <FaTwitter className="h-5 w-5" />
                 <span>Twitter</span>
               </Button>
-              <Button variant="glass" size="lg" className="flex items-center space-x-2">
+              <Button variant="glass" size="lg" className="flex items-center space-x-2 w-full sm:w-auto">
                 <FaTelegram className="h-5 w-5" />
                 <span>Telegram</span>
               </Button>
-              <Button variant="glass" size="lg" className="flex items-center space-x-2">
+              <Button variant="glass" size="lg" className="flex items-center space-x-2 w-full sm:w-auto">
                 <FaDiscord className="h-5 w-5" />
                 <span>Discord</span>
               </Button>

@@ -17,30 +17,30 @@ const socialLinks = [
 
 const footerLinks = {
   Product: [
-    { name: "Whitepaper", href: "#whitepaper" },
-    { name: "Technology", href: "#technology" },
-    { name: "Security", href: "#security" },
-    { name: "Launch App", href: "#", external: true },
+    { name: "Whitepaper", href: "/whitepaper" },
+    { name: "Technology", href: "/technology" },
+    { name: "Security", href: "/security" },
+    { name: "DApp", href: "/dapp" },
   ],
   Company: [
-    { name: "About", href: "#about" },
-    { name: "Team", href: "#team" },
-    { name: "Careers", href: "#careers" },
-    { name: "Contact", href: "#contact" },
+    { name: "About", href: "/about" },
+    { name: "Performance", href: "/performance" },
+    { name: "Risk Management", href: "/risk-management" },
+    { name: "Contact", href: "/contact" },
   ],
   Resources: [
-    { name: "Documentation", href: "#docs" },
-    { name: "API", href: "#api" },
-    { name: "Support", href: "#support" },
-    { name: "Community", href: "#community" },
+    { name: "Resources", href: "/resources" },
+    { name: "Market Insights", href: "/market-insights" },
+    { name: "Support", href: "/contact" },
+    { name: "Community", href: "#" },
   ],
   Legal: [
     { name: "Privacy Policy", href: "#privacy" },
     { name: "Terms of Service", href: "#terms" },
-    { name: "Disclaimer", href: "#disclaimer" },
-    { name: "Risk Warning", href: "#risk" },
+    { name: "Risk Disclaimer", href: "#disclaimer" },
+    { name: "Contact Us", href: "/contact" },
   ],
-} as const
+}
 
 export default function Footer() {
   const { theme } = useTheme()
@@ -76,10 +76,10 @@ export default function Footer() {
                     className="object-contain logo-white"
                   />
                 </div>
-                <span className="text-2xl font-bold gradient-text">ALLEGRA</span>
+                <span className="text-xl font-bold gradient-text">ALLEGRA</span>
               </div>
-              <p className="text-muted-foreground text-sm leading-relaxed max-w-md">
-                AI-Powered DeFi Protocol delivering sustainable yields through intelligent asset allocation and risk management.
+              <p className="text-muted-foreground text-xs leading-relaxed max-w-md">
+                AI-Driven Trading Protocol: Integrating AI with blockchain for transparent, verifiable trading strategies.
               </p>
               <div className="flex space-x-4">
                 {socialLinks.map((social) => (
@@ -108,7 +108,7 @@ export default function Footer() {
                 transition={{ delay: 0.1 }}
                 className="space-y-4"
               >
-                <h3 className="text-foreground font-semibold text-sm uppercase tracking-wider">
+                <h3 className="text-foreground font-semibold text-xs uppercase tracking-wider">
                   {category}
                 </h3>
                 <ul className="space-y-3">
@@ -116,10 +116,9 @@ export default function Footer() {
                     <li key={link.name}>
                       <a
                         href={link.href}
-                        className="text-muted-foreground hover:text-foreground text-sm transition-colors duration-200 flex items-center space-x-1"
+                        className="text-muted-foreground hover:text-foreground text-xs transition-colors duration-200 flex items-center space-x-1"
                       >
                         <span>{link.name}</span>
-                        {'external' in link && link.external && <ExternalLink size={12} />}
                       </a>
                     </li>
                   ))}
@@ -143,7 +142,7 @@ export default function Footer() {
                   onClick={() => toggleSection(category)}
                   className="w-full px-4 py-3 flex items-center justify-between text-left hover:bg-white/5 transition-colors duration-200"
                 >
-                  <h3 className="text-foreground font-semibold text-sm uppercase tracking-wider">
+                  <h3 className="text-foreground font-semibold text-xs uppercase tracking-wider">
                     {category}
                   </h3>
                   <motion.div
@@ -168,10 +167,9 @@ export default function Footer() {
                           <a
                             key={link.name}
                             href={link.href}
-                            className="block text-muted-foreground hover:text-foreground text-sm transition-colors duration-200 flex items-center space-x-1"
+                            className="block text-muted-foreground hover:text-foreground text-xs transition-colors duration-200 flex items-center space-x-1"
                           >
                             <span>{link.name}</span>
-                            {'external' in link && link.external && <ExternalLink size={12} />}
                           </a>
                         ))}
                       </div>
@@ -191,11 +189,11 @@ export default function Footer() {
           className="mt-12 pt-8 border-t border-white/10"
         >
           <div className="flex flex-col md:flex-row items-center justify-between space-y-4 md:space-y-0">
-            <div className="text-muted-foreground text-sm">
-              © 2024 ALLEGRA Protocol. All rights reserved.
+            <div className="text-muted-foreground text-xs">
+              © 2024 Allegra Technologies Ltd. All rights reserved.
             </div>
             <div className="glass px-4 py-2 rounded-lg">
-              <p className="text-yellow-400 text-sm font-medium flex items-center space-x-2">
+              <p className="text-yellow-400 text-xs font-medium flex items-center space-x-2">
                 <span className="w-2 h-2 bg-yellow-400 rounded-full animate-pulse"></span>
                 <span>Returns are variable and based on market performance</span>
               </p>

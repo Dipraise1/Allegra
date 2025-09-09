@@ -1,6 +1,6 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  output: 'export',
+  // output: 'export', // Disabled for development with middleware
   trailingSlash: true,
   images: {
     remotePatterns: [

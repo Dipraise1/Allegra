@@ -1,14 +1,5 @@
-import ReturnsStructure from "@/components/whitepaper/ReturnsStructure"
-
-export const metadata = {
-  title: "Returns Structure - ALLEGRA Protocol",
-  description: "Understand ALLEGRA Protocol's transparent returns structure and yield generation mechanisms.",
-}
+import { redirect } from 'next/navigation'
 
 export default function ReturnsPage() {
-  return (
-    <div className="pt-20">
-      <ReturnsStructure />
-    </div>
-  )
+  redirect('/performance')
 }

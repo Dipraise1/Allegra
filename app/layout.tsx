@@ -6,13 +6,14 @@ import Footer from '@/components/Footer'
 import { ThemeProvider } from '@/components/ThemeProvider'
 import LoadingWrapper from '@/components/LoadingWrapper'
 import ConditionalLayout from '@/components/ConditionalLayout'
+import { ToastProvider } from '@/components/dapp/ToastProvider'
 
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
-  title: 'ALLEGRA Protocol - AI-Powered DeFi with Sustainable Yields',
-  description: 'Discover ALLEGRA Protocol, the next-generation DeFi platform that uses AI to deliver sustainable yields through intelligent asset allocation and risk management.',
-  keywords: ['DeFi', 'AI', 'Yield Farming', 'Blockchain', 'Cryptocurrency', 'ALLEGRA Protocol'],
+  title: 'ALLEGRA: AI-Driven DeFi Trading Protocol | Sustainable Yields',
+  description: 'ALLEGRA Protocol delivers sustainable yields through AI-powered trading strategies. Daily returns of 0.1% to 5% with transparent, verifiable on-chain performance. No minimum deposit required.',
+  keywords: ['DeFi', 'AI', 'Yield Farming', 'Blockchain', 'Cryptocurrency', 'ALLEGRA Protocol', 'Sustainable Yields', 'AI Trading', 'USDT', 'Smart Contracts'],
   authors: [{ name: 'ALLEGRA Protocol Team' }],
   icons: {
     icon: [
@@ -50,11 +51,13 @@ export default function RootLayout({
         <link rel="manifest" href="/manifest.json" />
         <meta name="theme-color" content="#000000" />
         <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="mobile-web-app-capable" content="yes" />
         <meta name="apple-mobile-web-app-status-bar-style" content="default" />
         <meta name="apple-mobile-web-app-title" content="ALLEGRA Protocol" />
       </head>
       <body className={`${inter.className} min-h-screen bg-white dark:bg-black`}>
         <ThemeProvider defaultTheme="light" storageKey="allegra-theme">
+          <ToastProvider />
           <ConditionalLayout>
             {children}
           </ConditionalLayout>
