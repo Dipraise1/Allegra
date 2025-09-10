@@ -17,6 +17,16 @@ const navItems = [
   { name: "Risk Management", href: "/risk-management" },
   { name: "Performance", href: "/performance" },
   { name: "Resources", href: "/resources" },
+  { name: "Contact", href: "/contact" },
+]
+
+const authenticatedNavItems = [
+  { name: "Home", href: "/" },
+  { name: "About", href: "/about" },
+  { name: "Technology", href: "/technology" },
+  { name: "Risk Management", href: "/risk-management" },
+  { name: "Performance", href: "/performance" },
+  { name: "Resources", href: "/resources" },
   { name: "DApp", href: "/dapp" },
   { name: "Contact", href: "/contact" },
 ]
@@ -24,6 +34,7 @@ const navItems = [
 export default function Navigation() {
   const [isScrolled, setIsScrolled] = useState(false)
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
+  const [isAuthenticated, setIsAuthenticated] = useState(false)
   const pathname = usePathname()
   const { theme } = useTheme()
 
@@ -38,6 +49,28 @@ export default function Navigation() {
     window.addEventListener("scroll", handleScroll)
     return () => window.removeEventListener("scroll", handleScroll)
   }, [isMobileMenuOpen])
+
+  // Check authentication status
+  useEffect(() => {
+    const checkAuth = () => {
+      const authStatus = localStorage.getItem('allegra_auth_status')
+      setIsAuthenticated(authStatus === 'authenticated')
+    }
+
+    checkAuth()
+
+    // Listen for storage changes
+    const handleStorageChange = (e: StorageEvent) => {
+      if (e.key === 'allegra_auth_status') {
+        setIsAuthenticated(e.newValue === 'authenticated')
+      }
+    }
+    window.addEventListener('storage', handleStorageChange)
+
+    return () => {
+      window.removeEventListener('storage', handleStorageChange)
+    }
+  }, [])
 
   // Close mobile menu when route changes
   useEffect(() => {
@@ -113,7 +146,7 @@ export default function Navigation() {
 
             {/* Desktop Navigation */}
             <div className="hidden lg:flex items-center space-x-8">
-              {navItems.map((item) => (
+              {(isAuthenticated ? authenticatedNavItems : navItems).map((item) => (
                 <button
                   key={item.name}
                   onClick={() => handleNavClick(item.href)}
@@ -261,7 +294,7 @@ export default function Navigation() {
                 {/* Scrollable Navigation Items */}
                 <div className="flex-1 overflow-y-auto">
                   <div className="px-6 py-8 space-y-2">
-                    {navItems.map((item, index) => (
+                    {(isAuthenticated ? authenticatedNavItems : navItems).map((item, index) => (
                       <motion.button
                         key={item.name}
                         initial={{ opacity: 0, x: -30 }}
@@ -302,7 +335,7 @@ export default function Navigation() {
                 <motion.div
                   initial={{ opacity: 0, y: 30 }}
                   animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: navItems.length * 0.1 + 0.2, duration: 0.4 }}
+                  transition={{ delay: (isAuthenticated ? authenticatedNavItems : navItems).length * 0.1 + 0.2, duration: 0.4 }}
                   className="p-6 border-t border-gray-700 bg-gray-900/50 flex-shrink-0"
                 >
                   <div className="space-y-4">

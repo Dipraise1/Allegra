@@ -70,7 +70,6 @@ export default function NewMobileDApp() {
   const [chartData, setChartData] = useState<any>(null)
   const [showDepositModal, setShowDepositModal] = useState(false)
   const [depositAmount, setDepositAmount] = useState("")
-  const [showPerformanceHistory, setShowPerformanceHistory] = useState(false)
   const [isDepositing, setIsDepositing] = useState(false)
   const [walletAddress, setWalletAddress] = useState<string | null>(null)
   const [isWalletConnected, setIsWalletConnected] = useState(false)
@@ -299,41 +298,41 @@ export default function NewMobileDApp() {
     <div className="min-h-screen bg-white dark:bg-black text-black dark:text-white">
       {/* Compact Header */}
       <div className="sticky top-0 z-50 bg-white/95 dark:bg-black/95 backdrop-blur-sm border-b border-gray-200 dark:border-gray-800">
-        <div className="px-4 py-3">
+        <div className="px-3 py-2">
           <div className="flex items-center justify-between">
             <motion.div
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
-              className="flex items-center space-x-3 cursor-pointer"
+              className="flex items-center space-x-2 cursor-pointer"
               onClick={() => window.location.href = '/'}
             >
-              <div className="w-8 h-8 relative">
+              <div className="w-6 h-6 relative">
                 <Image
                   src="/images/logo-transparent.png"
                   alt="ALLEGRA Logo"
-                  width={32}
-                  height={32}
+                  width={24}
+                  height={24}
                   className="w-full h-full object-contain logo-white"
                 />
               </div>
-              <h1 className="text-lg font-bold gradient-text">ALLEGRA</h1>
+              <h1 className="text-sm font-bold gradient-text">ALLEGRA</h1>
             </motion.div>
             {isWalletConnected ? (
-              <div className="flex items-center space-x-2">
+              <div className="flex items-center space-x-1">
                 <div 
                   className="text-right cursor-pointer hover:opacity-80 transition-opacity"
                   onClick={() => window.location.href = '/profile'}
                 >
                   <p className="text-xs text-muted-foreground">Profile</p>
                   <p className="text-xs font-medium text-foreground">
-                    {walletAddress?.slice(0, 6)}...{walletAddress?.slice(-4)}
+                    {walletAddress?.slice(0, 4)}...{walletAddress?.slice(-3)}
                   </p>
                 </div>
-                <div className="w-2 h-2 bg-green-500 rounded-full"></div>
+                <div className="w-1.5 h-1.5 bg-green-500 rounded-full"></div>
               </div>
             ) : (
-              <Button variant="outline" size="sm" className="h-8 px-3 text-sm">
-                <WalletIcon size="w-4 h-4" />
+              <Button variant="outline" size="sm" className="h-6 px-2 text-xs">
+                <WalletIcon size="w-3 h-3" />
                 Connect
               </Button>
             )}
@@ -342,110 +341,102 @@ export default function NewMobileDApp() {
       </div>
 
       {/* Main Content */}
-      <div className="px-4 py-6 pb-24">
+      <div className="px-3 py-4 pb-20">
         {activeTab === "dashboard" && (
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            className="space-y-4"
+            className="space-y-3"
           >
             {/* Key Metrics */}
-            <div className="grid grid-cols-2 gap-4">
-              <div className="bg-gradient-to-br from-blue-50 to-blue-100 dark:from-blue-900/20 dark:to-blue-800/20 rounded-xl p-4 border border-blue-200 dark:border-blue-800">
+            <div className="grid grid-cols-2 gap-3">
+              <div className="bg-gradient-to-br from-blue-50 to-blue-100 dark:from-blue-900/20 dark:to-blue-800/20 rounded-lg p-3 border border-blue-200 dark:border-blue-800">
                 <div className="flex items-center justify-between">
                   <div>
-                    <p className="text-sm text-blue-600 dark:text-blue-400">Total Value</p>
-                    <p className="text-xl font-bold text-blue-700 dark:text-blue-300">$12,500</p>
+                    <p className="text-xs text-blue-600 dark:text-blue-400">Total Value</p>
+                    <p className="text-lg font-bold text-blue-700 dark:text-blue-300">$12,500</p>
                   </div>
-                  <CoinsIcon size="w-5 h-5" />
+                  <CoinsIcon size="w-4 h-4" />
                 </div>
               </div>
 
-              <div className="bg-gradient-to-br from-green-50 to-green-100 dark:from-green-900/20 dark:to-green-800/20 rounded-xl p-4 border border-green-200 dark:border-green-800">
+              <div className="bg-gradient-to-br from-green-50 to-green-100 dark:from-green-900/20 dark:to-green-800/20 rounded-lg p-3 border border-green-200 dark:border-green-800">
                 <div className="flex items-center justify-between">
                   <div>
-                    <p className="text-sm text-green-600 dark:text-green-400">APY</p>
-                    <p className="text-xl font-bold text-green-700 dark:text-green-300">12.5%</p>
+                    <p className="text-xs text-green-600 dark:text-green-400">APY</p>
+                    <p className="text-lg font-bold text-green-700 dark:text-green-300">12.5%</p>
                   </div>
-                  <TrendingUpIcon size="w-5 h-5" />
+                  <TrendingUpIcon size="w-4 h-4" />
                 </div>
               </div>
             </div>
 
             {/* Performance Chart */}
             {chartData && (
-              <div className="bg-gray-50 dark:bg-gray-900 rounded-xl p-4">
-                <div className="flex items-center justify-between mb-3">
-                  <h4 className="text-sm font-semibold text-foreground">7-Day Performance</h4>
-                  <span className="text-sm text-green-600 dark:text-green-400 font-medium">+2.3%</span>
+              <div className="bg-gray-50 dark:bg-gray-900 rounded-lg p-3">
+                <div className="flex items-center justify-between mb-2">
+                  <h4 className="text-xs font-semibold text-foreground">7-Day Performance</h4>
+                  <span className="text-xs text-green-600 dark:text-green-400 font-medium">+2.3%</span>
                 </div>
-                <div className="h-62">
+                <div className="h-32">
                   <Line data={chartData} options={chartOptions} />
                 </div>
               </div>
             )}
 
             {/* Quick Actions */}
-            <div className="space-y-3">
+            <div className="space-y-2">
               <Button 
-                className="w-full justify-start h-12 text-base" 
+                className="w-full justify-start h-10 text-sm" 
                 variant="outline"
                 onClick={() => setShowDepositModal(true)}
               >
-                <PlusIcon size="w-5 h-5" />
+                <PlusIcon size="w-4 h-4" />
                 Deposit Funds
-              </Button>
-              <Button 
-                className="w-full justify-start h-12 text-base" 
-                variant="outline"
-                onClick={() => setShowPerformanceHistory(!showPerformanceHistory)}
-              >
-                <TrendingUpIcon size="w-5 h-5" />
-                {showPerformanceHistory ? "Hide Performance" : "View Performance"}
               </Button>
             </div>
 
             {/* Recent Activity */}
-            <div className="space-y-3">
-              <h3 className="text-base font-semibold text-foreground">Recent Activity</h3>
-              <div className="space-y-3">
-                <div className="flex items-center justify-between p-3 bg-gray-50 dark:bg-gray-900 rounded-xl">
-                  <div className="flex items-center space-x-3">
-                    <div className="w-8 h-8 bg-green-100 dark:bg-green-900 rounded-full flex items-center justify-center">
-                      <PlusIcon size="w-4 h-4" />
+            <div className="space-y-2">
+              <h3 className="text-sm font-semibold text-foreground">Recent Activity</h3>
+              <div className="space-y-2">
+                <div className="flex items-center justify-between p-2 bg-gray-50 dark:bg-gray-900 rounded-lg">
+                  <div className="flex items-center space-x-2">
+                    <div className="w-6 h-6 bg-green-100 dark:bg-green-900 rounded-full flex items-center justify-center">
+                      <PlusIcon size="w-3 h-3" />
                     </div>
                     <div>
-                      <p className="text-sm font-medium">Deposit</p>
+                      <p className="text-xs font-medium">Deposit</p>
                       <p className="text-xs text-muted-foreground">2h ago</p>
                     </div>
                   </div>
-                  <p className="text-sm font-semibold text-green-600">+$1,000</p>
+                  <p className="text-xs font-semibold text-green-600">+$1,000</p>
                 </div>
 
-                <div className="flex items-center justify-between p-3 bg-gray-50 dark:bg-gray-900 rounded-xl">
-                  <div className="flex items-center space-x-3">
-                    <div className="w-8 h-8 bg-blue-100 dark:bg-blue-900 rounded-full flex items-center justify-center">
-                      <TrendingUpIcon size="w-4 h-4" />
+                <div className="flex items-center justify-between p-2 bg-gray-50 dark:bg-gray-900 rounded-lg">
+                  <div className="flex items-center space-x-2">
+                    <div className="w-6 h-6 bg-blue-100 dark:bg-blue-900 rounded-full flex items-center justify-center">
+                      <TrendingUpIcon size="w-3 h-3" />
                     </div>
                     <div>
-                      <p className="text-sm font-medium">Yield Earned</p>
+                      <p className="text-xs font-medium">Yield Earned</p>
                       <p className="text-xs text-muted-foreground">1d ago</p>
                     </div>
                   </div>
-                  <p className="text-sm font-semibold text-blue-600">+$45.23</p>
+                  <p className="text-xs font-semibold text-blue-600">+$45.23</p>
                 </div>
 
-                <div className="flex items-center justify-between p-3 bg-gray-50 dark:bg-gray-900 rounded-xl">
-                  <div className="flex items-center space-x-3">
-                    <div className="w-8 h-8 bg-blue-100 dark:bg-blue-900 rounded-full flex items-center justify-center">
-                      <ShieldIcon size="w-4 h-4" />
+                <div className="flex items-center justify-between p-2 bg-gray-50 dark:bg-gray-900 rounded-lg">
+                  <div className="flex items-center space-x-2">
+                    <div className="w-6 h-6 bg-blue-100 dark:bg-blue-900 rounded-full flex items-center justify-center">
+                      <ShieldIcon size="w-3 h-3" />
                     </div>
                     <div>
-                      <p className="text-sm font-medium">Reward Claimed</p>
+                      <p className="text-xs font-medium">Reward Claimed</p>
                       <p className="text-xs text-muted-foreground">3d ago</p>
                     </div>
                   </div>
-                  <p className="text-sm font-semibold text-blue-600">+$125.50</p>
+                  <p className="text-xs font-semibold text-blue-600">+$125.50</p>
                 </div>
               </div>
             </div>
@@ -456,71 +447,71 @@ export default function NewMobileDApp() {
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            className="space-y-4"
+            className="space-y-3"
           >
             <div className="flex items-center justify-between">
-              <h3 className="text-base font-semibold text-foreground">Portfolio</h3>
-              <span className="text-sm text-muted-foreground">Total: $12,500.75</span>
+              <h3 className="text-sm font-semibold text-foreground">Portfolio</h3>
+              <span className="text-xs text-muted-foreground">Total: $12,500.75</span>
             </div>
 
             {/* Portfolio Summary */}
-            <div className="grid grid-cols-2 gap-4">
-              <div className="bg-gradient-to-br from-green-50 to-green-100 dark:from-green-900/20 dark:to-green-800/20 rounded-xl p-4 border border-green-200 dark:border-green-800">
+            <div className="grid grid-cols-2 gap-3">
+              <div className="bg-gradient-to-br from-green-50 to-green-100 dark:from-green-900/20 dark:to-green-800/20 rounded-lg p-3 border border-green-200 dark:border-green-800">
                 <div className="flex items-center justify-between">
                   <div>
-                    <p className="text-sm text-green-600 dark:text-green-400">Total Returns</p>
-                    <p className="text-xl font-bold text-green-700 dark:text-green-300">+$1,250</p>
+                    <p className="text-xs text-green-600 dark:text-green-400">Total Returns</p>
+                    <p className="text-lg font-bold text-green-700 dark:text-green-300">+$1,250</p>
                   </div>
-                  <TrendingUpIcon size="w-5 h-5" />
+                  <TrendingUpIcon size="w-4 h-4" />
                 </div>
               </div>
 
-              <div className="bg-gradient-to-br from-blue-50 to-blue-100 dark:from-blue-900/20 dark:to-blue-800/20 rounded-xl p-4 border border-blue-200 dark:border-blue-800">
+              <div className="bg-gradient-to-br from-blue-50 to-blue-100 dark:from-blue-900/20 dark:to-blue-800/20 rounded-lg p-3 border border-blue-200 dark:border-blue-800">
                 <div className="flex items-center justify-between">
                   <div>
-                    <p className="text-sm text-blue-600 dark:text-blue-400">Active Investments</p>
-                    <p className="text-xl font-bold text-blue-700 dark:text-blue-300">3</p>
+                    <p className="text-xs text-blue-600 dark:text-blue-400">Active Investments</p>
+                    <p className="text-lg font-bold text-blue-700 dark:text-blue-300">3</p>
                   </div>
-                  <ChartIcon size="w-5 h-5" />
+                  <ChartIcon size="w-4 h-4" />
                 </div>
               </div>
             </div>
 
             {/* Transfer Out Section */}
             <Card className="glass">
-              <CardHeader>
-                <CardTitle className="text-lg">Transfer Out</CardTitle>
+              <CardHeader className="pb-2">
+                <CardTitle className="text-sm">Transfer Out</CardTitle>
               </CardHeader>
-              <CardContent className="space-y-4">
-                <div className="grid grid-cols-2 gap-3">
+              <CardContent className="space-y-3">
+                <div className="grid grid-cols-2 gap-2">
                   <Button 
                     variant="outline" 
-                    className="h-12 flex items-center justify-center space-x-2"
-                    onClick={() => toast.info("Transfer to external wallet feature coming soon!")}
+                    className="h-8 flex items-center justify-center space-x-1 text-xs"
+                    onClick={() => toast.success("Transfer to external wallet feature coming soon!")}
                   >
-                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
                     </svg>
                     <span>Send</span>
                   </Button>
                   <Button 
                     variant="outline" 
-                    className="h-12 flex items-center justify-center space-x-2"
-                    onClick={() => toast.info("Withdraw to bank account feature coming soon!")}
+                    className="h-8 flex items-center justify-center space-x-1 text-xs"
+                    onClick={() => toast.success("Withdraw to bank account feature coming soon!")}
                   >
-                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z" />
                     </svg>
                     <span>Withdraw</span>
                   </Button>
                 </div>
                 
-                <div className="pt-4 border-t border-gray-200 dark:border-gray-700">
-                  <div className="flex items-center justify-between text-sm">
+                <div className="pt-2 border-t border-gray-200 dark:border-gray-700">
+                  <div className="flex items-center justify-between text-xs">
                     <span className="text-muted-foreground">Available for Transfer</span>
                     <span className="font-semibold">$8,250.25</span>
                   </div>
-                  <div className="flex items-center justify-between text-sm mt-1">
+                  <div className="flex items-center justify-between text-xs mt-1">
                     <span className="text-muted-foreground">Locked in Investments</span>
                     <span className="font-semibold">$4,250.50</span>
                   </div>
@@ -528,218 +519,94 @@ export default function NewMobileDApp() {
               </CardContent>
             </Card>
 
-            <div className="space-y-4">
+            <div className="space-y-2">
+              <div className="mb-2">
+                <h4 className="text-xs font-semibold text-foreground mb-1">Click tokens to get deposit addresses</h4>
+                <p className="text-xs text-muted-foreground">Tap any token below to view its deposit address and network details</p>
+              </div>
+              
               <motion.div 
                 whileTap={{ scale: 0.98 }}
-                className="flex items-center justify-between p-4 bg-gray-50 dark:bg-gray-900 rounded-xl cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
+                className="flex items-center justify-between p-3 bg-gray-50 dark:bg-gray-900 rounded-lg cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors border-2 border-transparent hover:border-blue-200 dark:hover:border-blue-800"
                 onClick={() => handleTokenClick('USDT')}
               >
-                <div className="flex items-center space-x-4">
-                  <div className="w-10 h-10 bg-gray-100 dark:bg-gray-800 rounded-full flex items-center justify-center overflow-hidden">
+                <div className="flex items-center space-x-3">
+                  <div className="w-8 h-8 bg-gray-100 dark:bg-gray-800 rounded-full flex items-center justify-center overflow-hidden">
                     <Image
                       src="https://assets.coingecko.com/coins/images/325/large/Tether.png"
                       alt="USDT"
-                      width={40}
-                      height={40}
+                      width={32}
+                      height={32}
                       className="w-full h-full object-contain"
                     />
                   </div>
                   <div>
-                    <p className="text-base font-medium">USDT</p>
-                    <p className="text-sm text-muted-foreground">Tether USD</p>
+                    <p className="text-sm font-medium">USDT</p>
+                    <p className="text-xs text-muted-foreground">Tether USD</p>
+                    <p className="text-xs text-blue-600 dark:text-blue-400 font-medium">Tap for deposit address →</p>
                   </div>
                 </div>
                 <div className="text-right">
-                  <p className="text-base font-semibold">$8,450.23</p>
-                  <p className="text-sm text-green-600">+2.3%</p>
+                  <p className="text-sm font-semibold">$8,450.23</p>
+                  <p className="text-xs text-green-600">+2.3%</p>
                 </div>
               </motion.div>
 
               <motion.div 
                 whileTap={{ scale: 0.98 }}
-                className="flex items-center justify-between p-4 bg-gray-50 dark:bg-gray-900 rounded-xl cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
+                className="flex items-center justify-between p-3 bg-gray-50 dark:bg-gray-900 rounded-lg cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors border-2 border-transparent hover:border-blue-200 dark:hover:border-blue-800"
                 onClick={() => handleTokenClick('ETH')}
               >
-                <div className="flex items-center space-x-4">
-                  <div className="w-10 h-10 bg-gray-100 dark:bg-gray-800 rounded-full flex items-center justify-center overflow-hidden">
+                <div className="flex items-center space-x-3">
+                  <div className="w-8 h-8 bg-gray-100 dark:bg-gray-800 rounded-full flex items-center justify-center overflow-hidden">
                     <Image
                       src="https://assets.coingecko.com/coins/images/279/large/ethereum.png"
                       alt="ETH"
-                      width={40}
-                      height={40}
+                      width={32}
+                      height={32}
                       className="w-full h-full object-contain"
                     />
                   </div>
                   <div>
-                    <p className="text-base font-medium">ETH</p>
-                    <p className="text-sm text-muted-foreground">Ethereum</p>
+                    <p className="text-sm font-medium">ETH</p>
+                    <p className="text-xs text-muted-foreground">Ethereum</p>
+                    <p className="text-xs text-blue-600 dark:text-blue-400 font-medium">Tap for deposit address →</p>
                   </div>
                 </div>
                 <div className="text-right">
-                  <p className="text-base font-semibold">1.247 ETH</p>
-                  <p className="text-sm text-green-600">+5.1%</p>
+                  <p className="text-sm font-semibold">1.247 ETH</p>
+                  <p className="text-xs text-green-600">+5.1%</p>
                 </div>
               </motion.div>
 
               <motion.div 
                 whileTap={{ scale: 0.98 }}
-                className="flex items-center justify-between p-4 bg-gray-50 dark:bg-gray-900 rounded-xl cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
+                className="flex items-center justify-between p-3 bg-gray-50 dark:bg-gray-900 rounded-lg cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors border-2 border-transparent hover:border-blue-200 dark:hover:border-blue-800"
                 onClick={() => handleTokenClick('BNB')}
               >
-                <div className="flex items-center space-x-4">
-                  <div className="w-10 h-10 bg-gray-100 dark:bg-gray-800 rounded-full flex items-center justify-center overflow-hidden">
+                <div className="flex items-center space-x-3">
+                  <div className="w-8 h-8 bg-gray-100 dark:bg-gray-800 rounded-full flex items-center justify-center overflow-hidden">
                     <Image
                       src="https://assets.coingecko.com/coins/images/825/large/bnb-icon2_2x.png"
                       alt="BNB"
-                      width={40}
-                      height={40}
+                      width={32}
+                      height={32}
                       className="w-full h-full object-contain"
                     />
                   </div>
                   <div>
-                    <p className="text-base font-medium">BNB</p>
-                    <p className="text-sm text-muted-foreground">Binance Coin</p>
+                    <p className="text-sm font-medium">BNB</p>
+                    <p className="text-xs text-muted-foreground">Binance Coin</p>
+                    <p className="text-xs text-blue-600 dark:text-blue-400 font-medium">Tap for deposit address →</p>
                   </div>
                 </div>
                 <div className="text-right">
-                  <p className="text-base font-semibold">2.1 BNB</p>
-                  <p className="text-sm text-green-600">+1.8%</p>
+                  <p className="text-sm font-semibold">2.1 BNB</p>
+                  <p className="text-xs text-green-600">+1.8%</p>
                 </div>
               </motion.div>
             </div>
 
-            {/* Collapsible Performance History */}
-            {showPerformanceHistory && (
-              <motion.div
-                initial={{ opacity: 0, height: 0 }}
-                animate={{ opacity: 1, height: "auto" }}
-                exit={{ opacity: 0, height: 0 }}
-                transition={{ duration: 0.3 }}
-                className="space-y-4"
-              >
-                <h3 className="text-base font-semibold text-foreground">Performance History</h3>
-                
-                {/* Performance Chart */}
-                <Card className="glass">
-                  <CardHeader>
-                    <CardTitle className="text-lg">Portfolio Performance</CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    {chartData && (
-                      <div className="h-64">
-                        <Line data={chartData} options={{
-                          responsive: true,
-                          maintainAspectRatio: false,
-                          plugins: {
-                            legend: {
-                              display: false
-                            }
-                          },
-                          scales: {
-                            y: {
-                              beginAtZero: false,
-                              grid: {
-                                color: 'rgba(255, 255, 255, 0.1)'
-                              },
-                              ticks: {
-                                color: '#6B7280'
-                              }
-                            },
-                            x: {
-                              grid: {
-                                color: 'rgba(255, 255, 255, 0.1)'
-                              },
-                              ticks: {
-                                color: '#6B7280'
-                              }
-                            }
-                          }
-                        }} />
-                      </div>
-                    )}
-                  </CardContent>
-                </Card>
-
-                {/* Performance Metrics */}
-                <div className="grid grid-cols-2 gap-4">
-                  <Card className="glass">
-                    <CardContent className="p-4 text-center">
-                      <div className="w-12 h-12 bg-green-100 dark:bg-green-900 rounded-full flex items-center justify-center mx-auto mb-2">
-                        <TrendingUpIcon size="w-6 h-6" />
-                      </div>
-                      <p className="text-2xl font-bold text-green-600 dark:text-green-400">+12.5%</p>
-                      <p className="text-sm text-muted-foreground">Total Return</p>
-                    </CardContent>
-                  </Card>
-                  
-                  <Card className="glass">
-                    <CardContent className="p-4 text-center">
-                      <div className="w-12 h-12 bg-blue-100 dark:bg-blue-900 rounded-full flex items-center justify-center mx-auto mb-2">
-                        <ChartIcon size="w-6 h-6" />
-                      </div>
-                      <p className="text-2xl font-bold text-blue-600 dark:text-blue-400">$2,847</p>
-                      <p className="text-sm text-muted-foreground">Total Earnings</p>
-                    </CardContent>
-                  </Card>
-                </div>
-
-                {/* Performance Timeline */}
-                <Card className="glass">
-                  <CardHeader>
-                    <CardTitle className="text-lg">Recent Performance</CardTitle>
-                  </CardHeader>
-                  <CardContent className="space-y-3">
-                    <div className="flex items-center justify-between p-3 bg-green-50 dark:bg-green-900/20 rounded-lg">
-                      <div className="flex items-center space-x-3">
-                        <div className="w-8 h-8 bg-green-100 dark:bg-green-900 rounded-full flex items-center justify-center">
-                          <TrendingUpIcon size="w-4 h-4" />
-                        </div>
-                        <div>
-                          <p className="font-semibold">Daily Earnings</p>
-                          <p className="text-sm text-muted-foreground">Today</p>
-                        </div>
-                      </div>
-                      <div className="text-right">
-                        <p className="font-bold text-green-600 dark:text-green-400">+$45.23</p>
-                        <p className="text-xs text-muted-foreground">+2.1%</p>
-                      </div>
-                    </div>
-
-                    <div className="flex items-center justify-between p-3 bg-blue-50 dark:bg-blue-900/20 rounded-lg">
-                      <div className="flex items-center space-x-3">
-                        <div className="w-8 h-8 bg-blue-100 dark:bg-blue-900 rounded-full flex items-center justify-center">
-                          <ChartIcon size="w-4 h-4" />
-                        </div>
-                        <div>
-                          <p className="font-semibold">Weekly Performance</p>
-                          <p className="text-sm text-muted-foreground">This week</p>
-                        </div>
-                      </div>
-                      <div className="text-right">
-                        <p className="font-bold text-blue-600 dark:text-blue-400">+$312.50</p>
-                        <p className="text-xs text-muted-foreground">+8.7%</p>
-                      </div>
-                    </div>
-
-                    <div className="flex items-center justify-between p-3 bg-purple-50 dark:bg-purple-900/20 rounded-lg">
-                      <div className="flex items-center space-x-3">
-                        <div className="w-8 h-8 bg-purple-100 dark:bg-purple-900 rounded-full flex items-center justify-center">
-                          <CoinsIcon size="w-4 h-4" />
-                        </div>
-                        <div>
-                          <p className="font-semibold">Monthly Return</p>
-                          <p className="text-sm text-muted-foreground">This month</p>
-                        </div>
-                      </div>
-                      <div className="text-right">
-                        <p className="font-bold text-purple-600 dark:text-purple-400">+$1,250.50</p>
-                        <p className="text-xs text-muted-foreground">+12.5%</p>
-                      </div>
-                    </div>
-                  </CardContent>
-                </Card>
-              </motion.div>
-            )}
           </motion.div>
         )}
 
@@ -747,33 +614,35 @@ export default function NewMobileDApp() {
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            className="space-y-6"
+            className="space-y-3"
           >
             <div className="text-center">
-              <h2 className="text-2xl font-bold text-foreground mb-2">My Investments</h2>
-              <p className="text-muted-foreground">Track your active investments and returns</p>
+              <h2 className="text-lg font-bold text-foreground mb-1">My Investments</h2>
+              <p className="text-xs text-muted-foreground">Track your active investments and returns</p>
             </div>
 
             {/* Investment Cards */}
-            <div className="space-y-4">
+            <div className="space-y-2">
               <Card className="glass">
-                <CardContent className="p-4">
-                  <div className="flex items-center justify-between mb-3">
-                    <div className="flex items-center space-x-3">
-                      <div className="w-10 h-10 bg-blue-100 dark:bg-blue-900 rounded-lg flex items-center justify-center">
-                        <USDTIcon size="w-6 h-6" />
+                <CardContent className="p-3">
+                  <div className="flex items-center justify-between mb-2">
+                    <div className="flex items-center space-x-2">
+                      <div className="w-8 h-8 bg-blue-100 dark:bg-blue-900 rounded-lg flex items-center justify-center">
+                        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1" />
+                        </svg>
                       </div>
                       <div>
-                        <p className="font-semibold">USDT Investment</p>
-                        <p className="text-sm text-muted-foreground">Locked for 30 days</p>
+                        <p className="text-sm font-semibold">USDT Investment</p>
+                        <p className="text-xs text-muted-foreground">Locked for 30 days</p>
                       </div>
                     </div>
                     <div className="text-right">
-                      <p className="font-bold text-green-600 dark:text-green-400">+12.5%</p>
+                      <p className="text-sm font-bold text-green-600 dark:text-green-400">+12.5%</p>
                       <p className="text-xs text-muted-foreground">APY</p>
                     </div>
                   </div>
-                  <div className="grid grid-cols-2 gap-4 text-sm">
+                  <div className="grid grid-cols-2 gap-3 text-xs">
                     <div>
                       <p className="text-muted-foreground">Amount</p>
                       <p className="font-semibold">$1,250.50</p>
@@ -783,36 +652,38 @@ export default function NewMobileDApp() {
                       <p className="font-semibold text-green-600 dark:text-green-400">+$45.23</p>
                     </div>
                   </div>
-                  <div className="mt-3">
+                  <div className="mt-2">
                     <div className="flex justify-between text-xs text-muted-foreground mb-1">
                       <span>Progress</span>
                       <span>15/30 days</span>
                     </div>
-                    <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2">
-                      <div className="bg-blue-600 h-2 rounded-full" style={{ width: '50%' }}></div>
+                    <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-1.5">
+                      <div className="bg-blue-600 h-1.5 rounded-full" style={{ width: '50%' }}></div>
                     </div>
                   </div>
                 </CardContent>
               </Card>
 
               <Card className="glass">
-                <CardContent className="p-4">
-                  <div className="flex items-center justify-between mb-3">
-                    <div className="flex items-center space-x-3">
-                      <div className="w-10 h-10 bg-orange-100 dark:bg-orange-900 rounded-lg flex items-center justify-center">
-                        <ETHIcon size="w-6 h-6" />
+                <CardContent className="p-3">
+                  <div className="flex items-center justify-between mb-2">
+                    <div className="flex items-center space-x-2">
+                      <div className="w-8 h-8 bg-orange-100 dark:bg-orange-900 rounded-lg flex items-center justify-center">
+                        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
+                        </svg>
                       </div>
                       <div>
-                        <p className="font-semibold">ETH Investment</p>
-                        <p className="text-sm text-muted-foreground">Locked for 30 days</p>
+                        <p className="text-sm font-semibold">ETH Investment</p>
+                        <p className="text-xs text-muted-foreground">Locked for 30 days</p>
                       </div>
                     </div>
                     <div className="text-right">
-                      <p className="font-bold text-green-600 dark:text-green-400">+18.7%</p>
+                      <p className="text-sm font-bold text-green-600 dark:text-green-400">+18.7%</p>
                       <p className="text-xs text-muted-foreground">APY</p>
                     </div>
                   </div>
-                  <div className="grid grid-cols-2 gap-4 text-sm">
+                  <div className="grid grid-cols-2 gap-3 text-xs">
                     <div>
                       <p className="text-muted-foreground">Amount</p>
                       <p className="font-semibold">0.5 ETH</p>
@@ -822,13 +693,13 @@ export default function NewMobileDApp() {
                       <p className="font-semibold text-green-600 dark:text-green-400">+0.023 ETH</p>
                     </div>
                   </div>
-                  <div className="mt-3">
+                  <div className="mt-2">
                     <div className="flex justify-between text-xs text-muted-foreground mb-1">
                       <span>Progress</span>
                       <span>8/30 days</span>
                     </div>
-                    <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2">
-                      <div className="bg-orange-600 h-2 rounded-full" style={{ width: '27%' }}></div>
+                    <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-1.5">
+                      <div className="bg-orange-600 h-1.5 rounded-full" style={{ width: '27%' }}></div>
                     </div>
                   </div>
                 </CardContent>
@@ -1019,11 +890,28 @@ export default function NewMobileDApp() {
                     ? "bg-blue-100 dark:bg-blue-900/30"
                     : ""
                 }`}>
-                  {tab.id === "referrals" ? (
-                    <Icon className="h-5 w-5" />
-                  ) : (
-                    <Icon size="w-5 h-5" />
-                  )}
+                  {tab.id === "dashboard" ? (
+                    <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2H5a2 2 0 00-2-2z" />
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 5a2 2 0 012-2h4a2 2 0 012 2v6H8V5z" />
+                    </svg>
+                  ) : tab.id === "portfolio" ? (
+                    <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+                    </svg>
+                  ) : tab.id === "investments" ? (
+                    <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1" />
+                    </svg>
+                  ) : tab.id === "rewards" ? (
+                    <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
+                    </svg>
+                  ) : tab.id === "referrals" ? (
+                    <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+                    </svg>
+                  ) : null}
                 </div>
                 <span className="text-xs font-medium whitespace-nowrap">{tab.label}</span>
               </button>
