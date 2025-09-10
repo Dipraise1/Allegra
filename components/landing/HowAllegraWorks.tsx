@@ -43,7 +43,7 @@ export default function HowAllegraWorks() {
           <Card className="bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm border border-white/20 dark:border-gray-700/50 p-6 md:p-8 shadow-lg">
             <CardContent className="p-0">
               {/* Flowchart Container */}
-              <div className="grid grid-cols-2 lg:flex lg:flex-row items-start justify-between gap-6 lg:gap-8">
+              <div className="flex flex-col lg:flex-row items-center justify-between gap-4 lg:gap-8">
                 
                 {/* Step 1: Deposit */}
                 <motion.div
@@ -59,19 +59,19 @@ export default function HowAllegraWorks() {
                   }}
                   whileTap={{ scale: 0.95 }}
                 >
-                  <Card className="bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm border border-white/20 dark:border-gray-700/50 cursor-pointer hover:shadow-xl transition-all duration-300 shadow-lg">
-                    <CardContent className="p-6 md:p-8 text-center">
+                  <Card className="bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm border border-white/20 dark:border-gray-700/50 cursor-pointer hover:shadow-xl transition-all duration-300 shadow-lg w-full max-w-sm mx-auto aspect-square">
+                    <CardContent className="p-4 md:p-8 text-center h-full flex flex-col justify-center">
                       <motion.div 
-                        className="w-14 h-14 md:w-16 md:h-16 bg-gradient-to-br from-primary to-primary/80 rounded-full flex items-center justify-center mb-3 mx-auto shadow-lg"
+                        className="w-12 h-12 md:w-16 md:h-16 bg-gradient-to-br from-primary to-primary/80 rounded-full flex items-center justify-center mb-3 mx-auto shadow-lg"
                         whileHover={{ 
                           rotate: 360,
                           scale: 1.1,
                           transition: { duration: 0.6 }
                         }}
                       >
-                        <Wallet className="w-7 h-7 md:w-8 md:h-8 text-white" />
+                        <Wallet className="w-6 h-6 md:w-8 md:h-8 text-white" />
                       </motion.div>
-                      <h3 className="text-base md:text-lg font-bold text-foreground mb-2">Deposit</h3>
+                      <h3 className="text-sm md:text-lg font-bold text-foreground mb-2">Deposit</h3>
                       <p className="text-xs md:text-sm text-muted-foreground leading-relaxed">
                         Deposit USDT into your ALLEGRA account
                       </p>
@@ -85,9 +85,9 @@ export default function HowAllegraWorks() {
                   whileInView={{ opacity: 1, scale: 1 }}
                   transition={{ duration: 0.6, delay: 0.4 }}
                   viewport={{ once: true }}
-                  className="hidden lg:block"
+                  className="flex justify-center"
                 >
-                  <ArrowRight className="w-8 h-8 text-primary" />
+                  <ArrowRight className="w-6 h-6 lg:w-8 lg:h-8 text-primary rotate-90 lg:rotate-0" />
                 </motion.div>
 
                 {/* Step 2: AI Trades */}
@@ -104,19 +104,19 @@ export default function HowAllegraWorks() {
                   }}
                   whileTap={{ scale: 0.95 }}
                 >
-                  <Card className="bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm border border-white/20 dark:border-gray-700/50 cursor-pointer hover:shadow-xl transition-all duration-300 shadow-lg">
-                    <CardContent className="p-6 md:p-8 text-center">
+                  <Card className="bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm border border-white/20 dark:border-gray-700/50 cursor-pointer hover:shadow-xl transition-all duration-300 shadow-lg w-full max-w-sm mx-auto aspect-square">
+                    <CardContent className="p-4 md:p-8 text-center h-full flex flex-col justify-center">
                       <motion.div 
-                        className="w-14 h-14 md:w-16 md:h-16 bg-gradient-to-br from-blue-600 to-blue-700 rounded-full flex items-center justify-center mb-3 mx-auto shadow-lg"
+                        className="w-12 h-12 md:w-16 md:h-16 bg-gradient-to-br from-blue-600 to-blue-700 rounded-full flex items-center justify-center mb-3 mx-auto shadow-lg"
                         whileHover={{ 
                           rotate: 360,
                           scale: 1.1,
                           transition: { duration: 0.6 }
                         }}
                       >
-                        <Brain className="w-7 h-7 md:w-8 md:h-8 text-white" />
+                        <Brain className="w-6 h-6 md:w-8 md:h-8 text-white" />
                       </motion.div>
-                      <h3 className="text-base md:text-lg font-bold text-foreground mb-2">AI Trades</h3>
+                      <h3 className="text-sm md:text-lg font-bold text-foreground mb-2">AI Trades</h3>
                       <p className="text-xs md:text-sm text-muted-foreground leading-relaxed">
                         Advanced AI analyzes markets and executes trades
                       </p>
@@ -130,9 +130,9 @@ export default function HowAllegraWorks() {
                   whileInView={{ opacity: 1, scale: 1 }}
                   transition={{ duration: 0.6, delay: 0.6 }}
                   viewport={{ once: true }}
-                  className="hidden lg:block"
+                  className="flex justify-center"
                 >
-                  <ArrowRight className="w-8 h-8 text-primary" />
+                  <ArrowRight className="w-6 h-6 lg:w-8 lg:h-8 text-primary rotate-90 lg:rotate-0" />
                 </motion.div>
 
                 {/* Step 3: Activities */}
@@ -149,19 +149,19 @@ export default function HowAllegraWorks() {
                   }}
                   whileTap={{ scale: 0.95 }}
                 >
-                  <Card className="bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm border border-white/20 dark:border-gray-700/50 cursor-pointer hover:shadow-xl transition-all duration-300 shadow-lg">
-                    <CardContent className="p-6 md:p-8 text-center">
+                  <Card className="bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm border border-white/20 dark:border-gray-700/50 cursor-pointer hover:shadow-xl transition-all duration-300 shadow-lg w-full max-w-sm mx-auto aspect-square">
+                    <CardContent className="p-4 md:p-8 text-center h-full flex flex-col justify-center">
                       <motion.div 
-                        className="w-14 h-14 md:w-16 md:h-16 bg-gradient-to-br from-purple-600 to-purple-700 rounded-full flex items-center justify-center mb-3 mx-auto shadow-lg"
+                        className="w-12 h-12 md:w-16 md:h-16 bg-gradient-to-br from-purple-600 to-purple-700 rounded-full flex items-center justify-center mb-3 mx-auto shadow-lg"
                         whileHover={{ 
                           rotate: 360,
                           scale: 1.1,
                           transition: { duration: 0.6 }
                         }}
                       >
-                        <TrendingUp className="w-7 h-7 md:w-8 md:h-8 text-white" />
+                        <TrendingUp className="w-6 h-6 md:w-8 md:h-8 text-white" />
                       </motion.div>
-                      <h3 className="text-base md:text-lg font-bold text-foreground mb-2">Activities</h3>
+                      <h3 className="text-sm md:text-lg font-bold text-foreground mb-2">Activities</h3>
                       <div className="space-y-2 text-sm text-muted-foreground">
                         <motion.div 
                           className="font-medium bg-gray-100 dark:bg-gray-700 px-3 py-1 rounded-full text-xs"
@@ -192,9 +192,9 @@ export default function HowAllegraWorks() {
                   whileInView={{ opacity: 1, scale: 1 }}
                   transition={{ duration: 0.6, delay: 0.8 }}
                   viewport={{ once: true }}
-                  className="hidden lg:block"
+                  className="flex justify-center"
                 >
-                  <ArrowRight className="w-8 h-8 text-primary" />
+                  <ArrowRight className="w-6 h-6 lg:w-8 lg:h-8 text-primary rotate-90 lg:rotate-0" />
                 </motion.div>
 
                 {/* Step 4: Earnings */}
@@ -211,19 +211,19 @@ export default function HowAllegraWorks() {
                   }}
                   whileTap={{ scale: 0.95 }}
                 >
-                  <Card className="bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm border border-white/20 dark:border-gray-700/50 cursor-pointer hover:shadow-xl transition-all duration-300 shadow-lg">
-                    <CardContent className="p-6 md:p-8 text-center">
+                  <Card className="bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm border border-white/20 dark:border-gray-700/50 cursor-pointer hover:shadow-xl transition-all duration-300 shadow-lg w-full max-w-sm mx-auto aspect-square">
+                    <CardContent className="p-4 md:p-8 text-center h-full flex flex-col justify-center">
                       <motion.div 
-                        className="w-16 h-16 md:w-20 md:h-20 bg-gradient-to-br from-green-500 to-green-600 rounded-full flex items-center justify-center mb-4 mx-auto shadow-lg"
+                        className="w-12 h-12 md:w-20 md:h-20 bg-gradient-to-br from-green-500 to-green-600 rounded-full flex items-center justify-center mb-3 md:mb-4 mx-auto shadow-lg"
                         whileHover={{ 
                           rotate: 360,
                           scale: 1.1,
                           transition: { duration: 0.6 }
                         }}
                       >
-                        <DollarSign className="w-8 h-8 md:w-10 md:h-10 text-white" />
+                        <DollarSign className="w-6 h-6 md:w-10 md:h-10 text-white" />
                       </motion.div>
-                      <h3 className="text-base md:text-lg font-bold text-foreground mb-2">Earnings</h3>
+                      <h3 className="text-sm md:text-lg font-bold text-foreground mb-2">Earnings</h3>
                       <p className="text-xs md:text-sm text-muted-foreground leading-relaxed">
                         Daily returns of 0.1% to 4%
                       </p>
@@ -232,32 +232,17 @@ export default function HowAllegraWorks() {
                 </motion.div>
               </div>
 
-              {/* Mobile Arrows - Hidden */}
-              <div className="lg:hidden hidden">
-                <div className="flex justify-center">
-                  <ArrowRight className="w-6 h-6 text-primary" />
-                </div>
-                <div className="flex justify-center">
-                  <ArrowRight className="w-6 h-6 text-primary rotate-90" />
-                </div>
-                <div className="flex justify-center">
-                  <ArrowRight className="w-6 h-6 text-primary rotate-180" />
-                </div>
-                <div className="flex justify-center">
-                  <ArrowRight className="w-6 h-6 text-primary rotate-90" />
-                </div>
-              </div>
             </CardContent>
           </Card>
         </motion.div>
 
-        {/* Process Summary - Hidden on Mobile */}
+        {/* Process Summary */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 1.0 }}
           viewport={{ once: true }}
-          className="mt-8 md:mt-12 text-center hidden md:block"
+          className="mt-8 md:mt-12 text-center"
         >
           <div className="inline-flex flex-col sm:flex-row items-center space-y-2 sm:space-y-0 sm:space-x-4 bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm rounded-lg px-4 md:px-6 py-3 md:py-4 border border-white/20 dark:border-gray-700/50 shadow-lg">
             <span className="text-sm md:text-lg font-semibold text-foreground">Deposit</span>
