@@ -10,7 +10,6 @@ import { InvestmentsTab } from "./tabs/InvestmentsTab"
 import { RewardsVestingTab } from "./tabs/RewardsVestingTab"
 import { OptionsSettingsTab } from "./tabs/OptionsSettingsTab"
 import { DepositInterface } from "./DepositInterface"
-import { TradeHistory } from "./TradeHistory"
 import { HiX } from "react-icons/hi"
 import { 
   WalletIcon, 
@@ -34,7 +33,7 @@ import { ThemeToggle } from "@/components/ThemeToggle"
 import toast from "react-hot-toast"
 import Image from "next/image"
 
-type ActiveTab = "overview" | "investments" | "rewards" | "options" | "profile"
+type ActiveTab = "overview" | "investments" | "rewards" | "options" | "wallet"
 type ModalType = "deposit" | "trade-history" | "platform-transactions" | null
 type TransactionType = "send" | "receive" | "swap"
 type TokenType = "ETH" | "USDT" | "BNB"
@@ -156,9 +155,11 @@ export function EnhancedDAppInterface() {
                     variant="ghost"
                     size="icon"
                     className="relative"
-                    onClick={() => setActiveModal("trade-history")}
+                    onClick={() => window.location.href = '/profile#notifications'}
                   >
-                    <BellIcon />
+                    <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 17h5l-5 5v-5zM4 19h6v-6H4v6zM4 5h6V1H4v4zM15 1h5v6h-5V1z" />
+                    </svg>
                     {notifications.filter(n => !n.read).length > 0 && (
                       <span className="absolute -top-1 -right-1 h-4 w-4 bg-red-500 text-white text-xs rounded-full flex items-center justify-center">
                         {notifications.filter(n => !n.read).length}
@@ -166,6 +167,17 @@ export function EnhancedDAppInterface() {
                     )}
                   </Button>
                 </div>
+
+                {/* Profile Link */}
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  onClick={() => window.location.href = '/profile'}
+                  className="flex items-center space-x-2"
+                >
+                  <UserIcon size="w-4 h-4" />
+                  <span>Profile</span>
+                </Button>
 
                 {/* Wallet Info */}
                 {walletAddress && (
@@ -185,16 +197,6 @@ export function EnhancedDAppInterface() {
                   </div>
                 )}
 
-                {/* Platform Transactions */}
-                <Button
-                  variant="outline"
-                  size="sm"
-                  onClick={() => setActiveModal("platform-transactions")}
-                  className="flex items-center space-x-2"
-                >
-                  <SendIcon size="w-4 h-4" />
-                  <span>Transactions</span>
-                </Button>
 
                 {/* Theme Toggle */}
                 <ThemeToggle />
@@ -251,9 +253,9 @@ export function EnhancedDAppInterface() {
                   <SettingsIcon size="w-4 h-4" />
                   <span>Options</span>
                 </TabsTrigger>
-                <TabsTrigger value="profile" className="flex items-center space-x-2">
-                  <UserIcon size="w-4 h-4" />
-                  <span>Profile</span>
+                <TabsTrigger value="wallet" className="flex items-center space-x-2">
+                  <WalletIcon size="w-4 h-4" />
+                  <span>Wallet</span>
                 </TabsTrigger>
               </TabsList>
             </div>
@@ -298,13 +300,13 @@ export function EnhancedDAppInterface() {
                   <span className="text-xs">Options</span>
                 </button>
               <button
-                onClick={() => setActiveTab("profile")}
+                onClick={() => setActiveTab("wallet")}
                 className={`flex flex-col items-center justify-center space-y-1 ${
-                  activeTab === "profile" ? "text-blue-600 dark:text-blue-400" : "text-gray-500 dark:text-gray-400"
+                  activeTab === "wallet" ? "text-blue-600 dark:text-blue-400" : "text-gray-500 dark:text-gray-400"
                 }`}
               >
-                <UserIcon className="h-5 w-5" />
-                <span className="text-xs">Profile</span>
+                <WalletIcon className="h-5 w-5" />
+                <span className="text-xs">Wallet</span>
                 </button>
               </div>
             </div>
@@ -331,8 +333,8 @@ export function EnhancedDAppInterface() {
                 />
               </TabsContent>
 
-            <TabsContent value="profile" className="mt-0">
-              <ProfileTab onMakeDeposit={() => setActiveModal("deposit")} />
+            <TabsContent value="wallet" className="mt-0">
+              <WalletTab onMakeDeposit={() => setActiveModal("deposit")} />
               </TabsContent>
             </div>
           </Tabs>
@@ -363,28 +365,6 @@ export function EnhancedDAppInterface() {
           </div>
         )}
 
-        {activeModal === "trade-history" && (
-          <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
-            <motion.div
-              initial={{ opacity: 0, scale: 0.95 }}
-              animate={{ opacity: 1, scale: 1 }}
-              exit={{ opacity: 0, scale: 0.95 }}
-              className="bg-white dark:bg-gray-900 rounded-lg max-w-4xl w-full max-h-[90vh] overflow-y-auto"
-            >
-              <div className="flex items-center justify-between p-6 border-b border-gray-200 dark:border-gray-700">
-                <h2 className="text-xl font-semibold">Trade History</h2>
-                <Button
-                  variant="ghost"
-                  size="icon"
-                  onClick={() => setActiveModal(null)}
-                >
-                  <HiX className="h-5 w-5" />
-                </Button>
-              </div>
-              <TradeHistory />
-            </motion.div>
-          </div>
-        )}
 
         {/* Platform Transactions Modal */}
         {activeModal === "platform-transactions" && (
@@ -518,14 +498,15 @@ export function EnhancedDAppInterface() {
   )
 }
 
-// Profile Tab Component
-function ProfileTab({ onMakeDeposit }: { onMakeDeposit: () => void }) {
+// Wallet Tab Component
+function WalletTab({ onMakeDeposit }: { onMakeDeposit: () => void }) {
   const [selectedToken, setSelectedToken] = useState<"ETH" | "BNB" | "USDT">("USDT")
   const [depositAmount, setDepositAmount] = useState("")
   const [walletAction, setWalletAction] = useState<"deposit" | "send" | "receive">("deposit")
   const [sendAmount, setSendAmount] = useState("")
   const [sendAddress, setSendAddress] = useState("")
   const [receiveAddress, setReceiveAddress] = useState("0x742d35Cc6634C0532925a3b8D4C9db96C4b4d8b6")
+  const [isDepositing, setIsDepositing] = useState(false)
 
   const tokens = [
     {
@@ -567,12 +548,43 @@ function ProfileTab({ onMakeDeposit }: { onMakeDeposit: () => void }) {
     dailyPL: 45.23
   }
 
-  const handleDeposit = () => {
+  const handleDeposit = async () => {
     if (!depositAmount || parseFloat(depositAmount) <= 0) {
       toast.error("Please enter a valid amount")
       return
     }
-    onMakeDeposit()
+    
+    setIsDepositing(true)
+    
+    try {
+      // Simulate deposit process
+      toast.loading("Processing deposit...", { id: 'deposit-process' })
+      
+      // Simulate realistic blockchain transaction steps
+      const steps = [
+        { message: "Connecting to wallet...", delay: 800 },
+        { message: `Approving ${selectedToken} transfer...`, delay: 1200 },
+        { message: "Submitting transaction...", delay: 1500 },
+        { message: "Waiting for confirmation...", delay: 2000 },
+        { message: "Transaction confirmed!", delay: 1000 }
+      ]
+      
+      for (const step of steps) {
+        toast.loading(step.message, { id: 'deposit-process' })
+        await new Promise(resolve => setTimeout(resolve, step.delay))
+      }
+      
+      toast.success(`Deposit successful! ${depositAmount} ${selectedToken} deposited.`, { id: 'deposit-process' })
+      
+      // Reset form
+      setDepositAmount("")
+      
+    } catch (error) {
+      console.error("Deposit failed:", error)
+      toast.error("Deposit failed. Please try again.", { id: 'deposit-process' })
+    } finally {
+      setIsDepositing(false)
+    }
   }
 
   const handleSend = () => {
@@ -596,31 +608,6 @@ function ProfileTab({ onMakeDeposit }: { onMakeDeposit: () => void }) {
 
   return (
     <div className="space-y-6">
-      {/* Profile Header */}
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.1 }}
-      >
-        <Card className="glass">
-          <CardContent className="p-6">
-            <div className="flex items-center space-x-4">
-              <div className="w-16 h-16 bg-gradient-to-r from-blue-500 to-blue-600 rounded-full flex items-center justify-center">
-                <span className="text-white font-bold text-xl">RD</span>
-              </div>
-              <div>
-                <h2 className="text-2xl font-bold text-foreground">Raphael Divine</h2>
-                <p className="text-muted-foreground">raphaeldivine2@gmail.com</p>
-                <div className="flex items-center space-x-2 mt-2">
-                  <ShieldIcon className="h-4 w-4 text-gray-600 dark:text-gray-300" />
-                  <span className="text-sm text-green-600 dark:text-green-400">Verified Account</span>
-                </div>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
-      </motion.div>
-
       {/* Wallet Metrics */}
       <motion.div
         initial={{ opacity: 0, y: 20 }}
@@ -713,6 +700,212 @@ function ProfileTab({ onMakeDeposit }: { onMakeDeposit: () => void }) {
                   <h3 className="text-lg font-semibold mb-2">Deposit Tokens</h3>
                   <p className="text-muted-foreground">Add tokens to your wallet to start earning</p>
                 </div>
+                
+                {/* Token Selection */}
+                <div>
+                  <label className="text-sm font-medium text-foreground mb-2 block">
+                    Select Token
+                  </label>
+                  <div className="grid grid-cols-3 gap-2">
+                    {tokens.map((token) => (
+                      <button
+                        key={token.symbol}
+                        onClick={() => setSelectedToken(token.symbol as "ETH" | "BNB" | "USDT")}
+                        className={`p-3 rounded-lg border-2 transition-all ${
+                          selectedToken === token.symbol
+                            ? "border-blue-500 bg-blue-50 dark:bg-blue-900/20"
+                            : "border-gray-200 dark:border-gray-700 hover:border-gray-300 dark:hover:border-gray-600"
+                        }`}
+                      >
+                        <div className="flex flex-col items-center space-y-1">
+                          <img
+                            src={token.image}
+                            alt={token.name}
+                            className="w-6 h-6 rounded-full"
+                          />
+                          <span className="font-semibold text-sm">{token.symbol}</span>
+                        </div>
+                      </button>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Amount Input */}
+                <div>
+                  <label className="text-sm font-medium text-foreground mb-2 block">
+                    Deposit Amount
+                  </label>
+                  <div className="relative">
+                    <input
+                      type="number"
+                      value={depositAmount}
+                      onChange={(e) => setDepositAmount(e.target.value)}
+                      placeholder="0.00"
+                      className="w-full px-4 py-3 text-lg font-semibold bg-background border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
+                    />
+                    <div className="absolute right-4 top-1/2 transform -translate-y-1/2">
+                      <span className="text-lg font-semibold text-muted-foreground">{selectedToken}</span>
+                    </div>
+                  </div>
+                  <p className="text-xs text-muted-foreground mt-1">
+                    Available: {tokens.find(t => t.symbol === selectedToken)?.walletBalance}
+                  </p>
+                </div>
+
+                {/* Quick Amount Buttons */}
+                <div className="grid grid-cols-4 gap-2">
+                  {selectedToken === "USDT" ? (
+                    <>
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        onClick={() => setDepositAmount("100")}
+                        className="text-sm"
+                      >
+                        $100
+                      </Button>
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        onClick={() => setDepositAmount("500")}
+                        className="text-sm"
+                      >
+                        $500
+                      </Button>
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        onClick={() => setDepositAmount("1000")}
+                        className="text-sm"
+                      >
+                        $1,000
+                      </Button>
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        onClick={() => setDepositAmount("5000")}
+                        className="text-sm"
+                      >
+                        $5,000
+                      </Button>
+                    </>
+                  ) : selectedToken === "ETH" ? (
+                    <>
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        onClick={() => setDepositAmount("0.1")}
+                        className="text-sm"
+                      >
+                        0.1 ETH
+                      </Button>
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        onClick={() => setDepositAmount("0.5")}
+                        className="text-sm"
+                      >
+                        0.5 ETH
+                      </Button>
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        onClick={() => setDepositAmount("1.0")}
+                        className="text-sm"
+                      >
+                        1.0 ETH
+                      </Button>
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        onClick={() => setDepositAmount("2.0")}
+                        className="text-sm"
+                      >
+                        2.0 ETH
+                      </Button>
+                    </>
+                  ) : (
+                    <>
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        onClick={() => setDepositAmount("0.5")}
+                        className="text-sm"
+                      >
+                        0.5 BNB
+                      </Button>
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        onClick={() => setDepositAmount("2.0")}
+                        className="text-sm"
+                      >
+                        2.0 BNB
+                      </Button>
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        onClick={() => setDepositAmount("5.0")}
+                        className="text-sm"
+                      >
+                        5.0 BNB
+                      </Button>
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        onClick={() => setDepositAmount("10.0")}
+                        className="text-sm"
+                      >
+                        10.0 BNB
+                      </Button>
+                    </>
+                  )}
+                </div>
+
+                {/* Expected Returns */}
+                {depositAmount && (
+                  <div className="bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-lg p-4">
+                    <div className="flex items-start space-x-2">
+                      <TrendingUpIcon className="h-5 w-5 text-blue-600 dark:text-blue-400 mt-0.5" />
+                      <div className="text-sm">
+                        <p className="font-medium text-blue-800 dark:text-blue-200">
+                          Expected Returns
+                        </p>
+                        <p className="text-blue-700 dark:text-blue-300">
+                          {selectedToken === "USDT" && `$${depositAmount} USDT`}
+                          {selectedToken === "ETH" && `${depositAmount} ETH`}
+                          {selectedToken === "BNB" && `${depositAmount} BNB`}
+                          {" "}will earn approximately{" "}
+                          {selectedToken === "USDT" && `$${(parseFloat(depositAmount) * 0.1873).toFixed(2)}`}
+                          {selectedToken === "ETH" && `${(parseFloat(depositAmount) * 0.2047).toFixed(4)} ETH`}
+                          {selectedToken === "BNB" && `${(parseFloat(depositAmount) * 0.1523).toFixed(4)} BNB`}
+                          {" "}annually at current APY rates.
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                )}
+
+                {/* Deposit Button */}
+                <Button
+                  variant="gradient"
+                  size="lg"
+                  onClick={handleDeposit}
+                  disabled={!depositAmount || parseFloat(depositAmount) <= 0 || isDepositing}
+                  className="w-full"
+                >
+                  {isDepositing ? (
+                    <div className="flex items-center space-x-2">
+                      <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+                      <span>Depositing...</span>
+                    </div>
+                  ) : (
+                    <div className="flex items-center space-x-2">
+                      <PlusIcon className="h-4 w-4" />
+                      <span>Deposit {selectedToken}</span>
+                    </div>
+                  )}
+                </Button>
               </div>
             )}
 
@@ -722,6 +915,39 @@ function ProfileTab({ onMakeDeposit }: { onMakeDeposit: () => void }) {
                   <h3 className="text-lg font-semibold mb-2">Send Tokens</h3>
                   <p className="text-muted-foreground">Transfer tokens to another wallet</p>
                 </div>
+                
+                {/* Token Selection for Send */}
+                <div>
+                  <label className="text-sm font-medium text-foreground mb-2 block">
+                    Select Token to Send
+                  </label>
+                  <div className="grid grid-cols-3 gap-2">
+                    {tokens.map((token) => (
+                      <button
+                        key={token.symbol}
+                        onClick={() => setSelectedToken(token.symbol as "ETH" | "BNB" | "USDT")}
+                        className={`p-3 rounded-lg border-2 transition-all ${
+                          selectedToken === token.symbol
+                            ? "border-blue-500 bg-blue-50 dark:bg-blue-900/20"
+                            : "border-gray-200 dark:border-gray-700 hover:border-gray-300 dark:hover:border-gray-600"
+                        }`}
+                      >
+                        <div className="flex flex-col items-center space-y-1">
+                          <img
+                            src={token.image}
+                            alt={token.name}
+                            className="w-6 h-6 rounded-full"
+                          />
+                          <span className="font-semibold text-sm">{token.symbol}</span>
+                        </div>
+                      </button>
+                    ))}
+                  </div>
+                  <p className="text-xs text-muted-foreground mt-1">
+                    Available: {tokens.find(t => t.symbol === selectedToken)?.walletBalance}
+                  </p>
+                </div>
+
                 <div>
                   <label className="text-sm font-medium text-foreground mb-2 block">
                     Recipient Address
@@ -769,6 +995,36 @@ function ProfileTab({ onMakeDeposit }: { onMakeDeposit: () => void }) {
                   <h3 className="text-lg font-semibold mb-2">Receive Tokens</h3>
                   <p className="text-muted-foreground">Share your wallet address to receive tokens</p>
                 </div>
+                
+                {/* Token Selection for Receive */}
+                <div>
+                  <label className="text-sm font-medium text-foreground mb-2 block">
+                    Select Token to Receive
+                  </label>
+                  <div className="grid grid-cols-3 gap-2">
+                    {tokens.map((token) => (
+                      <button
+                        key={token.symbol}
+                        onClick={() => setSelectedToken(token.symbol as "ETH" | "BNB" | "USDT")}
+                        className={`p-3 rounded-lg border-2 transition-all ${
+                          selectedToken === token.symbol
+                            ? "border-blue-500 bg-blue-50 dark:bg-blue-900/20"
+                            : "border-gray-200 dark:border-gray-700 hover:border-gray-300 dark:hover:border-gray-600"
+                        }`}
+                      >
+                        <div className="flex flex-col items-center space-y-1">
+                          <img
+                            src={token.image}
+                            alt={token.name}
+                            className="w-6 h-6 rounded-full"
+                          />
+                          <span className="font-semibold text-sm">{token.symbol}</span>
+                        </div>
+                      </button>
+                    ))}
+                  </div>
+                </div>
+
                 <div>
                   <label className="text-sm font-medium text-foreground mb-2 block">
                     Your Wallet Address
@@ -797,224 +1053,13 @@ function ProfileTab({ onMakeDeposit }: { onMakeDeposit: () => void }) {
                         Security Notice
                       </p>
                       <p className="text-blue-700 dark:text-blue-300">
-                        Only send supported tokens to this address. Sending unsupported tokens may result in permanent loss.
+                        Only send {selectedToken} to this address. Sending unsupported tokens may result in permanent loss.
                       </p>
                     </div>
                   </div>
                 </div>
               </div>
             )}
-          </CardContent>
-        </Card>
-      </motion.div>
-
-      {/* Token Selection */}
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.2 }}
-      >
-        <Card className="glass">
-          <CardHeader>
-            <CardTitle className="flex items-center space-x-2">
-              <CoinsIcon className="h-5 w-5" />
-              <span>Select Token to Deposit</span>
-            </CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-              {tokens.map((token) => (
-                <button
-                  key={token.symbol}
-                  onClick={() => setSelectedToken(token.symbol as "ETH" | "BNB" | "USDT")}
-                  className={`p-4 rounded-lg border-2 transition-all ${
-                    selectedToken === token.symbol
-                      ? "border-blue-500 bg-blue-50 dark:bg-blue-900/20"
-                      : "border-gray-200 dark:border-gray-700 hover:border-gray-300 dark:hover:border-gray-600"
-                  }`}
-                >
-                  <div className="flex items-center space-x-3">
-                    <div className="w-12 h-12 relative">
-                      <Image
-                        src={token.image}
-                        alt={token.name}
-                        width={48}
-                        height={48}
-                        className="w-full h-full object-contain rounded-full"
-                      />
-                    </div>
-                    <div className="text-left">
-                      <p className="font-semibold text-foreground">{token.symbol}</p>
-                      <p className="text-sm text-muted-foreground">{token.name}</p>
-                      <p className="text-xs text-green-600 dark:text-green-400">APY: {token.apy}</p>
-                    </div>
-                  </div>
-                  <div className="mt-3 text-right">
-                    <p className="text-sm font-semibold text-foreground">{token.balance}</p>
-                    <p className="text-xs text-muted-foreground">{token.value}</p>
-                    <div className="mt-1 space-y-1">
-                      <p className="text-xs text-blue-600 dark:text-blue-400">Wallet: {token.walletBalance}</p>
-                      <p className="text-xs text-green-600 dark:text-green-400">Staked: {token.stakedBalance}</p>
-                    </div>
-                  </div>
-                </button>
-              ))}
-            </div>
-          </CardContent>
-        </Card>
-      </motion.div>
-
-      {/* Deposit Form */}
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.3 }}
-      >
-        <Card className="glass">
-          <CardHeader>
-            <CardTitle className="flex items-center space-x-2">
-              <PlusIcon className="h-5 w-5" />
-              <span>Deposit {selectedToken}</span>
-            </CardTitle>
-          </CardHeader>
-          <CardContent className="space-y-4">
-            <div>
-              <label className="text-sm font-medium text-foreground mb-2 block">
-                Amount to Deposit
-              </label>
-              <div className="relative">
-                <input
-                  type="number"
-                  value={depositAmount}
-                  onChange={(e) => setDepositAmount(e.target.value)}
-                  placeholder="0.00"
-                  className="w-full px-4 py-3 text-lg font-semibold bg-background border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
-                />
-                <div className="absolute right-4 top-1/2 transform -translate-y-1/2">
-                  <span className="text-lg font-semibold text-muted-foreground">{selectedToken}</span>
-                </div>
-              </div>
-              <p className="text-sm text-muted-foreground mt-1">
-                Minimum: {selectedToken === "USDT" ? "$100" : selectedToken === "ETH" ? "0.1 ETH" : "0.5 BNB"}
-              </p>
-            </div>
-
-            <div className="grid grid-cols-3 gap-2">
-              {selectedToken === "USDT" ? (
-                <>
-                  <Button
-                    variant="outline"
-                    size="sm"
-                    onClick={() => setDepositAmount("100")}
-                    className="text-sm"
-                  >
-                    $100
-                  </Button>
-                  <Button
-                    variant="outline"
-                    size="sm"
-                    onClick={() => setDepositAmount("500")}
-                    className="text-sm"
-                  >
-                    $500
-                  </Button>
-                  <Button
-                    variant="outline"
-                    size="sm"
-                    onClick={() => setDepositAmount("1000")}
-                    className="text-sm"
-                  >
-                    $1,000
-                  </Button>
-                </>
-              ) : selectedToken === "ETH" ? (
-                <>
-                  <Button
-                    variant="outline"
-                    size="sm"
-                    onClick={() => setDepositAmount("0.1")}
-                    className="text-sm"
-                  >
-                    0.1 ETH
-                  </Button>
-                  <Button
-                    variant="outline"
-                    size="sm"
-                    onClick={() => setDepositAmount("0.5")}
-                    className="text-sm"
-                  >
-                    0.5 ETH
-                  </Button>
-                  <Button
-                    variant="outline"
-                    size="sm"
-                    onClick={() => setDepositAmount("1.0")}
-                    className="text-sm"
-                  >
-                    1.0 ETH
-                  </Button>
-                </>
-              ) : (
-                <>
-                  <Button
-                    variant="outline"
-                    size="sm"
-                    onClick={() => setDepositAmount("0.5")}
-                    className="text-sm"
-                  >
-                    0.5 BNB
-                  </Button>
-                  <Button
-                    variant="outline"
-                    size="sm"
-                    onClick={() => setDepositAmount("2.0")}
-                    className="text-sm"
-                  >
-                    2.0 BNB
-                  </Button>
-                  <Button
-                    variant="outline"
-                    size="sm"
-                    onClick={() => setDepositAmount("5.0")}
-                    className="text-sm"
-                  >
-                    5.0 BNB
-                  </Button>
-                </>
-              )}
-            </div>
-
-            <div className="bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-lg p-4">
-              <div className="flex items-start space-x-2">
-                <TrendingUpIcon className="h-5 w-5 text-gray-600 dark:text-gray-300 mt-0.5" />
-                <div className="text-sm">
-                  <p className="font-medium text-blue-800 dark:text-blue-200">
-                    Expected Returns
-                  </p>
-                  <p className="text-blue-700 dark:text-blue-300">
-                    {selectedToken === "USDT" && depositAmount && `$${depositAmount} USDT`}
-                    {selectedToken === "ETH" && depositAmount && `${depositAmount} ETH`}
-                    {selectedToken === "BNB" && depositAmount && `${depositAmount} BNB`}
-                    {" "}will earn approximately{" "}
-                    {selectedToken === "USDT" && depositAmount && `$${(parseFloat(depositAmount) * 0.1873).toFixed(2)}`}
-                    {selectedToken === "ETH" && depositAmount && `${(parseFloat(depositAmount) * 0.2047).toFixed(4)} ETH`}
-                    {selectedToken === "BNB" && depositAmount && `${(parseFloat(depositAmount) * 0.1523).toFixed(4)} BNB`}
-                    {" "}annually at current APY rates.
-                  </p>
-                </div>
-              </div>
-            </div>
-
-            <Button
-              variant="gradient"
-              size="lg"
-              onClick={handleDeposit}
-              disabled={!depositAmount || parseFloat(depositAmount) <= 0}
-              className="w-full"
-            >
-              <PlusIcon className="h-5 w-5 mr-2" />
-              Deposit {selectedToken}
-            </Button>
           </CardContent>
         </Card>
       </motion.div>

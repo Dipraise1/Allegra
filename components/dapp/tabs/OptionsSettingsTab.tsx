@@ -133,73 +133,12 @@ export function OptionsSettingsTab({ user, walletAddress, onDisconnectWallet }: 
     <div className="space-y-6">
       {/* Header */}
       <div>
-        <h2 className="text-2xl font-bold">Options & Settings</h2>
+        <h2 className="text-2xl font-bold">Settings & Preferences</h2>
         <p className="text-muted-foreground">
-          Manage your account preferences and security settings
+          Manage your notification preferences, security settings, and application options
         </p>
       </div>
 
-      {/* Account Information */}
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.1 }}
-      >
-        <Card className="glass">
-          <CardHeader>
-            <CardTitle className="flex items-center space-x-2">
-              <FaUser className="h-5 w-5" />
-              <span>Account Information</span>
-            </CardTitle>
-          </CardHeader>
-          <CardContent className="space-y-4">
-            {user ? (
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div>
-                  <p className="text-sm font-medium text-muted-foreground">Name</p>
-                  <p className="text-lg font-semibold">{user.name}</p>
-                </div>
-                <div>
-                  <p className="text-sm font-medium text-muted-foreground">Email</p>
-                  <p className="text-lg font-semibold">{user.email}</p>
-                </div>
-                <div>
-                  <p className="text-sm font-medium text-muted-foreground">Account Type</p>
-                  <div className="flex items-center space-x-2">
-                    {user.accountType === "enterprise" ? (
-                      <HiOfficeBuilding className="h-4 w-4 text-gray-600 dark:text-gray-300" />
-                    ) : (
-                      <FaUser className="h-4 w-4 text-gray-600 dark:text-gray-300" />
-                    )}
-                    <p className="text-lg font-semibold capitalize">{user.accountType}</p>
-                  </div>
-                </div>
-                {user.companyName && (
-                  <div>
-                    <p className="text-sm font-medium text-muted-foreground">Company</p>
-                    <p className="text-lg font-semibold">{user.companyName}</p>
-                  </div>
-                )}
-                <div>
-                  <p className="text-sm font-medium text-muted-foreground">Member Since</p>
-                  <p className="text-lg font-semibold">{user.memberSince}</p>
-                </div>
-                <div>
-                  <p className="text-sm font-medium text-muted-foreground">KYC Status</p>
-                  <div className="flex items-center space-x-2">
-                    <HiShieldCheck className="h-4 w-4 text-gray-600 dark:text-gray-300" />
-                    <p className="text-lg font-semibold text-green-600 dark:text-green-400">
-                      {user.kycStatus}
-                    </p>
-                  </div>
-                </div>
-              </div>
-            ) : (
-              <p className="text-muted-foreground">No user information available</p>
-            )}
-          </CardContent>
-        </Card>
-      </motion.div>
 
       {/* Wallet Management */}
       <motion.div

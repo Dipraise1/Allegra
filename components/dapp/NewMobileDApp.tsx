@@ -70,6 +70,7 @@ export default function NewMobileDApp() {
   const [chartData, setChartData] = useState<any>(null)
   const [showDepositModal, setShowDepositModal] = useState(false)
   const [depositAmount, setDepositAmount] = useState("")
+  const [showPerformanceHistory, setShowPerformanceHistory] = useState(false)
   const [isDepositing, setIsDepositing] = useState(false)
   const [walletAddress, setWalletAddress] = useState<string | null>(null)
   const [isWalletConnected, setIsWalletConnected] = useState(false)
@@ -93,8 +94,9 @@ export default function NewMobileDApp() {
   const tabs = [
     { id: "dashboard", label: "Home", icon: UserIcon },
     { id: "portfolio", label: "Portfolio", icon: ChartIcon },
+    { id: "investments", label: "Investments", icon: CoinsIcon },
+    { id: "rewards", label: "Rewards", icon: TrendingUpIcon },
     { id: "referrals", label: "Referrals", icon: FaUsers },
-    { id: "profile", label: "Profile", icon: UserIcon },
   ]
 
   const depositAddresses = {
@@ -318,8 +320,11 @@ export default function NewMobileDApp() {
             </motion.div>
             {isWalletConnected ? (
               <div className="flex items-center space-x-2">
-                <div className="text-right">
-                  <p className="text-xs text-muted-foreground">Wallet</p>
+                <div 
+                  className="text-right cursor-pointer hover:opacity-80 transition-opacity"
+                  onClick={() => window.location.href = '/profile'}
+                >
+                  <p className="text-xs text-muted-foreground">Profile</p>
                   <p className="text-xs font-medium text-foreground">
                     {walletAddress?.slice(0, 6)}...{walletAddress?.slice(-4)}
                   </p>
@@ -390,9 +395,13 @@ export default function NewMobileDApp() {
                 <PlusIcon size="w-5 h-5" />
                 Deposit Funds
               </Button>
-              <Button className="w-full justify-start h-12 text-base" variant="outline">
+              <Button 
+                className="w-full justify-start h-12 text-base" 
+                variant="outline"
+                onClick={() => setShowPerformanceHistory(!showPerformanceHistory)}
+              >
                 <TrendingUpIcon size="w-5 h-5" />
-                View Performance
+                {showPerformanceHistory ? "Hide Performance" : "View Performance"}
               </Button>
             </div>
 
@@ -477,6 +486,48 @@ export default function NewMobileDApp() {
               </div>
             </div>
 
+            {/* Transfer Out Section */}
+            <Card className="glass">
+              <CardHeader>
+                <CardTitle className="text-lg">Transfer Out</CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                <div className="grid grid-cols-2 gap-3">
+                  <Button 
+                    variant="outline" 
+                    className="h-12 flex items-center justify-center space-x-2"
+                    onClick={() => toast.info("Transfer to external wallet feature coming soon!")}
+                  >
+                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
+                    </svg>
+                    <span>Send</span>
+                  </Button>
+                  <Button 
+                    variant="outline" 
+                    className="h-12 flex items-center justify-center space-x-2"
+                    onClick={() => toast.info("Withdraw to bank account feature coming soon!")}
+                  >
+                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z" />
+                    </svg>
+                    <span>Withdraw</span>
+                  </Button>
+                </div>
+                
+                <div className="pt-4 border-t border-gray-200 dark:border-gray-700">
+                  <div className="flex items-center justify-between text-sm">
+                    <span className="text-muted-foreground">Available for Transfer</span>
+                    <span className="font-semibold">$8,250.25</span>
+                  </div>
+                  <div className="flex items-center justify-between text-sm mt-1">
+                    <span className="text-muted-foreground">Locked in Investments</span>
+                    <span className="font-semibold">$4,250.50</span>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+
             <div className="space-y-4">
               <motion.div 
                 whileTap={{ scale: 0.98 }}
@@ -556,6 +607,291 @@ export default function NewMobileDApp() {
                 </div>
               </motion.div>
             </div>
+
+            {/* Collapsible Performance History */}
+            {showPerformanceHistory && (
+              <motion.div
+                initial={{ opacity: 0, height: 0 }}
+                animate={{ opacity: 1, height: "auto" }}
+                exit={{ opacity: 0, height: 0 }}
+                transition={{ duration: 0.3 }}
+                className="space-y-4"
+              >
+                <h3 className="text-base font-semibold text-foreground">Performance History</h3>
+                
+                {/* Performance Chart */}
+                <Card className="glass">
+                  <CardHeader>
+                    <CardTitle className="text-lg">Portfolio Performance</CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    {chartData && (
+                      <div className="h-64">
+                        <Line data={chartData} options={{
+                          responsive: true,
+                          maintainAspectRatio: false,
+                          plugins: {
+                            legend: {
+                              display: false
+                            }
+                          },
+                          scales: {
+                            y: {
+                              beginAtZero: false,
+                              grid: {
+                                color: 'rgba(255, 255, 255, 0.1)'
+                              },
+                              ticks: {
+                                color: '#6B7280'
+                              }
+                            },
+                            x: {
+                              grid: {
+                                color: 'rgba(255, 255, 255, 0.1)'
+                              },
+                              ticks: {
+                                color: '#6B7280'
+                              }
+                            }
+                          }
+                        }} />
+                      </div>
+                    )}
+                  </CardContent>
+                </Card>
+
+                {/* Performance Metrics */}
+                <div className="grid grid-cols-2 gap-4">
+                  <Card className="glass">
+                    <CardContent className="p-4 text-center">
+                      <div className="w-12 h-12 bg-green-100 dark:bg-green-900 rounded-full flex items-center justify-center mx-auto mb-2">
+                        <TrendingUpIcon size="w-6 h-6" />
+                      </div>
+                      <p className="text-2xl font-bold text-green-600 dark:text-green-400">+12.5%</p>
+                      <p className="text-sm text-muted-foreground">Total Return</p>
+                    </CardContent>
+                  </Card>
+                  
+                  <Card className="glass">
+                    <CardContent className="p-4 text-center">
+                      <div className="w-12 h-12 bg-blue-100 dark:bg-blue-900 rounded-full flex items-center justify-center mx-auto mb-2">
+                        <ChartIcon size="w-6 h-6" />
+                      </div>
+                      <p className="text-2xl font-bold text-blue-600 dark:text-blue-400">$2,847</p>
+                      <p className="text-sm text-muted-foreground">Total Earnings</p>
+                    </CardContent>
+                  </Card>
+                </div>
+
+                {/* Performance Timeline */}
+                <Card className="glass">
+                  <CardHeader>
+                    <CardTitle className="text-lg">Recent Performance</CardTitle>
+                  </CardHeader>
+                  <CardContent className="space-y-3">
+                    <div className="flex items-center justify-between p-3 bg-green-50 dark:bg-green-900/20 rounded-lg">
+                      <div className="flex items-center space-x-3">
+                        <div className="w-8 h-8 bg-green-100 dark:bg-green-900 rounded-full flex items-center justify-center">
+                          <TrendingUpIcon size="w-4 h-4" />
+                        </div>
+                        <div>
+                          <p className="font-semibold">Daily Earnings</p>
+                          <p className="text-sm text-muted-foreground">Today</p>
+                        </div>
+                      </div>
+                      <div className="text-right">
+                        <p className="font-bold text-green-600 dark:text-green-400">+$45.23</p>
+                        <p className="text-xs text-muted-foreground">+2.1%</p>
+                      </div>
+                    </div>
+
+                    <div className="flex items-center justify-between p-3 bg-blue-50 dark:bg-blue-900/20 rounded-lg">
+                      <div className="flex items-center space-x-3">
+                        <div className="w-8 h-8 bg-blue-100 dark:bg-blue-900 rounded-full flex items-center justify-center">
+                          <ChartIcon size="w-4 h-4" />
+                        </div>
+                        <div>
+                          <p className="font-semibold">Weekly Performance</p>
+                          <p className="text-sm text-muted-foreground">This week</p>
+                        </div>
+                      </div>
+                      <div className="text-right">
+                        <p className="font-bold text-blue-600 dark:text-blue-400">+$312.50</p>
+                        <p className="text-xs text-muted-foreground">+8.7%</p>
+                      </div>
+                    </div>
+
+                    <div className="flex items-center justify-between p-3 bg-purple-50 dark:bg-purple-900/20 rounded-lg">
+                      <div className="flex items-center space-x-3">
+                        <div className="w-8 h-8 bg-purple-100 dark:bg-purple-900 rounded-full flex items-center justify-center">
+                          <CoinsIcon size="w-4 h-4" />
+                        </div>
+                        <div>
+                          <p className="font-semibold">Monthly Return</p>
+                          <p className="text-sm text-muted-foreground">This month</p>
+                        </div>
+                      </div>
+                      <div className="text-right">
+                        <p className="font-bold text-purple-600 dark:text-purple-400">+$1,250.50</p>
+                        <p className="text-xs text-muted-foreground">+12.5%</p>
+                      </div>
+                    </div>
+                  </CardContent>
+                </Card>
+              </motion.div>
+            )}
+          </motion.div>
+        )}
+
+        {activeTab === "investments" && (
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="space-y-6"
+          >
+            <div className="text-center">
+              <h2 className="text-2xl font-bold text-foreground mb-2">My Investments</h2>
+              <p className="text-muted-foreground">Track your active investments and returns</p>
+            </div>
+
+            {/* Investment Cards */}
+            <div className="space-y-4">
+              <Card className="glass">
+                <CardContent className="p-4">
+                  <div className="flex items-center justify-between mb-3">
+                    <div className="flex items-center space-x-3">
+                      <div className="w-10 h-10 bg-blue-100 dark:bg-blue-900 rounded-lg flex items-center justify-center">
+                        <USDTIcon size="w-6 h-6" />
+                      </div>
+                      <div>
+                        <p className="font-semibold">USDT Investment</p>
+                        <p className="text-sm text-muted-foreground">Locked for 30 days</p>
+                      </div>
+                    </div>
+                    <div className="text-right">
+                      <p className="font-bold text-green-600 dark:text-green-400">+12.5%</p>
+                      <p className="text-xs text-muted-foreground">APY</p>
+                    </div>
+                  </div>
+                  <div className="grid grid-cols-2 gap-4 text-sm">
+                    <div>
+                      <p className="text-muted-foreground">Amount</p>
+                      <p className="font-semibold">$1,250.50</p>
+                    </div>
+                    <div>
+                      <p className="text-muted-foreground">Returns</p>
+                      <p className="font-semibold text-green-600 dark:text-green-400">+$45.23</p>
+                    </div>
+                  </div>
+                  <div className="mt-3">
+                    <div className="flex justify-between text-xs text-muted-foreground mb-1">
+                      <span>Progress</span>
+                      <span>15/30 days</span>
+                    </div>
+                    <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2">
+                      <div className="bg-blue-600 h-2 rounded-full" style={{ width: '50%' }}></div>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+
+              <Card className="glass">
+                <CardContent className="p-4">
+                  <div className="flex items-center justify-between mb-3">
+                    <div className="flex items-center space-x-3">
+                      <div className="w-10 h-10 bg-orange-100 dark:bg-orange-900 rounded-lg flex items-center justify-center">
+                        <ETHIcon size="w-6 h-6" />
+                      </div>
+                      <div>
+                        <p className="font-semibold">ETH Investment</p>
+                        <p className="text-sm text-muted-foreground">Locked for 30 days</p>
+                      </div>
+                    </div>
+                    <div className="text-right">
+                      <p className="font-bold text-green-600 dark:text-green-400">+18.7%</p>
+                      <p className="text-xs text-muted-foreground">APY</p>
+                    </div>
+                  </div>
+                  <div className="grid grid-cols-2 gap-4 text-sm">
+                    <div>
+                      <p className="text-muted-foreground">Amount</p>
+                      <p className="font-semibold">0.5 ETH</p>
+                    </div>
+                    <div>
+                      <p className="text-muted-foreground">Returns</p>
+                      <p className="font-semibold text-green-600 dark:text-green-400">+0.023 ETH</p>
+                    </div>
+                  </div>
+                  <div className="mt-3">
+                    <div className="flex justify-between text-xs text-muted-foreground mb-1">
+                      <span>Progress</span>
+                      <span>8/30 days</span>
+                    </div>
+                    <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2">
+                      <div className="bg-orange-600 h-2 rounded-full" style={{ width: '27%' }}></div>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+            </div>
+          </motion.div>
+        )}
+
+        {activeTab === "rewards" && (
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="space-y-6"
+          >
+            <div className="text-center">
+              <h2 className="text-2xl font-bold text-foreground mb-2">Rewards & Vesting</h2>
+              <p className="text-muted-foreground">Claim your earned rewards</p>
+            </div>
+
+            {/* Rewards Summary */}
+            <Card className="glass">
+              <CardContent className="p-6 text-center">
+                <div className="w-16 h-16 bg-green-100 dark:bg-green-900 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <TrendingUpIcon size="w-8 h-8" />
+                </div>
+                <h3 className="text-2xl font-bold text-green-600 dark:text-green-400 mb-2">
+                  $2,847.50
+                </h3>
+                <p className="text-muted-foreground mb-4">Total Rewards Available</p>
+                <Button className="w-full" size="lg">
+                  Claim All Rewards
+                </Button>
+              </CardContent>
+            </Card>
+
+            {/* Vesting Schedule */}
+            <Card className="glass">
+              <CardHeader>
+                <CardTitle>Vesting Schedule</CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                <div className="flex items-center justify-between p-3 bg-blue-50 dark:bg-blue-900/20 rounded-lg">
+                  <div>
+                    <p className="font-semibold">USDT Rewards</p>
+                    <p className="text-sm text-muted-foreground">Vesting over 7 days</p>
+                  </div>
+                  <div className="text-right">
+                    <p className="font-bold">$1,250.50</p>
+                    <p className="text-xs text-green-600 dark:text-green-400">Available now</p>
+                  </div>
+                </div>
+                <div className="flex items-center justify-between p-3 bg-orange-50 dark:bg-orange-900/20 rounded-lg">
+                  <div>
+                    <p className="font-semibold">ETH Rewards</p>
+                    <p className="text-sm text-muted-foreground">Vesting over 7 days</p>
+                  </div>
+                  <div className="text-right">
+                    <p className="font-bold">0.023 ETH</p>
+                    <p className="text-xs text-green-600 dark:text-green-400">Available now</p>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
           </motion.div>
         )}
 
@@ -660,63 +996,19 @@ export default function NewMobileDApp() {
           </motion.div>
         )}
 
-        {activeTab === "profile" && (
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="space-y-4"
-          >
-            <div className="flex items-center space-x-3 mb-4">
-              <div className="w-12 h-12 bg-gradient-to-r from-blue-500 to-blue-600 rounded-full flex items-center justify-center">
-                <span className="text-white font-bold text-sm">RD</span>
-              </div>
-              <div>
-                <h3 className="text-sm font-semibold">Raphael Divine</h3>
-                <p className="text-xs text-muted-foreground">raphaeldivine2@gmail.com</p>
-                <p className="text-xs text-green-600 dark:text-green-400">Verified</p>
-              </div>
-            </div>
-
-            <div className="space-y-2">
-              <div className="flex items-center justify-between p-2 bg-gray-50 dark:bg-gray-900 rounded-lg">
-                <div>
-                  <p className="text-xs font-medium">Total Invested</p>
-                  <p className="text-xs text-muted-foreground">Lifetime</p>
-                </div>
-                <p className="text-xs font-semibold">$15,420</p>
-              </div>
-
-              <div className="flex items-center justify-between p-2 bg-gray-50 dark:bg-gray-900 rounded-lg">
-                <div>
-                  <p className="text-xs font-medium">Total Returns</p>
-                  <p className="text-xs text-muted-foreground">All time</p>
-                </div>
-                <p className="text-xs font-semibold text-green-600">+$3,780</p>
-              </div>
-
-              <div className="flex items-center justify-between p-2 bg-gray-50 dark:bg-gray-900 rounded-lg">
-                <div>
-                  <p className="text-xs font-medium">Member Since</p>
-                  <p className="text-xs text-muted-foreground">Account creation</p>
-                </div>
-                <p className="text-xs font-semibold">Jan 2024</p>
-              </div>
-            </div>
-          </motion.div>
-        )}
 
       </div>
 
       {/* Compact Bottom Navigation */}
       <div className="fixed bottom-0 left-0 right-0 bg-white/95 dark:bg-black/95 backdrop-blur-sm border-t border-gray-200 dark:border-gray-800 z-50">
-        <div className="grid grid-cols-4 h-16">
+        <div className="flex overflow-x-auto h-16 scrollbar-hide">
           {tabs.map((tab) => {
             const Icon = tab.icon
             return (
               <button
                 key={tab.id}
                 onClick={() => setActiveTab(tab.id)}
-                className={`flex flex-col items-center justify-center space-y-1 transition-all duration-200 ${
+                className={`flex flex-col items-center justify-center space-y-1 transition-all duration-200 min-w-[80px] px-2 ${
                   activeTab === tab.id
                     ? "text-blue-600 dark:text-blue-400"
                     : "text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300"
@@ -733,7 +1025,7 @@ export default function NewMobileDApp() {
                     <Icon size="w-5 h-5" />
                   )}
                 </div>
-                <span className="text-xs font-medium">{tab.label}</span>
+                <span className="text-xs font-medium whitespace-nowrap">{tab.label}</span>
               </button>
             )
           })}

@@ -36,6 +36,168 @@ interface OverviewTabProps {
   onMakeDeposit: () => void
 }
 
+interface Transaction {
+  id: string
+  type: 'deposit' | 'withdrawal' | 'swap'
+  token: string
+  amount: string
+  value: string
+  timestamp: Date
+  status: 'pending' | 'completed' | 'failed'
+  user: string
+}
+
+function LiveTransactionsContainer() {
+  const [transactions, setTransactions] = useState<Transaction[]>([])
+  const [isLive, setIsLive] = useState(true)
+
+  useEffect(() => {
+    // Generate initial transactions
+    const generateTransaction = (): Transaction => {
+      const types: Transaction['type'][] = ['deposit', 'withdrawal', 'swap']
+      const tokens = ['ETH', 'USDT', 'BNB']
+      const statuses: Transaction['status'][] = ['pending', 'completed', 'failed']
+      const users = ['0x742d...8b6', '0x1a2b...c3d', '0x9f8e...7d6', '0x5c4d...3e2']
+      
+      return {
+        id: Math.random().toString(36).substr(2, 9),
+        type: types[Math.floor(Math.random() * types.length)],
+        token: tokens[Math.floor(Math.random() * tokens.length)],
+        amount: (Math.random() * 10).toFixed(4),
+        value: `$${(Math.random() * 50000).toFixed(2)}`,
+        timestamp: new Date(),
+        status: statuses[Math.floor(Math.random() * statuses.length)],
+        user: users[Math.floor(Math.random() * users.length)]
+      }
+    }
+
+    // Initial transactions
+    const initialTransactions = Array.from({ length: 8 }, generateTransaction)
+    setTransactions(initialTransactions)
+
+    // Add new transactions every 3-8 seconds
+    const interval = setInterval(() => {
+      if (isLive) {
+        const newTransaction = generateTransaction()
+        setTransactions(prev => [newTransaction, ...prev.slice(0, 9)]) // Keep only 10 transactions
+      }
+    }, Math.random() * 5000 + 3000)
+
+    return () => clearInterval(interval)
+  }, [isLive])
+
+  const getTransactionIcon = (type: Transaction['type']) => {
+    switch (type) {
+      case 'deposit':
+        return <HiPlus className="h-4 w-4 text-green-600" />
+      case 'withdrawal':
+        return <HiTrendingDown className="h-4 w-4 text-red-600" />
+      case 'swap':
+        return <HiRefresh className="h-4 w-4 text-blue-600" />
+    }
+  }
+
+  const getStatusColor = (status: Transaction['status']) => {
+    switch (status) {
+      case 'completed':
+        return 'text-green-600 dark:text-green-400'
+      case 'pending':
+        return 'text-yellow-600 dark:text-yellow-400'
+      case 'failed':
+        return 'text-red-600 dark:text-red-400'
+    }
+  }
+
+  const formatTime = (timestamp: Date) => {
+    const now = new Date()
+    const diff = now.getTime() - timestamp.getTime()
+    const seconds = Math.floor(diff / 1000)
+    
+    if (seconds < 60) return `${seconds}s ago`
+    if (seconds < 3600) return `${Math.floor(seconds / 60)}m ago`
+    return `${Math.floor(seconds / 3600)}h ago`
+  }
+
+  return (
+    <motion.div
+      initial={{ opacity: 0, x: 20 }}
+      animate={{ opacity: 1, x: 0 }}
+      transition={{ delay: 0.3 }}
+      className="sticky top-6"
+    >
+      <Card className="glass">
+        <CardHeader>
+          <div className="flex items-center justify-between">
+            <CardTitle className="flex items-center space-x-2">
+              <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
+              <span>Live Transactions</span>
+            </CardTitle>
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={() => setIsLive(!isLive)}
+              className="text-xs"
+            >
+              {isLive ? 'Pause' : 'Resume'}
+            </Button>
+          </div>
+        </CardHeader>
+        <CardContent className="p-0">
+          <div className="max-h-96 overflow-y-auto">
+            {transactions.map((tx, index) => (
+              <motion.div
+                key={tx.id}
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: index * 0.1 }}
+                className="border-b border-gray-200 dark:border-gray-700 last:border-b-0 p-4 hover:bg-gray-50 dark:hover:bg-gray-800/50 transition-colors"
+              >
+                <div className="flex items-center justify-between mb-2">
+                  <div className="flex items-center space-x-2">
+                    {getTransactionIcon(tx.type)}
+                    <span className="text-sm font-medium capitalize">{tx.type}</span>
+                    <span className={`text-xs px-2 py-1 rounded-full ${getStatusColor(tx.status)} bg-opacity-20`}>
+                      {tx.status}
+                    </span>
+                  </div>
+                  <span className="text-xs text-muted-foreground">
+                    {formatTime(tx.timestamp)}
+                  </span>
+                </div>
+                
+                <div className="flex items-center justify-between">
+                  <div>
+                    <p className="text-sm font-semibold">
+                      {tx.amount} {tx.token}
+                    </p>
+                    <p className="text-xs text-muted-foreground">
+                      {tx.value}
+                    </p>
+                  </div>
+                  <div className="text-right">
+                    <p className="text-xs text-muted-foreground font-mono">
+                      {tx.user}
+                    </p>
+                  </div>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+          
+          {transactions.length === 0 && (
+            <div className="p-8 text-center">
+              <div className="w-12 h-12 bg-gray-100 dark:bg-gray-800 rounded-full flex items-center justify-center mx-auto mb-4">
+                <HiRefresh className="h-6 w-6 text-gray-400" />
+              </div>
+              <p className="text-sm text-muted-foreground">No transactions yet</p>
+            </div>
+          )}
+        </CardContent>
+      </Card>
+    </motion.div>
+  )
+}
+
 interface Metrics {
   personalTVL: number
   currentAPY: number
@@ -351,23 +513,25 @@ export function OverviewTab({ onMakeDeposit }: OverviewTabProps) {
   }
 
   return (
-    <div className="space-y-6">
-      {/* Metrics Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+    <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+      {/* Main Content */}
+      <div className="lg:col-span-2 space-y-6">
+        {/* Metrics Cards */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.1 }}
         >
           <Card className="glass hover:shadow-lg transition-shadow">
-            <CardContent className="p-6">
+            <CardContent className="p-8">
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="text-sm font-medium text-muted-foreground">Personal TVL</p>
-                  <p className="text-2xl font-bold">${metrics.personalTVL.toLocaleString()}</p>
+                  <p className="text-sm font-medium text-muted-foreground mb-2">Personal TVL</p>
+                  <p className="text-3xl font-bold">${metrics.personalTVL.toLocaleString()}</p>
                 </div>
-                <div className="w-12 h-12 bg-blue-100 dark:bg-blue-900 rounded-lg flex items-center justify-center">
-                  <FaCoins className="h-6 w-6 text-gray-600 dark:text-gray-300" />
+                <div className="w-16 h-16 bg-blue-100 dark:bg-blue-900 rounded-lg flex items-center justify-center">
+                  <FaCoins className="h-8 w-8 text-gray-600 dark:text-gray-300" />
                 </div>
               </div>
             </CardContent>
@@ -380,16 +544,16 @@ export function OverviewTab({ onMakeDeposit }: OverviewTabProps) {
           transition={{ delay: 0.2 }}
         >
           <Card className="glass hover:shadow-lg transition-shadow">
-            <CardContent className="p-6">
+            <CardContent className="p-8">
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="text-sm font-medium text-muted-foreground">Current APY</p>
-                  <p className="text-2xl font-bold text-green-600 dark:text-green-400">
+                  <p className="text-sm font-medium text-muted-foreground mb-2">Current APY</p>
+                  <p className="text-3xl font-bold text-green-600 dark:text-green-400">
                     {metrics.currentAPY}%
                   </p>
                 </div>
-                <div className="w-12 h-12 bg-green-100 dark:bg-green-900 rounded-lg flex items-center justify-center">
-                  <HiTrendingUp className="h-6 w-6 text-gray-600 dark:text-gray-300" />
+                <div className="w-16 h-16 bg-green-100 dark:bg-green-900 rounded-lg flex items-center justify-center">
+                  <HiTrendingUp className="h-8 w-8 text-gray-600 dark:text-gray-300" />
                 </div>
               </div>
             </CardContent>
@@ -402,14 +566,14 @@ export function OverviewTab({ onMakeDeposit }: OverviewTabProps) {
           transition={{ delay: 0.3 }}
         >
           <Card className="glass hover:shadow-lg transition-shadow">
-            <CardContent className="p-6">
+            <CardContent className="p-8">
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="text-sm font-medium text-muted-foreground">Reserve Fund</p>
-                  <p className="text-2xl font-bold">${(metrics.reserveFundSize / 1000000).toFixed(1)}M</p>
+                  <p className="text-sm font-medium text-muted-foreground mb-2">Reserve Fund</p>
+                  <p className="text-3xl font-bold">${(metrics.reserveFundSize / 1000000).toFixed(1)}M</p>
                 </div>
-                <div className="w-12 h-12 bg-blue-100 dark:bg-blue-900 rounded-lg flex items-center justify-center">
-                  <FaShieldAlt className="h-6 w-6 text-gray-600 dark:text-gray-300" />
+                <div className="w-16 h-16 bg-blue-100 dark:bg-blue-900 rounded-lg flex items-center justify-center">
+                  <FaShieldAlt className="h-8 w-8 text-gray-600 dark:text-gray-300" />
                 </div>
               </div>
             </CardContent>
@@ -422,19 +586,19 @@ export function OverviewTab({ onMakeDeposit }: OverviewTabProps) {
           transition={{ delay: 0.4 }}
         >
           <Card className="glass hover:shadow-lg transition-shadow">
-            <CardContent className="p-6">
+            <CardContent className="p-8">
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="text-sm font-medium text-muted-foreground">Daily P/L</p>
-                  <p className={`text-2xl font-bold ${metrics.dailyPL >= 0 ? 'text-green-600 dark:text-green-400' : 'text-red-600 dark:text-red-400'}`}>
+                  <p className="text-sm font-medium text-muted-foreground mb-2">Daily P/L</p>
+                  <p className={`text-3xl font-bold ${metrics.dailyPL >= 0 ? 'text-green-600 dark:text-green-400' : 'text-red-600 dark:text-red-400'}`}>
                     {metrics.dailyPL >= 0 ? '+' : ''}${metrics.dailyPL.toFixed(2)}
                   </p>
                 </div>
-                <div className={`w-12 h-12 rounded-lg flex items-center justify-center ${metrics.dailyPL >= 0 ? 'bg-green-100 dark:bg-green-900' : 'bg-red-100 dark:bg-red-900'}`}>
+                <div className={`w-16 h-16 rounded-lg flex items-center justify-center ${metrics.dailyPL >= 0 ? 'bg-green-100 dark:bg-green-900' : 'bg-red-100 dark:bg-red-900'}`}>
                   {metrics.dailyPL >= 0 ? (
-                    <HiTrendingUp className="h-6 w-6 text-gray-600 dark:text-gray-300" />
+                    <HiTrendingUp className="h-8 w-8 text-gray-600 dark:text-gray-300" />
                   ) : (
-                    <HiTrendingDown className="h-6 w-6 text-gray-600 dark:text-gray-300" />
+                    <HiTrendingDown className="h-8 w-8 text-gray-600 dark:text-gray-300" />
                   )}
                 </div>
               </div>
@@ -512,37 +676,6 @@ export function OverviewTab({ onMakeDeposit }: OverviewTabProps) {
         </Card>
       </motion.div>
 
-      {/* Additional Info */}
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.7 }}
-      >
-        <Card className="glass">
-          <CardContent className="p-6">
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 text-center">
-              <div>
-                <p className="text-2xl font-bold text-blue-600 dark:text-blue-400">
-                  {metrics.activeInvestments}
-                </p>
-                <p className="text-sm text-muted-foreground">Active Investments</p>
-              </div>
-              <div>
-                <p className="text-2xl font-bold text-green-600 dark:text-green-400">
-                  ${metrics.totalReturns.toFixed(2)}
-                </p>
-                <p className="text-sm text-muted-foreground">Total Returns</p>
-              </div>
-              <div>
-                <p className="text-2xl font-bold text-blue-600 dark:text-blue-400">
-                  30 Days
-                </p>
-                <p className="text-sm text-muted-foreground">Average Lock Period</p>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
-      </motion.div>
 
       {/* Live Crypto Data Marquee */}
       <motion.div
@@ -604,6 +737,50 @@ export function OverviewTab({ onMakeDeposit }: OverviewTabProps) {
           </CardContent>
         </Card>
       </motion.div>
+      </div>
+
+      {/* Live Transactions Sidebar */}
+      <div className="lg:col-span-1 space-y-6">
+        <LiveTransactionsContainer />
+        
+        {/* Investment Metrics */}
+        <motion.div
+          initial={{ opacity: 0, x: 20 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ delay: 0.4 }}
+        >
+          <Card className="glass">
+            <CardHeader>
+              <CardTitle>Investment Metrics</CardTitle>
+            </CardHeader>
+            <CardContent className="space-y-6">
+              {/* Active Investments */}
+              <div className="text-center p-4 bg-blue-50 dark:bg-blue-900/20 rounded-lg">
+                <p className="text-2xl font-bold text-blue-600 dark:text-blue-400">
+                  $1,250.50
+                </p>
+                <p className="text-sm text-muted-foreground">Active Investments</p>
+              </div>
+              
+              {/* Total Returns */}
+              <div className="text-center p-4 bg-green-50 dark:bg-green-900/20 rounded-lg">
+                <p className="text-2xl font-bold text-green-600 dark:text-green-400">
+                  $2,847.50
+                </p>
+                <p className="text-sm text-muted-foreground">Total Returns</p>
+              </div>
+              
+              {/* Average Lock Period */}
+              <div className="text-center p-4 bg-orange-50 dark:bg-orange-900/20 rounded-lg">
+                <p className="text-2xl font-bold text-orange-600 dark:text-orange-400">
+                  30 Days
+                </p>
+                <p className="text-sm text-muted-foreground">Average Lock Period</p>
+              </div>
+            </CardContent>
+          </Card>
+        </motion.div>
+      </div>
     </div>
   )
 }

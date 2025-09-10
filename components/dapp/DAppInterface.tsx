@@ -11,7 +11,7 @@ import { HiUser, HiTrendingUp, HiTrendingDown, HiRefresh, HiPlus, HiMinus, HiClo
 import { FaWallet, FaChartLine, FaUsers, FaCog, FaCopy } from "react-icons/fa"
 import { ThemeToggle } from "@/components/ThemeToggle"
 
-type ActiveSection = "overview" | "investments" | "rewards" | "options" | "profile"
+type ActiveSection = "overview" | "investments" | "rewards" | "options" | "account"
 
 export function DAppInterface() {
   const [activeSection, setActiveSection] = useState<ActiveSection>("overview")
@@ -205,7 +205,7 @@ export function DAppInterface() {
                 <HiBell className="h-5 w-5" />
               </Button>
               <button 
-                onClick={() => setActiveSection("profile")}
+                onClick={() => setActiveSection("account")}
                 className="flex items-center space-x-3 hover:bg-muted/20 rounded-lg p-2 transition-colors"
               >
                 <div className="w-8 h-8 bg-gradient-to-r from-primary to-primary/80 rounded-full flex items-center justify-center shadow-lg">
@@ -495,8 +495,8 @@ export function DAppInterface() {
         {/* Options Section */}
         {activeSection === "options" && <OptionsWheelSection />}
 
-        {/* Profile Section */}
-        {activeSection === "profile" && <ProfileSection userProfile={userProfile} />}
+        {/* Account Section */}
+        {activeSection === "account" && <AccountSection userProfile={userProfile} />}
 
       </div>
     </div>
@@ -1966,40 +1966,11 @@ function PlatformActivitySection() {
   )
 }
 
-// Profile Section
-function ProfileSection({ userProfile }: { userProfile: any }) {
+// Account Section
+function AccountSection({ userProfile }: { userProfile: any }) {
   const [isEditing, setIsEditing] = useState(false)
-  const [selectedAsset, setSelectedAsset] = useState<string | null>(null)
-  const [showSendModal, setShowSendModal] = useState(false)
-  const [showReceiveModal, setShowReceiveModal] = useState(false)
   const [profileData, setProfileData] = useState(userProfile)
 
-  const assets = {
-    ETH: {
-      name: "Ethereum",
-      symbol: "ETH",
-      icon: "https://assets.coingecko.com/coins/images/279/large/ethereum.png",
-      balance: "1.247 ETH",
-      value: "$2,847.50",
-      address: "0x742d35Cc6634C0532925a3b8D4C9db96C4b4d8b6"
-    },
-    USDT: {
-      name: "Tether USD",
-      symbol: "USDT",
-      icon: "https://assets.coingecko.com/coins/images/325/large/Tether.png",
-      balance: "$8,450.23",
-      value: "$8,450.23",
-      address: "0x742d35Cc6634C0532925a3b8D4C9db96C4b4d8b6"
-    },
-    BSC: {
-      name: "BNB Smart Chain",
-      symbol: "BSC",
-      icon: "https://assets.coingecko.com/coins/images/825/large/bnb-icon2_2x.png",
-      balance: "2.847 BNB",
-      value: "$1,234.56",
-      address: "0x742d35Cc6634C0532925a3b8D4C9db96C4b4d8b6"
-    }
-  }
 
   const handleSave = () => {
     setIsEditing(false)
@@ -2137,183 +2108,7 @@ function ProfileSection({ userProfile }: { userProfile: any }) {
         </div>
       </div>
 
-      {/* Asset Holdings */}
-      <div className="bg-card border border-border rounded-xl p-6 shadow-lg">
-        <div className="flex items-center justify-between mb-6">
-          <h3 className="text-xl font-bold text-foreground">Asset Holdings</h3>
-          <div className="flex space-x-2">
-            <Button 
-              variant="default" 
-              size="sm"
-              onClick={() => setShowReceiveModal(true)}
-            >
-              <HiPlus className="h-4 w-4 mr-2" />
-              Receive
-            </Button>
-            <Button 
-              variant="outline" 
-              size="sm"
-              onClick={() => setShowSendModal(true)}
-            >
-              <HiMinus className="h-4 w-4 mr-2" />
-              Send
-            </Button>
-          </div>
-        </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-          {Object.entries(assets).map(([key, asset]) => (
-            <div 
-              key={key}
-              className={`p-4 rounded-lg border transition-colors cursor-pointer ${
-                selectedAsset === key 
-                  ? 'bg-primary/10 border-primary' 
-                  : 'bg-muted/20 border-border hover:border-primary'
-              }`}
-              onClick={() => setSelectedAsset(selectedAsset === key ? null : key)}
-            >
-              <div className="flex items-center space-x-3 mb-3">
-                <div className="w-10 h-10 bg-gray-100 dark:bg-gray-800 rounded-full flex items-center justify-center overflow-hidden">
-                  <Image
-                    src={asset.icon}
-                    alt={asset.symbol}
-                    width={40}
-                    height={40}
-                    className="w-full h-full object-contain"
-                  />
-                </div>
-                <div>
-                  <p className="font-semibold text-foreground">{asset.symbol}</p>
-                  <p className="text-sm text-muted-foreground">{asset.name}</p>
-                </div>
-              </div>
-              <div className="space-y-1">
-                <p className="text-lg font-bold text-foreground">{asset.balance}</p>
-                <p className="text-sm text-muted-foreground">{asset.value}</p>
-              </div>
-            </div>
-          ))}
-        </div>
-
-        {/* Selected Asset Actions */}
-        {selectedAsset && (
-          <div className="mt-6 p-4 bg-muted/20 rounded-lg border border-border">
-            <div className="flex items-center justify-between mb-4">
-              <div className="flex items-center space-x-3">
-                <div className="w-8 h-8 bg-gray-100 dark:bg-gray-800 rounded-full flex items-center justify-center overflow-hidden">
-                  <Image
-                    src={assets[selectedAsset as keyof typeof assets].icon}
-                    alt={assets[selectedAsset as keyof typeof assets].symbol}
-                    width={32}
-                    height={32}
-                    className="w-full h-full object-contain"
-                  />
-                </div>
-                <div>
-                  <p className="font-semibold text-foreground">{assets[selectedAsset as keyof typeof assets].name}</p>
-                  <p className="text-sm text-muted-foreground">Wallet Address</p>
-                </div>
-              </div>
-              <Button 
-                variant="outline" 
-                size="sm"
-                onClick={() => navigator.clipboard.writeText(assets[selectedAsset as keyof typeof assets].address)}
-              >
-                <FaCopy className="h-4 w-4" />
-              </Button>
-            </div>
-            <div className="p-3 bg-background border border-border rounded-lg">
-              <p className="text-sm font-mono text-foreground break-all">
-                {assets[selectedAsset as keyof typeof assets].address}
-              </p>
-            </div>
-          </div>
-        )}
-      </div>
-
-      {/* Send Modal */}
-      {showSendModal && (
-        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
-          <div className="bg-card border border-border rounded-xl p-6 shadow-lg w-full max-w-md mx-4">
-            <div className="flex items-center justify-between mb-6">
-              <h3 className="text-xl font-bold text-foreground">Send Assets</h3>
-              <Button variant="ghost" size="icon" onClick={() => setShowSendModal(false)}>
-                <HiX className="h-5 w-5" />
-              </Button>
-            </div>
-            <div className="space-y-4">
-              <div>
-                <label className="text-sm font-medium text-foreground">Select Asset</label>
-                <select className="w-full mt-1 px-3 py-2 bg-background border border-border rounded-lg text-foreground">
-                  <option>ETH</option>
-                  <option>USDT</option>
-                  <option>BNB</option>
-                </select>
-              </div>
-              <div>
-                <label className="text-sm font-medium text-foreground">Recipient Address</label>
-                <input
-                  type="text"
-                  placeholder="0x..."
-                  className="w-full mt-1 px-3 py-2 bg-background border border-border rounded-lg text-foreground"
-                />
-              </div>
-              <div>
-                <label className="text-sm font-medium text-foreground">Amount</label>
-                <input
-                  type="number"
-                  placeholder="0.00"
-                  className="w-full mt-1 px-3 py-2 bg-background border border-border rounded-lg text-foreground"
-                />
-              </div>
-              <Button className="w-full">Send Transaction</Button>
-            </div>
-          </div>
-        </div>
-      )}
-
-      {/* Receive Modal */}
-      {showReceiveModal && (
-        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
-          <div className="bg-card border border-border rounded-xl p-6 shadow-lg w-full max-w-md mx-4">
-            <div className="flex items-center justify-between mb-6">
-              <h3 className="text-xl font-bold text-foreground">Receive Assets</h3>
-              <Button variant="ghost" size="icon" onClick={() => setShowReceiveModal(false)}>
-                <HiX className="h-5 w-5" />
-              </Button>
-            </div>
-            <div className="space-y-4">
-              <div>
-                <label className="text-sm font-medium text-foreground">Select Asset</label>
-                <select className="w-full mt-1 px-3 py-2 bg-background border border-border rounded-lg text-foreground">
-                  <option>ETH</option>
-                  <option>USDT</option>
-                  <option>BNB</option>
-                </select>
-              </div>
-              <div>
-                <label className="text-sm font-medium text-foreground">Your Address</label>
-                <div className="flex items-center space-x-2 mt-1">
-                  <input
-                    type="text"
-                    value="0x742d35Cc6634C0532925a3b8D4C9db96C4b4d8b6"
-                    readOnly
-                    className="flex-1 px-3 py-2 bg-background border border-border rounded-lg text-foreground font-mono text-sm"
-                  />
-                  <Button variant="outline" size="sm">
-                    <FaCopy className="h-4 w-4" />
-                  </Button>
-                </div>
-              </div>
-              <div className="p-4 bg-muted/20 rounded-lg">
-                <p className="text-sm text-muted-foreground text-center">
-                  Share this address to receive assets. Only send supported assets to this address.
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
-      )}
     </div>
   )
 }
